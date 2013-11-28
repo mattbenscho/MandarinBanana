@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131119201432) do
+ActiveRecord::Schema.define(version: 20131128195402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "subtitles", force: true do |t|
+    t.text     "sentence"
+    t.integer  "start"
+    t.integer  "stop"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subtitles", ["start"], name: "index_subtitles_on_start", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
