@@ -1,4 +1,5 @@
 Mbv2::Application.routes.draw do
+  match '/subtitles/embedded/:id', to: 'subtitles#embed', via: 'get'
   get "subtitles/new"
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
