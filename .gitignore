@@ -20,4 +20,4 @@ doc/
 .secret
 
 # Ignore current import file
-app/helpers/subtitles_populate/*.txt
+app/helpers/subtitles_populate/import.txt
