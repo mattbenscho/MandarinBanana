@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe User do
@@ -16,6 +17,7 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:comments) }
   it { should respond_to(:admin) }
 
   it { should be_valid }
@@ -113,5 +115,35 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "comment associations" do
+
+    before do
+      @subtitle = Subtitle.new(sentence: "大王", start: 160, stop: 170)
+    end
+
+    before { @user.save }
+    before { @subtitle.save }
+
+    let!(:older_comment) do
+      FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle)
+    end
+    let!(:newer_comment) do
+      FactoryGirl.create(:comment, user: @user, created_at: 1.hour.ago, subtitle: @subtitle)
+    end
+
+    it "should have the right comments in the right order" do
+      @user.comments.should == [older_comment, newer_comment]
+    end
+
+    it "should destroy associated comments on user deletion" do
+      comments = @user.comments.to_a
+      @user.destroy
+      expect(comments).not_to be_empty
+      comments.each do |comment|
+        expect(Comment.where(id: comment.id)).to be_empty
+      end
+    end
   end
 end

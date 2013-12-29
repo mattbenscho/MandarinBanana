@@ -1,9 +1,13 @@
 Mbv2::Application.routes.draw do
   match '/subtitles/embedded/:id', to: 'subtitles#embed', via: 'get'
-  get "subtitles/new"
+<<<<<<< HEAD
+  match '/subtitles/embedded_comments/:id', to: 'subtitles#embed_comments', via: 'get'
+=======
+>>>>>>> transition-to-database
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :subtitles
+  resources :comments, only: [:create, :destroy]
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

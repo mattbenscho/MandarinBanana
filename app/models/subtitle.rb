@@ -4,6 +4,9 @@ class Subtitle < ActiveRecord::Base
   validates :stop,  presence: true
   validate :start_must_be_greater_than_zero
   validate :start_must_be_before_stop
+  has_many :comments, dependent: :destroy
+
+  default_scope -> { order('created_at ASC') }
   
   def start_must_be_greater_than_zero
     return unless start

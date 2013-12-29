@@ -1,0 +1,5 @@
+<li>
+  <span class="timestamp">
+    <%= User.find_by(id: comment.user_id).name %> wrote <%= time_ago_in_words(comment.created_at) %> ago:
+  </span><span class="content"><%= comment.content %></span>
+</li>

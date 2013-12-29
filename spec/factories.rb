@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 FactoryGirl.define do
   factory :user do
     sequence(:name)  { |n| "Person #{n}" }
@@ -8,5 +9,17 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
+  end
+
+  factory :subtitle do
+    sentence "大王"
+    start 160
+    stop 170
+  end
+
+  factory :comment do
+    content "Lorem ipsum"
+    user
+    subtitle
   end
 end

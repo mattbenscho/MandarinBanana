@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe "Authentication" do
@@ -84,6 +85,30 @@ describe "Authentication" do
       end
     end
 
+    describe "in the Comments controller" do
+        
+      before do
+        @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+      end
+      
+      before do
+        @subtitle = Subtitle.new(sentence: "大王", start: 160, stop: 170)
+      end
+      
+      before { @user.save }
+      before { @subtitle.save }
+      
+      describe "submitting to the create action" do
+        before { post comments_path }
+        specify { response.should redirect_to(signin_path) }
+      end
+      
+      describe "submitting to the destroy action" do
+        before { delete comment_path(FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle)) }
+        specify { response.should redirect_to(signin_path) }
+      end
+    end
+    
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }

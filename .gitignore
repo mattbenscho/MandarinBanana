@@ -19,3 +19,6 @@ doc/
 .idea
 .secret
 Gemfile.lock
+
+# Ignore current import file
+app/helpers/subtitles_populate/*.txt

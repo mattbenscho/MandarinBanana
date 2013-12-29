@@ -1,4 +1,19 @@
 <% provide(:title, @subtitle.sentence) %>
 <%= previous_for @subtitle %> <%= @subtitle.sentence %> <%= next_for @subtitle %><br/>
-<%= @subtitle.start %><br/>
-<%= @subtitle.stop %><br/>
+Start: <%= @subtitle.start %><br/>
+Stop: <%= @subtitle.stop %><br/>
+
+<% if @subtitle.comments.any? %>
+<div>
+  <h3> Comments (<%= @subtitle.comments.count %>)</h3>
+  <ol class="comments">
+    <%= render @comments %>
+  </ol>
+</div>
+<% end %>
+
+<% if signed_in? %>
+<div>
+  <%= render 'shared/comment_form' %>
+</div>
+<% end %>
