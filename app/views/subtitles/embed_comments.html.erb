@@ -1,5 +1,10 @@
-<% if @subtitle.comments.any? %>
-<ol class="comments">
-  <%= render @comments %>
-</ol>
-<% end %>
+<!DOCTYPE html>
+<html>
+  <body>
+    <% if @subtitle.comments.any? %>
+    <ol class="comments">
+      <%= render @comments %>
+    </ol>
+    <% end %>
+  </body>
+</html>
