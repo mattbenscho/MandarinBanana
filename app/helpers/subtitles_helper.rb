@@ -2,8 +2,7 @@ module SubtitlesHelper
 
   # Return id of previous subtitle
   def previous_for(subtitle)
-    # @subtitles = Subtitle.find_by(movie_id: @subtitle.movie_id)
-    @subtitles = Subtitle.all
+    @subtitles = Subtitle.where(movie_id: @subtitle.movie_id)
     @previous_subtitle = @subtitles[@subtitles.index(@subtitle) - 1]
     if @previous_subtitle == @subtitles.last
       link_to "Home", '/'
@@ -14,8 +13,7 @@ module SubtitlesHelper
 
   # Return id of next subtitle
   def next_for(subtitle)
-    # @subtitles = Subtitle.find_by(movie_id: @subtitle.movie_id)
-    @subtitles = Subtitle.all
+    @subtitles = Subtitle.where(movie_id: @subtitle.movie_id)
     @next_subtitle = @subtitles[@subtitles.index(@subtitle) + 1]
     if @next_subtitle == nil
       link_to "Home", '/'

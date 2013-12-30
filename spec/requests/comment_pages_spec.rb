@@ -7,9 +7,8 @@ describe "Comment pages" do
     @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
   end
   
-  before do
-    @subtitle = Subtitle.new(sentence: "大王", start: 160, stop: 170)
-  end
+  let(:movie) { FactoryGirl.create(:movie) }
+  before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
   
   before { @user.save }
   before { @subtitle.save }

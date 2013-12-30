@@ -1,7 +1,10 @@
 class Subtitle < ActiveRecord::Base
+  belongs_to :movie
+
   validates :sentence, presence: true
   validates :start, presence: true
   validates :stop,  presence: true
+  validates :movie_id, presence: true
   validate :start_must_be_greater_than_zero
   validate :start_must_be_before_stop
   has_many :comments, dependent: :destroy

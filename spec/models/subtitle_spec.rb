@@ -3,15 +3,15 @@ require 'spec_helper'
 
 describe Subtitle do
 
-  before do
-    @subtitle = Subtitle.new(sentence: "Dies ist ein Untertitel", start: 1, stop: 10)
-  end
+  let(:movie) { FactoryGirl.create(:movie) }
+  before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
 
   subject { @subtitle }
 
   it { should respond_to(:sentence) }
   it { should respond_to(:start) }
   it { should respond_to(:stop) }
+  it { should respond_to(:movie_id) }
 
   describe "when sentence is not present" do
     before { @subtitle.sentence = " " }
@@ -61,7 +61,7 @@ describe Subtitle do
     end
  
     before do
-      @subtitle = Subtitle.new(sentence: "大王", start: 160, stop: 170)
+      @subtitle = Subtitle.new(sentence: "大王", start: 160, stop: 170, movie_id: 1)
     end
 
     before { @user.save }
@@ -86,6 +86,21 @@ describe Subtitle do
       comments.each do |comment|
         expect(Comment.where(id: comment.id)).to be_empty
       end
+    end
+  end
+
+  describe "movie associations" do
+    let(:movie) { FactoryGirl.create(:movie) }
+    before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
+
+    subject { @subtitle }
+
+    it { should respond_to(:movie_id) }
+    its(:movie_id) { should == movie.id }
+
+    describe "when movie_id is not present" do
+      before { @subtitle.movie_id = nil }
+      it { should_not be_valid }
     end
   end
 end

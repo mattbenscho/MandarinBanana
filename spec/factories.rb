@@ -11,10 +11,16 @@ FactoryGirl.define do
     end
   end
 
+  factory :movie do
+    title "Lola Rennt"
+    youtube_id "abcd"
+  end
+
   factory :subtitle do
     sentence "大王"
     start 160
     stop 170
+    movie_id 1
   end
 
   factory :comment do

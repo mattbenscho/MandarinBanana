@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131226152018) do
+ActiveRecord::Schema.define(version: 20131230191255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,20 @@ ActiveRecord::Schema.define(version: 20131226152018) do
 
   add_index "comments", ["subtitle_id", "created_at"], name: "index_comments_on_subtitle_id_and_created_at", using: :btree
 
+  create_table "movies", force: true do |t|
+    t.string   "title"
+    t.string   "youtube_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "subtitles", force: true do |t|
     t.text     "sentence"
     t.integer  "start"
     t.integer  "stop"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "movie_id"
   end
 
   add_index "subtitles", ["start"], name: "index_subtitles_on_start", using: :btree

@@ -119,9 +119,8 @@ describe User do
 
   describe "comment associations" do
 
-    before do
-      @subtitle = Subtitle.new(sentence: "大王", start: 160, stop: 170)
-    end
+    let(:movie) { FactoryGirl.create(:movie) }
+    before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
 
     before { @user.save }
     before { @subtitle.save }

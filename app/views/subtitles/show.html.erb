@@ -1,4 +1,6 @@
 <% provide(:title, @subtitle.sentence) %>
+<h3><%= Movie.find(@subtitle.movie_id).title %></h3>
+<object width="420" height="315" data="http://www.youtube.com/embed/<%= Movie.find(@subtitle.movie_id).youtube_id %>?autoplay=1&rel=0&start=<%= @subtitle.start %>&end=<%= @subtitle.stop %>"></object>
 <%= previous_for @subtitle %> <%= @subtitle.sentence %> <%= next_for @subtitle %><br/>
 Start: <%= @subtitle.start %><br/>
 Stop: <%= @subtitle.stop %><br/>
