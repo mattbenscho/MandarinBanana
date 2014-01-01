@@ -14,6 +14,7 @@ FactoryGirl.define do
   factory :movie do
     title "Lola Rennt"
     youtube_id "abcd"
+    description "A great movie."
   end
 
   factory :subtitle do

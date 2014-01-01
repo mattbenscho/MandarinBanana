@@ -1,0 +1,12 @@
+<% provide(:title, 'All movies') %>
+<h1>All movies</h1>
+
+<ul class="movies">
+  <% @movies.each do |movie| %>
+    <li>
+      <%= movie.title %>: <%= movie.description %> 
+      <a href="subtitles/<%= Subtitle.where(movie_id: movie.id).first.id %>">Go to first subtitle</a>
+    </li>
+  <% end %>
+</ul>
+
