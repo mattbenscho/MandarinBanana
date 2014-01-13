@@ -1,4 +1,5 @@
 Mbv2::Application.routes.draw do
+  get "images/new"
   get "movies/index"
   get "comments/index"
   match '/subtitles/embedded/:id', to: 'subtitles#embed', via: 'get'
@@ -8,6 +9,7 @@ Mbv2::Application.routes.draw do
   resources :subtitles
   resources :comments, only: [:index, :create, :destroy]
   resources :movies, only: [:index]
+  resources :images, only: [:show, :new, :create, :destroy]
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

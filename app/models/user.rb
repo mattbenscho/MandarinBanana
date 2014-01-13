@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   has_secure_password
   has_many :comments, dependent: :destroy
+  has_many :images, dependent: :destroy
   validates :password, length: { minimum: 6 }
 
   def User.new_remember_token
