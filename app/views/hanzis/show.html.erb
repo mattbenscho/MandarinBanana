@@ -1,0 +1,11 @@
+<% provide(:title, @hanzi.character) %>
+<div class="row">
+  <h1>
+    <%= @hanzi.character %>
+  </h1>
+  <div>
+    <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
+      <b><%= pinyindefinition.pinyin %></b>: <%= pinyindefinition.definition %> <br/>
+    <% end %>
+  </div>
+</div>

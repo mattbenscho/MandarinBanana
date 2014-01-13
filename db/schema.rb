@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140109225548) do
+ActiveRecord::Schema.define(version: 20140113180735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,15 +26,20 @@ ActiveRecord::Schema.define(version: 20140109225548) do
 
   add_index "comments", ["subtitle_id", "created_at"], name: "index_comments_on_subtitle_id_and_created_at", using: :btree
 
+  create_table "hanzis", force: true do |t|
+    t.string   "character"
+    t.string   "components"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hanzis", ["character"], name: "index_hanzis_on_character", using: :btree
+
   create_table "images", force: true do |t|
-    t.binary   "blob"
+    t.text     "data"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
   end
 
   create_table "movies", force: true do |t|
@@ -44,6 +49,19 @@ ActiveRecord::Schema.define(version: 20140109225548) do
     t.datetime "updated_at"
     t.text     "description"
   end
+
+  create_table "pinyindefinitions", force: true do |t|
+    t.string   "pinyin"
+    t.text     "definition"
+    t.integer  "hanzi_id"
+    t.string   "gbeginning"
+    t.string   "gending"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pinyindefinitions", ["hanzi_id", "pinyin", "definition"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin_and_definition", unique: true, using: :btree
+  add_index "pinyindefinitions", ["hanzi_id", "pinyin"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin", using: :btree
 
   create_table "subtitles", force: true do |t|
     t.text     "sentence"
