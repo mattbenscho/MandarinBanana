@@ -1,0 +1,5 @@
+<li>
+  <span>
+    <%= User.find_by(id: image.user_id).name %> painted <%= time_ago_in_words(image.created_at) %> ago:
+  </span><img src="<%= image.data %>"</img>
+</li>

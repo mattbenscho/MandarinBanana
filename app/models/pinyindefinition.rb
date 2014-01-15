@@ -4,4 +4,5 @@ class Pinyindefinition < ActiveRecord::Base
   validates :hanzi_id, presence: true
   validates :gbeginning, presence: true
   validates :gending, presence: true
+  has_many :mnemonics, dependent: :destroy
 end

@@ -3,6 +3,7 @@ class ImagesController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def new
+    @mnemonic = Mnemonic.find(params[:id])
     @image = Image.new
   end
 
@@ -26,7 +27,7 @@ class ImagesController < ApplicationController
   private
 
     def image_params
-      params.require(:image).permit(:data)
+      params.require(:image).permit(:data,:mnemonic_id)
     end
     
 end

@@ -1,2 +1,2 @@
-module HanziHelper
+module HanzisHelper
 end

@@ -1,0 +1,10 @@
+<%= @mnemonic.aide %>
+
+<% if @mnemonic.images.any? %>
+<div>
+  <h3> Images (<%= @mnemonic.images.count %>)</h3>
+  <ol class="images">
+    <%= render @images %>
+  </ol>
+</div>
+<% end %>

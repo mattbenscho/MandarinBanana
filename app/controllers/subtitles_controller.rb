@@ -1,5 +1,6 @@
 class SubtitlesController < ApplicationController
   def new
+    @user = User.new
   end
 
   def show

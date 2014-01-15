@@ -3,8 +3,9 @@
 
 <%= form_for(@image,:html => { :onsubmit => 'createimagedata();' })  do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <input id="image_data" name="image[data]" type="hidden" value="000"/>
-<%= f.submit "Save", :onclick => "setimagedata();", class: "btn btn-large btn-primary"%>
+  <%= f.hidden_field :mnemonic_id, :value => @mnemonic.id %>
+  <input id="image_data" name="image[data]" type="hidden" value=""/>
+<%= f.submit "Save", class: "btn btn-large btn-primary"%>
 <% end %>
 
 

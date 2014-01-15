@@ -1,0 +1,9 @@
+<h1>Hallo Philipp</h1>
+
+<%= Pinyindefinition.find_by(id: @id).pinyin if @parent == "pinyindefinitions" %>
+<%= Gorodish.find_by(id: @id).element if @parent == "gorodishes" %>
+<% if signed_in? %>
+<div>
+  <%= render 'shared/mnemonics_form' %>
+</div>
+<% end %>

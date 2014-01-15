@@ -1,0 +1,9 @@
+<%= form_for(@mnemonic) do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
+<div>
+  <%= f.text_area :aide, placeholder: "..." %>
+  <%= f.hidden_field :gorodish_id, :value => @id if @parent == "gorodishes" %>
+  <%= f.hidden_field :pinyindefinition_id, :value => @id if @parent == "pinyindefinitions" %>
+</div>
+<%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+<% end %>
