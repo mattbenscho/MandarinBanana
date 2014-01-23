@@ -8,6 +8,7 @@ Mbv2::Application.routes.draw do
   resources :subtitles
   resources :comments, only: [:index, :create, :destroy]
   resources :movies, only: [:index]
+  resources :hanzis
   resources :gorodishes, only: [:show, :index]
   resources :images, only: [:new, :create, :show, :destroy]
   resources :mnemonics
