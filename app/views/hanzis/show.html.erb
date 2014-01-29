@@ -2,11 +2,12 @@
 <div class="row">
   <h1>
     <%= @hanzi.character %><br/>
-    <%= @hanzi.components %>
   </h1>
   <div>
     <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
       <b><%= pinyindefinition.pinyin %> - <%= pinyindefinition.gbeginning %><%= pinyindefinition.gending %></b>: <%= pinyindefinition.definition %><br/>
     <% end %>
   </div>
+  <hr/>
+  <%= decompose @hanzi.components %>
 </div>
