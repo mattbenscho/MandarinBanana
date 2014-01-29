@@ -1,4 +1,9 @@
 <% provide(:title) %>
+
+<% @mnemonic.images.each do |image| %>
+  <img width="100" src="<%= image.data %>" onclick="addImage(this.src);"></img>
+<% end %>
+
 <%= render 'images/drawing.html' %>
 
 <%= form_for(@image,:html => { :onsubmit => 'createimagedata();' })  do |f| %>

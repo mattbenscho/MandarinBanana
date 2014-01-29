@@ -167,8 +167,11 @@
 <div id="tools">
   <input type="button" value="draw" onclick="updateAction('drawing');">
   <input type="button" value="move" onclick="updateAction('moving');">
+  <input type="button" value="scale" onclick="updateAction('scaling');">
+  <input type="button" value="rotate" onclick="updateAction('rotating');">
   <input type="button" value="undo" onclick="undoHistory();">
   <input type="button" value="redo" onclick="redoHistory();">
+  <input type="button" value="mirror" onclick="mirrorLayer();">
 </div>
 <script>
 /*! KineticJS v4.7.4 2013-11-08 http://www.kineticjs.com by Eric Rowell @ericdrowell - MIT License https://github.com/ericdrowell/KineticJS/wiki/License*/
@@ -228,6 +231,7 @@ function makeHistory() {
     var json = layer.toJSON();
     history.push(json);
     setimagedata();
+    stage.draw();
 }
 
 function searcharray(arr, obj) {
@@ -245,7 +249,7 @@ function undoHistory() {
         layer.destroy();
 	rectIdCounter++;
         layer = Kinetic.Node.create(history[historyStep], 'container')
-	dragrect = new Kinetic.Rect({width: stage.getWidth(), height: stage.getHeight(), id: 'Rec'+rectIdCounter});
+	var dragrect = new Kinetic.Rect({width: stage.getWidth(), height: stage.getHeight(), id: 'Rec'+rectIdCounter});
 	layer.add(dragrect);
 	layer.setListening(false);
 	layer.setId(layerid);	
@@ -270,7 +274,7 @@ function redoHistory() {
         layer.destroy();
 	rectIdCounter++;
         layer = Kinetic.Node.create(history[historyStep], 'container')
-	dragrect = new Kinetic.Rect({width: stage.getWidth(), height: stage.getHeight(), id: 'Rec'+rectIdCounter});
+	var dragrect = new Kinetic.Rect({width: stage.getWidth(), height: stage.getHeight(), id: 'Rec'+rectIdCounter});
 	layer.add(dragrect);
 	layer.setListening(false);
 	layer.setId(layerid);	
@@ -337,9 +341,7 @@ function selectLayer(string) {
     }    
     layer = stage.find(eval('\'#'+string+'\''))[0];
     currentLayerId = string;
-    if (action == "moving") {
-    	updateAction("moving");
-    }
+    updateAction(action);
     history = [];
     historyStep = 0;
 }
@@ -354,11 +356,9 @@ function updateColor(newcolor) {
 
 function updateAction(newaction){
     action = newaction;
-    if (action == "drawing"){
-	layer.setDraggable(false);
-	layer.setListening(false);
-	layer.drawHit();
-    }
+    layer.setDraggable(false);
+    layer.setListening(false);
+    layer.drawHit();
     if (action == "moving"){
 	layer.setListening(true);
 	layer.setDraggable(true);
@@ -374,36 +374,74 @@ function setimagedata() {
     });
 }
 
+function mirrorLayer() {
+    layer.setScale(layer.getScale().x * (-1),1);
+    if (layer.getScale().x == -1) {
+	layer.setPosition(640,0);
+    } else {
+	layer.setPosition(0,0);
+    }
+    layer.draw();
+}
+
+function addImage(imagesrc) {
+    var imageObj = new Image();
+    var image = new Kinetic.Image({image: imageObj});
+    layer.add(image);
+    imageObj.src = imagesrc;
+    makeHistory();
+}
+
 stage.on('contentMousedown', function() {
     isMousedown = true;
-    if (action != "drawing"){
-	return;
+    if (action == "drawing") {
+	points = [];
+	points.push([stage.getPointerPosition().x - layer.getPosition().x,stage.getPointerPosition().y - layer.getPosition().y]);
+	var line = new Kinetic.Line({
+            points: points,
+            stroke: color,
+            strokeWidth: brush,
+            lineCap: 'round',
+            lineJoin: 'round',
+	    dragOnTop: false
+	});
+	layer.add(line);
+	newline = line;
+    } else if (action == "scaling") {
+	scalestartx = stage.getPointerPosition().x;
+	scalestarty = stage.getPointerPosition().y;
+    } else if (action == "rotating") {
+	rotatestart = stage.getPointerPosition().y;
+	layer.setOffset(stage.getPointerPosition());
+	layer.setPosition(layer.getOffset());
     }
-    points = [];
-    points.push([stage.getPointerPosition().x - layer.getPosition().x,stage.getPointerPosition().y - layer.getPosition().y]);
-    var line = new Kinetic.Line({
-        points: points,
-        stroke: color,
-        strokeWidth: brush,
-        lineCap: 'round',
-        lineJoin: 'round',
-	dragOnTop: false
-    });
-    layer.add(line);
-    newline = line;
 });
 
 stage.on('contentMousemove', function() {
-    if (action == "drawing" && isMousedown) {
-	points.push([stage.getPointerPosition().x - layer.getPosition().x,stage.getPointerPosition().y - layer.getPosition().y]);
-	newline.setPoints(points);
-	newline.drawScene();
+    if (isMousedown) {
+	if (action == "drawing") {
+	    points.push([stage.getPointerPosition().x - layer.getPosition().x,stage.getPointerPosition().y - layer.getPosition().y]);
+	    newline.setPoints(points);
+	    newline.drawScene();
+	} else if (action == "scaling") {
+	    var scalex = (scalestartx - stage.getPointerPosition().x) / (stage.getWidth());
+	    var scaley = (scalestarty - stage.getPointerPosition().y) / (stage.getHeight());
+	    layer.setScale(layer.getScale().x - scalex,layer.getScale().y - scaley);
+	    scalestartx = stage.getPointerPosition().x;
+	    scalestarty = stage.getPointerPosition().y;
+	    layer.drawScene();
+	} else if (action == "rotating") {
+	    var angle = (rotatestart - stage.getPointerPosition().y) / 50;
+	    layer.rotate(angle);
+	    rotatestart = stage.getPointerPosition().y;
+	    layer.drawScene();
+	}
     }
 });
 
 stage.on('contentMouseup', function() {
     isMousedown = false;
-    layer.drawScene();
+    layer.draw();
     makeHistory();
 });
 
