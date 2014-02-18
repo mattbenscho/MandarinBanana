@@ -1,11 +1,17 @@
 <% provide(:title, @hanzi.character) %>
-<div class="row">
+<div class="row-fluid">
   <h1>
     <%= @hanzi.character %><br/>
   </h1>
   <div>
     <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
-      <b><%= pinyindefinition.pinyin %> - <%= pinyindefinition.gbeginning %><%= pinyindefinition.gending %></b>: <%= pinyindefinition.definition %><br/>
+      <b><%= pinyindefinition.pinyin %> - <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a></b>: <%= pinyindefinition.definition %> - <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add mnemonic</a><br/>
+      <% pinyindefinition.mnemonics.each do |mnemonic| %>
+        <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
+	<% mnemonic.images.each do |image| %>
+	  <img width=100 src="<%= image.data %>">
+	<% end %><br/>
+      <% end %>
     <% end %>
   </div>
   <hr/>

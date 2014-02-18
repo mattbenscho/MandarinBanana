@@ -1,7 +1,20 @@
 <% provide(:title) %>
 
-<% @mnemonic.images.each do |image| %>
-  <img width="100" src="<%= image.data %>" onclick="addImage(this.src);"></img>
+<% if !@mnemonic.pinyindefinition_id.nil? %>
+  <% Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id).mnemonics.each do |mnemonic| %>
+    <%= mnemonic.aide %>
+    <% mnemonic.images.each do |image| %>
+      <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if !@mnemonic.gorodish_id.nil? %>
+  <% Gorodish.find_by(id: @mnemonic.gorodish_id).mnemonics.each do |mnemonic| %>
+    <% mnemonic.images.each do |image| %>
+      <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= render 'images/drawing.html' %>

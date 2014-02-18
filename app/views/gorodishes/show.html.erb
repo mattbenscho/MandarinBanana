@@ -1,4 +1,12 @@
 <% provide(:title, @gorodish.element) %>
 
+<h1>Gorodish element <%= @gorodish.element %></h1>
 <%= @gorodish.element %>
-
+<a href="/gorodishes/<%= @gorodish.id %>/mnemonics/new">add mnemonic</a><br/><br/>
+<% @gorodish.mnemonics.each do |mnemonic| %>
+<%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a></br>
+<% mnemonic.images.each do |image| %>
+<img width=100 src="<%= image.data %>">
+<% end %>
+</br>
+<% end %>

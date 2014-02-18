@@ -1,8 +1,56 @@
-<h1>Hallo Philipp</h1>
+<% @ancestor = Pinyindefinition.find_by(id: @id).pinyin if @parent == "pinyindefinitions" %>
+<% @ancestor = Gorodish.find_by(id: @id).element if @parent == "gorodishes" %>
 
-<%= Pinyindefinition.find_by(id: @id).pinyin if @parent == "pinyindefinitions" %>
-<%= Gorodish.find_by(id: @id).element if @parent == "gorodishes" %>
+<% if @parent == "pinyindefinitions" %>
+  <h1>Invent a new mnemonic for <%= @hanzi.character %></h1>
+  <b><a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a> <%= @pinyindefinition.pinyin %> - <a href="/gorodishes/<%= Gorodish.find_by(element: @gbeginning).id %>"><%= @gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: @gending).id %>"><%= @gending %></a></b>: <%= @pinyindefinition.definition %>
+  <h2>Mnemonics for <%= @gbeginning %>:</h2>
+  <% Gorodish.find_by(element: @gbeginning).mnemonics.each do |mnemonic| %>
+    <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
+    <% mnemonic.images.each do |image| %>
+      <img width=100 src="<%= image.data %>">
+    <% end %><br/>
+  <% end %>
+  <a href="/gorodishes/<%= Gorodish.find_by(element: @gbeginning).id %>/mnemonics/new">add mnemonic</a></br>
+  <h2>Mnemonics for <%= @gending %>:</h2>
+  <% Gorodish.find_by(element: @gending).mnemonics.each do |mnemonic| %>
+    <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
+    <% mnemonic.images.each do |image| %>
+      <img width=100 src="<%= image.data %>">
+    <% end %><br/>
+  <% end %>
+  <a href="/gorodishes/<%= Gorodish.find_by(element: @gending).id %>/mnemonics/new">add mnemonic</a></br>
+  <h2>Components of <%= @hanzi.character %></h2>
+  <% if !@hanzi.components.to_s.empty? %>
+    <%= decompose @hanzi.components %>
+  <% else %>
+    <%= @hanzi.character %> has no components.
+  <% end %>
+  <% if @pinyindefinition.mnemonics.count > 0 %>
+    <h2>Current mnemonics:</h2>
+    <% @pinyindefinition.mnemonics.each do |mnemonic| %>
+      <%= mnemonic.aide %><br/>
+      <% mnemonic.images.each do |image| %>
+        <img width=100 src="<%= image.data %>">
+      <% end %><br/>
+    <% end %>
+  <% else %>
+    <h2>There are no mnemonics for <%= @hanzi.character %> yet.</h2>
+  <% end %>
+<% end %>
+
+<% if @parent == "gorodishes" %>
+  <h1>Invent a new mnemonic for <%= @ancestor %></h1>
+  <% if Gorodish.find_by(id: @id).mnemonics.count > 0 %>
+    <h2>Current mnemonics:</h2>
+    <% Gorodish.find_by(id: @id).mnemonics.each do |mnemonic| %>
+      <%= mnemonic.aide %><br/>
+    <% end %>
+  <% end %>
+<% end %>
+
 <% if signed_in? %>
+<h2>Your new mnemonic:</h2>
 <div>
   <%= render 'shared/mnemonics_form' %>
 </div>

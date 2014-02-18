@@ -6,6 +6,15 @@ class MnemonicsController < ApplicationController
     @mnemonic = Mnemonic.new
     @parent = params[:parent]
     @id = params[:id]
+    if @parent == "pinyindefinitions"
+      @pinyindefinition = Pinyindefinition.find_by(id: @id)
+      @hanzi = Hanzi.find_by(id: @pinyindefinition.hanzi_id)
+      @gbeginning = @pinyindefinition.gbeginning
+      @gending = @pinyindefinition.gending
+    end
+    if @parent == "gorodishes"
+      @ancestor = Gorodish.find_by(id: @id).element
+    end
   end
   
   def create
