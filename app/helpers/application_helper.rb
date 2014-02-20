@@ -15,8 +15,8 @@ module ApplicationHelper
       composition.each_char do |char|
         @char = Hanzi.find_by(character: char)
         if @char
-          html << '<div class="row-fluid"><div class="span1 pagination-centered"><b><a href="/hanzis/' + @char.id.to_s + '">' + char + '</a></b></div><div class="span11"><div class="row-fluid">'
           @char.pinyindefinitions.each do |pinyindefinition|
+          html << '<div class="row-fluid"><div class="span1 pagination-centered"><b><a href="/hanzis/' + @char.id.to_s + '">' + char + '</a></b></div><div class="span11"><div class="row-fluid">'
             html << '<div class="span2 pagination-centered"><b>' + pinyindefinition.pinyin + " / " + pinyindefinition.gbeginning + pinyindefinition.gending + '</b></div><div class="span10">' + pinyindefinition.definition + ' - <a href="/pinyindefinitions/' + pinyindefinition.id.to_s + '/mnemonics/new">add mnemonic</a>' + '<br/><br/>'
             pinyindefinition.mnemonics.each do |mnemonic|
               html << mnemonic.aide + ' - <a href="/mnemonics/' + mnemonic.id.to_s + '/images/new">add image</a>' + '<br/>'

@@ -23,3 +23,6 @@
 <%= decompose @hanzi.components %>
 
 <h2>Example sentences</h2>
+<% @examples.each do |example| %>
+  <%= example.sentence %> <a href="/subtitles/<%= example.id %>">more...</a><br/>
+<% end %>

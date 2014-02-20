@@ -8,7 +8,8 @@ class Subtitle < ActiveRecord::Base
   validate :start_must_be_greater_than_zero
   validate :start_must_be_before_stop
   has_many :comments, dependent: :destroy
-
+  has_many :reverse_examples, foreign_key: "subtitle_id", class_name: "Example", dependent: :destroy
+  has_many :expressions, through: :reverse_examples, source: :expression
   default_scope -> { order('start ASC') }
   
   def start_must_be_greater_than_zero
