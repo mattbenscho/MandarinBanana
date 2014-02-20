@@ -1,14 +1,53 @@
-<div id="kineticcontainer"></div>
-<div id="layerinputs">
-  Layer:<br/>
-  <input type="button" value="+" onClick="moveLayerUp(document.radioForm.layerRadio);">
-  <form name="radioForm" id="radioForm" autocomplete="off">
-  <input type="radio" name="layerRadio" value="1" onclick="selectLayer(1);" checked="checked">1<br/>
-  </form>
-  <input type="button" value="-" onClick="moveLayerDown(document.radioForm.layerRadio);"><br/>
+<div class="row">
+  <div class="span1">
+    <div id="layerinputs">
+      Layer:<br/>
+      <input type="button" value="+" onClick="moveLayerUp(document.radioForm.layerRadio);"/>
+      <form name="radioForm" id="radioForm" autocomplete="off">
+	<input type="radio" name="layerRadio" value="1" onclick="selectLayer(1);" checked="checked">1<br/>
+      </form>
+      <input type="button" value="-" onClick="moveLayerDown(document.radioForm.layerRadio);"><br/>
+    </div>
+  </div>
+  <div class="span10">
+    <div id="kineticcontainer" style="width:640px; margin:auto;">
+    </div>
+  </div>
+      <div class="span1">
+	<div id="brushes">
+	  Brush size:<br/>
+	  <form name="brushesForm" id="brushesForm" autocomplete="off">
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(1);">1<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(2);">2<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(3);" checked="checked">3<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(5);">5<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(7);">7<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(9);">9<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(12);">12<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(15);">15<br/>
+	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(20);">20<br/>
+	  </form>
+	</div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="row-fluid">
+  <div class="span12">
+    <div id="tools">
+      <input type="button" value="draw" onclick="updateAction('drawing');"/>
+      <input type="button" value="move" onclick="updateAction('moving');"/>
+      <input type="button" value="scale" onclick="updateAction('scaling');"/>
+      <input type="button" value="rotate" onclick="updateAction('rotating');"/>
+      <input type="button" value="undo" onclick="undoHistory();"/>
+      <input type="button" value="redo" onclick="redoHistory();"/>
+      <input type="button" value="mirror" onclick="mirrorLayer();"/>
+    </div>
+  </div>    
+</div>    
+<div class="row">
+<div class="span12">
 <div id="palette">
-  Colors:<br/>
   <input type="button" value="A" onclick="updateColor('black');" style="color:black; background-color:black">
   <input type="button" value="A" onclick="updateColor('navy');" style="color:navy; background-color:navy">
   <input type="button" value="A" onclick="updateColor('darkblue');" style="color:darkblue; background-color:darkblue">
@@ -150,28 +189,7 @@
   <input type="button" value="A" onclick="updateColor('ivory');" style="color:ivory; background-color:ivory">
   <input type="button" value="A" onclick="updateColor('white');" style="color:white; background-color:white">
 </div>
-<div id="brushes">
-  Brush size:<br/>
-  <form name="brushesForm" id="brushesForm" autocomplete="off">
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(1);">1<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(2);">2<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(3);" checked="checked">3<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(5);">5<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(7);">7<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(9);">9<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(12);">12<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(15);">15<br/>
-  <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(20);">20<br/>
-  </form>
 </div>
-<div id="tools">
-  <input type="button" value="draw" onclick="updateAction('drawing');">
-  <input type="button" value="move" onclick="updateAction('moving');">
-  <input type="button" value="scale" onclick="updateAction('scaling');">
-  <input type="button" value="rotate" onclick="updateAction('rotating');">
-  <input type="button" value="undo" onclick="undoHistory();">
-  <input type="button" value="redo" onclick="redoHistory();">
-  <input type="button" value="mirror" onclick="mirrorLayer();">
 </div>
 <script>
 /*! KineticJS v4.7.4 2013-11-08 http://www.kineticjs.com by Eric Rowell @ericdrowell - MIT License https://github.com/ericdrowell/KineticJS/wiki/License*/

@@ -1,5 +1,4 @@
 class Movie < ActiveRecord::Base
-  validates :youtube_id, presence: true
   validates :title, presence: true
   validates :description, presence: true
 

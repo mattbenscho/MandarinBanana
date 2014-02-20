@@ -1,5 +1,8 @@
 <% provide(:title) %>
 
+<h1>Paint something!</h1>
+
+<h2>Mnemonics</h2>
 <% if !@mnemonic.pinyindefinition_id.nil? %>
   <% Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id).mnemonics.each do |mnemonic| %>
     <%= mnemonic.aide %>
@@ -11,12 +14,14 @@
 
 <% if !@mnemonic.gorodish_id.nil? %>
   <% Gorodish.find_by(id: @mnemonic.gorodish_id).mnemonics.each do |mnemonic| %>
+    <%= mnemonic.aide %>
     <% mnemonic.images.each do |image| %>
       <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
     <% end %>
   <% end %>
 <% end %>
 
+<h2>Your canvas</h2>
 <%= render 'images/drawing.html' %>
 
 <%= form_for(@image,:html => { :onsubmit => 'createimagedata();' })  do |f| %>

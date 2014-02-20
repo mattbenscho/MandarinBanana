@@ -1,19 +1,25 @@
 <% provide(:title, @hanzi.character) %>
-<div class="row-fluid">
-  <h1>
-    <%= @hanzi.character %><br/>
-  </h1>
-  <div>
-    <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
-      <b><%= pinyindefinition.pinyin %> - <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a></b>: <%= pinyindefinition.definition %> - <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add mnemonic</a><br/>
+<h1>
+  <%= @hanzi.character %><br/>
+</h1>
+<% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
+  <div class="row-fluid">
+    <div class="span2 pagination-centered">
+      <b><%= @hanzi.character %></b><br/>
+      <b><%= pinyindefinition.pinyin %> - <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a></b>
+    </div>
+    <div class="span10">
+      <%= pinyindefinition.definition %> - <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add a mnemonic for this meaning of <%= @hanzi.character %></a><br/><br/>
       <% pinyindefinition.mnemonics.each do |mnemonic| %>
-        <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
-	<% mnemonic.images.each do |image| %>
-	  <img width=100 src="<%= image.data %>">
-	<% end %><br/>
+        <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a><br/>
+        <% mnemonic.images.each do |image| %>
+          <img width=200 src="<%= image.data %>">
+        <% end %><br/>
       <% end %>
-    <% end %>
+    </div>
   </div>
-  <hr/>
-  <%= decompose @hanzi.components %>
-</div>
+<% end %>
+<h2>Elements of <%= @hanzi.character %></h2>
+<%= decompose @hanzi.components %>
+
+<h2>Example sentences</h2>
