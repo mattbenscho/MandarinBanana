@@ -117,6 +117,24 @@ footer {
   @include box_sizing;
 }
 
+.hero-unit {
+   background: url('bg_tile.png');
+}
+
+#hero {
+      background: rgba(255,255,255,0.9);
+      padding: 50px 0px;
+      h2 {
+            color: #444444;
+      }
+}
+
+#logo {
+      font-weight: normal;
+      text-transform: none;
+      letter-spacing: normal;
+}
+
 /* sidebar */
 
 aside {
@@ -218,5 +236,15 @@ aside {
   textarea {
     height: 100px;
     margin-bottom: 5px;
+  }
+}
+
+/* hanzis */
+
+.hanzis-ul {
+  margin: 0;
+  list-style-type: none;
+  li {
+    display: inline;
   }
 }

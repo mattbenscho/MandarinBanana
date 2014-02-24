@@ -1,8 +1,6 @@
 Mbv2::Application.routes.draw do
   match '/mnemonics/:id/images/new', to: 'images#new', via: 'get'
   match '/:parent/:id/mnemonics/new', to: 'mnemonics#new', via: 'get'
-  match '/subtitles/embedded/:id', to: 'subtitles#embed', via: 'get'
-  match '/subtitles/embedded_comments/:id', to: 'subtitles#embed_comments', via: 'get'
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :subtitles
@@ -17,9 +15,7 @@ Mbv2::Application.routes.draw do
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
-  match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
-  match '/contact', to: 'static_pages#contact', via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

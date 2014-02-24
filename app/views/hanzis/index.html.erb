@@ -1,0 +1,12 @@
+<% provide(:title, 'All hanzis') %>
+<h1>All hanzis</h1>
+
+<ul class="hanzis-ul">
+  <% @hanzis.each do |hanzi| %>
+    <li>
+    <a href="/hanzis/<%= hanzi.id %>"><%= hanzi.character %></a>
+    </li>
+  <% end %>
+</ul>
+
+<%= will_paginate %>
