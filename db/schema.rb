@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220183940) do
+ActiveRecord::Schema.define(version: 20140224195402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20140220183940) do
     t.integer  "subtitle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "hanzi_id"
   end
 
   add_index "comments", ["subtitle_id", "created_at"], name: "index_comments_on_subtitle_id_and_created_at", using: :btree

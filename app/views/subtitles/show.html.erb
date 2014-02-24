@@ -19,6 +19,9 @@ Stop: <%= @subtitle.stop %><br/>
 <% end %>
 
 <% if signed_in? %>
+<% if !@subtitle.comments.any? %>
+  <h2>Write the first comment</h2>
+<% end %>
 <div>
   <%= render 'shared/comment_form' %>
 </div>

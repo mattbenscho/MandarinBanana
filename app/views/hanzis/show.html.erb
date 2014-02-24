@@ -26,3 +26,21 @@
 <% @examples.each do |example| %>
   <%= example.sentence %> <a href="/subtitles/<%= example.id %>">more...</a><br/>
 <% end %>
+
+<% if @hanzi.comments.any? %>
+<div>
+  <h2> Comments (<%= @hanzi.comments.count %>)</h2>
+  <ol class="comments">
+    <%= render @comments %>
+  </ol>
+</div>
+<% end %>
+
+<% if signed_in? %>
+<% if !@hanzi.comments.any? %>
+  <h2>Write the first comment</h2>
+<% end %>
+<div>
+  <%= render 'shared/comment_form' %>
+</div>
+<% end %>

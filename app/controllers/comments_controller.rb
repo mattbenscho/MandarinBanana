@@ -8,13 +8,24 @@ class CommentsController < ApplicationController
 
   def create
     @comment = current_user.comments.build(comment_params)
-    @subtitle = Subtitle.find_by(id: (params[:comment][:subtitle_id]))
-    if @comment.save
-      flash[:success] = "Comment saved."
-      redirect_to subtitle_path(@subtitle)
-    else
-      @comments = @subtitle.comments
-      render 'subtitles/show'
+    if params[:comment][:topic] == "subtitle"
+      @subtitle = Subtitle.find_by(id: (params[:comment][:subtitle_id]))
+      if @comment.save
+        flash[:success] = "Comment saved."
+        redirect_to subtitle_path(@subtitle)
+      else
+        @comments = @subtitle.comments
+        render 'subtitles/show'
+      end
+    elsif params[:comment][:topic] == "hanzi"
+      @hanzi = Hanzi.find_by(id: (params[:comment][:hanzi_id]))
+      if @comment.save
+        flash[:success] = "Comment saved."
+        redirect_to hanzi_path(@hanzi)
+      else
+        @comments = @hanzi.comments
+        render 'hanzi/show'
+      end
     end
   end
 
@@ -24,6 +35,6 @@ class CommentsController < ApplicationController
   private
 
     def comment_params
-      params.require(:comment).permit(:content,:subtitle_id)
+      params.require(:comment).permit(:content,:subtitle_id,:hanzi_id)
     end
 end

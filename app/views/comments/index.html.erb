@@ -8,11 +8,18 @@
     <li>
       <span class="timestamp">
 	<%= User.find_by(id: comment.user_id).name %> wrote <%= time_ago_in_words(comment.created_at) %> ago about
-	<% @subtitle = Subtitle.find_by(id: comment.subtitle_id) %>
-	<% if Subtitle.find_by(id: comment.subtitle_id).present? %>
-	  "<a href="/subtitles/<%= Subtitle.find_by(id: comment.subtitle_id).id %>"><%= @sentence = @subtitle.sentence %></a>":
-	<% else %>
-	  <%= @sentence = 'a deleted subtitle' %>:
+	<% if !comment.subtitle_id.nil? %>
+          <% if Subtitle.find_by(id: comment.subtitle_id).present? %>
+	    "<a href="/subtitles/<%= Subtitle.find_by(id: comment.subtitle_id).id %>"><%= Subtitle.find_by(id: comment.subtitle_id).sentence %></a>":
+	  <% else %>
+            <%= 'a deleted subtitle' %>:
+          <% end %>
+        <% elsif !comment.hanzi_id.nil? %>
+          <% if Hanzi.find_by(id: comment.hanzi_id).present? %>
+	    "<a href="/hanzis/<%= Hanzi.find_by(id: comment.hanzi_id).id %>"><%= Hanzi.find_by(id: comment.hanzi_id).character %></a>":
+	  <% else %>
+            <%= 'a deleted hanzi' %>:
+	  <% end %>
 	<% end %>
       </span><span class="content"><%= comment.content %></span>
     </li>
