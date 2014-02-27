@@ -4,7 +4,18 @@
 
 <h2>Mnemonics</h2>
 <% if !@mnemonic.pinyindefinition_id.nil? %>
-  <% Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id).mnemonics.each do |mnemonic| %>
+  <% @pinyindefinition = Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id) %>
+  <% Gorodish.find_by(element: @pinyindefinition.gbeginning).mnemonics.each do |mnemonic| %>
+    <% mnemonic.images.each do |image| %>
+      <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+    <% end %>
+  <% end %>
+  <% Gorodish.find_by(element: @pinyindefinition.gending).mnemonics.each do |mnemonic| %>
+    <% mnemonic.images.each do |image| %>
+      <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+    <% end %>
+  <% end %>
+  <% @pinyindefinition.mnemonics.each do |mnemonic| %>
     <%= mnemonic.aide %>
     <% mnemonic.images.each do |image| %>
       <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
