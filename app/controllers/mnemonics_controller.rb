@@ -36,6 +36,10 @@ class MnemonicsController < ApplicationController
   def update
   end
 
+  def index
+    @mnemonics = Mnemonic.paginate(page: params[:page])
+  end
+
   private
 
     def mnemonic_params
