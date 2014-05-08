@@ -1,6 +1,15 @@
 class HanzisController < ApplicationController
   def index
-    @hanzis = Hanzi.paginate(page: params[:page], :per_page => 500)
+    if params[:hanzi_search]
+      @hanzi = Hanzi.find_by(character: "#{params[:hanzi_search]}")
+      if @hanzi.nil? then
+        @hanzis = Hanzi.paginate(page: params[:page], :per_page => 500)
+      else
+        redirect_to hanzi_url(@hanzi.id)
+      end
+    else
+      @hanzis = Hanzi.paginate(page: params[:page], :per_page => 500)
+    end
   end
 
   def show
