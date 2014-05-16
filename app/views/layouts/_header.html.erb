@@ -4,11 +4,11 @@
       <%= link_to "MandarinBanana.com", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Hanzis", hanzis_path %></li>
 	  <li><%= link_to "Movies", movies_path %></li>
           <li><%= link_to "Mnemonics", mnemonics_path %></li>
           <li><%= link_to "Comments", comments_path %></li>
+          <li><%= link_to "Wall", wallposts_path %></li>
           <% if signed_in? %>
 	    <li><%= link_to "Users", users_path %></li>
             <li id="fat-menu" class="dropdown">

@@ -1,6 +1,7 @@
 Mbv2::Application.routes.draw do
   match '/mnemonics/:id/images/new', to: 'images#new', via: 'get'
   match '/:parent/:id/mnemonics/new', to: 'mnemonics#new', via: 'get'
+  match '/wallposts/:id/new', to: 'wallposts#new', via: 'get'
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :subtitles
@@ -11,6 +12,7 @@ Mbv2::Application.routes.draw do
   resources :images, only: [:new, :create, :show, :destroy]
   resources :mnemonics
   resources :pinyindefinitions
+  resources :wallposts, only: [:index, :create, :destroy]
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
