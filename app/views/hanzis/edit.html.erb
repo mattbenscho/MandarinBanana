@@ -1,0 +1,15 @@
+<% provide(:title, "Edit hanzi") %>
+<h1>Update <%= @hanzi.character %></h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@hanzi) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      
+      <%= f.label :components %>
+      <%= f.text_field :components %>
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
