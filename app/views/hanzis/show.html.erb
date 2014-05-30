@@ -26,6 +26,11 @@
   <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %>
 <% end %>
 
+<h2>Appears in:</h2>
+<% @appearances.each do |a| %>
+  <a href="/hanzis/<%= a.id %>"><%= a.character %></a>
+<% end %>
+
 <h2>Example sentences</h2>
 <% @examples.each do |example| %>
   <%= example.sentence %> <a href="/subtitles/<%= example.id %>">more...</a><br/>
