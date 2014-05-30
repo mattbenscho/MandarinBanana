@@ -8,6 +8,7 @@ while read -n 1 char; do
 	then	    
 	    COMPOSITION=$(./decompose.sh $char | tr -d '\n')
 	    echo -e "$char\t\t\t\t\t$COMPOSITION"
+	    echo -e "$char\t\t\t\t\t$COMPOSITION" >> prepared-hanzis.csv
 	else
 	    while read LINE; do 
 		TCHAR=$(echo "$LINE" | awk -F '\t' '{print $1}')
@@ -21,6 +22,7 @@ while read -n 1 char; do
 		OUT1="$TCHAR\t$PINYIN\t$TRANSLATION\t$G1\t$G2\t$TCOMPOSITION"
 		OUT2="$SCHAR\t$PINYIN\t$TRANSLATION\t$G1\t$G2\t$SCOMPOSITION"
 		echo -e "$OUT1\n$OUT2" | uniq
+		echo -e "$OUT1\n$OUT2" | uniq >> prepared-hanzis.csv
 		./prepare-hanzis.sh "$SCOMPOSITION$TCOMPOSITION"
 	    done < <(grep "^. $char " cedict.csv | sed 's/ /\t/' | sed 's/ /\t/' | sed 's/ /\t/')
 	fi
