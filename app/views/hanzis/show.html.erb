@@ -36,6 +36,15 @@
   <%= example.sentence %> <a href="/subtitles/<%= example.id %>">more...</a><br/>
 <% end %>
 
+<h2>See this character on</h2>
+<div>
+  <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a></br>
+  <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a></br>
+  <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a></br>
+  <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a></br>
+  <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a></br>
+</div>
+
 <% if @hanzi.comments.any? %>
 <div>
   <h2> Comments (<%= @hanzi.comments.count %>)</h2>
