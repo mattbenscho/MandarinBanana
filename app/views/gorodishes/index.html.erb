@@ -1,2 +1,16 @@
-<h1>Gorodishes#index</h1>
-<p>Find me in app/views/gorodishes/index.html.erb</p>
+<h1>All Gorodishes</h1>
+<div>
+<% @all_gorodishes.each do |g| %>
+  <div>
+  <a href="/gorodishes/<%= g.id %>"><%= g.element %></a> - 
+  <a href="/gorodishes/<%= g.id %>/mnemonics/new">add mnemonic</a><br/>
+  <% g.mnemonics.each do |mnemonic| %>
+    <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a></br>
+    <% mnemonic.images.each do |image| %>
+      <img width=100 src="<%= image.data %>">
+    <% end %>
+  <% end %>
+  </div>
+  </br>
+<% end %> 
+</div>

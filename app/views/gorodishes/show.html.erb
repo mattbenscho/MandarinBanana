@@ -4,9 +4,18 @@
 <%= @gorodish.element %>
 <a href="/gorodishes/<%= @gorodish.id %>/mnemonics/new">add mnemonic</a><br/><br/>
 <% @gorodish.mnemonics.each do |mnemonic| %>
-<%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a></br>
-<% mnemonic.images.each do |image| %>
-<img width=100 src="<%= image.data %>">
+  <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a></br>
+    <% mnemonic.images.each do |image| %>
+      <img width=100 src="<%= image.data %>">
+    <% end %>
+  </br>
 <% end %>
-</br>
+
+<%= @gorodish.element %> appears in:
+<% Pinyindefinition.where(["gbeginning = ? or gending = ?", @gorodish.element, @gorodish.element]).each do |pd| %>
+  <% @hanzi = Hanzi.find(pd.hanzi_id) %>
+  <a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a>
 <% end %>
+
+</br></br>
+<div><a href="/gorodishes">Gorodish index</a></div>

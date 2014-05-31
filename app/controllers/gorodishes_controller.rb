@@ -4,5 +4,6 @@ class GorodishesController < ApplicationController
   end
 
   def index
+    @all_gorodishes = Gorodish.all
   end
 end
