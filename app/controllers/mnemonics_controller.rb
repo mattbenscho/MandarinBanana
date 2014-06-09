@@ -10,7 +10,9 @@ class MnemonicsController < ApplicationController
       @pinyindefinition = Pinyindefinition.find_by(id: @id)
       @hanzi = Hanzi.find_by(id: @pinyindefinition.hanzi_id)
       @gbeginning = @pinyindefinition.gbeginning
+      @gbeginning_obj = Gorodish.find_by(element: @gbeginning)
       @gending = @pinyindefinition.gending
+      @gending_obj = Gorodish.find_by(element: @gending)
     end
     if @parent == "gorodishes"
       @ancestor = Gorodish.find_by(id: @id).element

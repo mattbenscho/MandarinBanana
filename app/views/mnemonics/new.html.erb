@@ -3,23 +3,30 @@
 
 <% if @parent == "pinyindefinitions" %>
   <h1>Invent a new mnemonic for <%= @hanzi.character %></h1>
-  <b><a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a> <%= @pinyindefinition.pinyin %> - <a href="/gorodishes/<%= Gorodish.find_by(element: @gbeginning).id %>"><%= @gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: @gending).id %>"><%= @gending %></a></b>: <%= @pinyindefinition.definition %>
-  <h2>Mnemonics for <%= @gbeginning %>:</h2>
-  <% Gorodish.find_by(element: @gbeginning).mnemonics.each do |mnemonic| %>
-    <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
-    <% mnemonic.images.each do |image| %>
-      <img width=100 src="<%= image.data %>">
-    <% end %><br/>
+  <b><a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a> <%= @pinyindefinition.pinyin %>
+  <%= " | " if !@gbeginning.empty? %>
+  <%= link_to @gbeginning, @gbeginning_obj if @gbeginning %><%= link_to @gending, @ending_obj if @gending %></b>:
+  <%= @pinyindefinition.definition %>
+  <% if !@gbeginning_obj.nil? %>
+    <h2>Mnemonics for <%= @gbeginning %>:</h2>
+    <% @gbeginning_obj.mnemonics.each do |mnemonic| %>
+      <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
+      <% mnemonic.images.each do |image| %>
+        <img width=100 src="<%= image.data %>">
+      <% end %><br/>
+    <% end %>
+    <a href="/gorodishes/<%= @gbeninning_obj %>/mnemonics/new">add mnemonic</a></br>
   <% end %>
-  <a href="/gorodishes/<%= Gorodish.find_by(element: @gbeginning).id %>/mnemonics/new">add mnemonic</a></br>
-  <h2>Mnemonics for <%= @gending %>:</h2>
-  <% Gorodish.find_by(element: @gending).mnemonics.each do |mnemonic| %>
-    <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
-    <% mnemonic.images.each do |image| %>
-      <img width=100 src="<%= image.data %>">
-    <% end %><br/>
+  <% if !@gending_obj.nil? %>
+    <h2>Mnemonics for <%= @gending %>:</h2>
+    <% @gending_obj.mnemonics.each do |mnemonic| %>
+      <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
+      <% mnemonic.images.each do |image| %>
+        <img width=100 src="<%= image.data %>">
+      <% end %><br/>
+    <% end %>
+    <a href="/gorodishes/<%= @gending_obj %>/mnemonics/new">add mnemonic</a></br>
   <% end %>
-  <a href="/gorodishes/<%= Gorodish.find_by(element: @gending).id %>/mnemonics/new">add mnemonic</a></br>
   <h2>Components of <%= @hanzi.character %></h2>
   <% if !@hanzi.components.to_s.empty? %>
     <%= decompose @hanzi.components %>

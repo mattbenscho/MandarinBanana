@@ -1,0 +1,27 @@
+<% provide(:title, "Edit pinyindefinition") %>
+<h1>Update pinyindefinition</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@pinyindefinition) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :pinyin %>
+      <%= f.text_field :pinyin %>
+
+      <%= f.label :definition %>
+      <%= f.text_field :definition %>
+
+      <%= f.label :hanzi_id %>
+      <%= f.text_field :hanzi_id %>
+
+      <%= f.label :gbeginning %>
+      <%= f.text_field :gbeginning %>
+
+      <%= f.label :gending %>
+      <%= f.text_field :gending %>
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

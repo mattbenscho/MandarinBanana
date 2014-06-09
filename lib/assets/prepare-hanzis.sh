@@ -2,7 +2,7 @@
 
 touch prepared-hanzis.csv
 
-while read -n 1 char; do
+while read -n1 char; do
     if [ $(cat prepared-hanzis.csv | grep -q "^$char"; echo "$?") = "1" ]; then
 	if [ $(grep -q "^. $char " cedict.csv; echo "$?") = "1" ];
 	then	    

@@ -6,10 +6,19 @@
   <div class="row-fluid">
     <div class="span2 pagination-centered">
       <b><%= @hanzi.character %></b><br/>
-      <b><%= pinyindefinition.pinyin %> - <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a></b>
-    </div>
+      <b><%= pinyindefinition.pinyin %>
+      <% if pinyindefinition.gbeginning.present? %>
+        | <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning
+      %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
+      <% end %>
+    </b></div>
     <div class="span10">
-      <%= pinyindefinition.definition %> - <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add a mnemonic for this meaning of <%= @hanzi.character %></a><br/><br/>
+      <%= pinyindefinition.definition %> | <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add a mnemonic for this meaning of <%= @hanzi.character %></a>
+      <% if signed_in? && current_user.admin? %>
+        | <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
+        | <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>
+      <br/><br/>
       <% pinyindefinition.mnemonics.each do |mnemonic| %>
         <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a><br/>
         <% mnemonic.images.each do |image| %>
@@ -23,7 +32,7 @@
 <%= decompose @hanzi.components %>
 
 <% if signed_in? && current_user.admin? %>
-  <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %>
+  <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %> | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
 <% end %>
 
 <h2>Appears in:</h2>

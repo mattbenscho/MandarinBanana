@@ -14,12 +14,24 @@ namespace :db do
         @hanzi = Hanzi.find_by(character: hanzi)
         @hanzi.components = components
         @hanzi.save
-        pd_exists = Pinyindefinition.where(pinyin: pinyin).where(definition: definition).where(hanzi_id: @hanzi.id).exists?
-        @hanzi.pinyindefinitions.create(pinyin: pinyin, definition: definition, gbeginning: g1, gending: g2) if pd_exists == false
+        @pd = Pinyindefinition.where(pinyin: pinyin).where(definition: definition).where(hanzi_id: @hanzi.id).first
+	if !@pd.nil?
+          @pd.gbeginning = g1
+          @pd.gending = g2
+          @pd.save
+        else
+          @hanzi.pinyindefinitions.create(pinyin: pinyin, definition: definition, gbeginning: g1, gending: g2)
+        end
       else
         @hanzi = Hanzi.create(character: hanzi, components: components)
-        pd_exists = Pinyindefinition.where(pinyin: pinyin).where(definition: definition).where(hanzi_id: @hanzi.id).exists?
-        @hanzi.pinyindefinitions.create(pinyin: pinyin, definition: definition, gbeginning: g1, gending: g2) if pd_exists == false
+        @pd = Pinyindefinition.where(pinyin: pinyin).where(definition: definition).where(hanzi_id: @hanzi.id).first
+	if !@pd.nil?
+          @pd.gbeginning = g1
+          @pd.gending = g2
+          @pd.save
+        else
+          @hanzi.pinyindefinitions.create(pinyin: pinyin, definition: definition, gbeginning: g1, gending: g2)
+        end
       end
       puts @hanzi.character
     end

@@ -26,6 +26,9 @@ module ApplicationHelper
             end              
             html << '</div></div></div></div>'
           end
+          if @char.pinyindefinitions.empty?
+            html << '<div class="row-fluid"><div class="span1 pagination-centered"><b><a href="/hanzis/' + @char.id.to_s + '">' + char + '</a></b></div></div>'
+          end
           @children = @char.components
           if @children.length > 0
             html << recursive_decompose(@children)
