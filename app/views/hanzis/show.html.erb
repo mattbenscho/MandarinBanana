@@ -54,6 +54,22 @@
   <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a></br>
 </div>
 
+<h2>Review</h2>
+<% if signed_in? %>
+  <% @review = current_user.reviews.find_by(hanzi_id: @hanzi.id) %>
+  <% if @review.nil? %>
+    <%= form_for(current_user.reviews.build(hanzi_id: @hanzi.id)) do |f| %>
+      <div><%= f.hidden_field :hanzi_id %></div>
+      <%= f.submit "Review this character", class: "btn btn-large btn-primary" %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.reviews.find_by(hanzi_id: @hanzi.id), html: { method: :delete}) do |f| %>
+      <div><%= f.hidden_field :hanzi_id %></div>
+      <%= f.submit "Stop reviewing", class: "btn btn-large btn-primary" %>
+    <% end %>  
+  <% end %>
+<% end %>
+
 <% if @hanzi.comments.any? %>
 <div>
   <h2> Comments (<%= @hanzi.comments.count %>)</h2>

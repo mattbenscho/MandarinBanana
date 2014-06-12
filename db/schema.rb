@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514182831) do
+ActiveRecord::Schema.define(version: 20140612183546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,21 @@ ActiveRecord::Schema.define(version: 20140514182831) do
 
   add_index "pinyindefinitions", ["hanzi_id", "pinyin", "definition"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin_and_definition", unique: true, using: :btree
   add_index "pinyindefinitions", ["hanzi_id", "pinyin"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin", using: :btree
+
+  create_table "reviews", force: true do |t|
+    t.integer  "hanzi_id"
+    t.integer  "user_id"
+    t.datetime "due"
+    t.integer  "failed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reviews", ["due"], name: "index_reviews_on_due", using: :btree
+  add_index "reviews", ["failed"], name: "index_reviews_on_failed", using: :btree
+  add_index "reviews", ["hanzi_id", "user_id"], name: "index_reviews_on_hanzi_id_and_user_id", unique: true, using: :btree
+  add_index "reviews", ["hanzi_id"], name: "index_reviews_on_hanzi_id", using: :btree
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "subtitles", force: true do |t|
     t.text     "sentence"

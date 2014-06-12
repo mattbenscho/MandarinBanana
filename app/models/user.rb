@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :images, dependent: :destroy
   has_many :mnemonics, dependent: :destroy
   has_many :wallposts, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   validates :password, length: { minimum: 6 }
 
   def User.new_remember_token

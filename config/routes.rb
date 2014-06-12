@@ -13,6 +13,7 @@ Mbv2::Application.routes.draw do
   resources :mnemonics
   resources :pinyindefinitions
   resources :wallposts, only: [:index, :create, :destroy]
+  resources :reviews, only: [:index, :show, :create, :update, :destroy ]
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

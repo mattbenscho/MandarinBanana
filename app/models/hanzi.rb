@@ -4,4 +4,5 @@ class Hanzi < ActiveRecord::Base
   has_many :examples, foreign_key: "expression_id", dependent: :destroy
   has_many :subtitles, through: :examples, source: :subtitle
   has_many :comments, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 end

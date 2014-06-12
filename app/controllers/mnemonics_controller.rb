@@ -48,5 +48,4 @@ class MnemonicsController < ApplicationController
       params.require(:mnemonic).permit(:aide, :gorodish_id, :pinyindefinition_id)
     end
 
-
 end
