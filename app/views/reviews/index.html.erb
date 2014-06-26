@@ -1,0 +1,7 @@
+<div class="row-fluid">
+  <% if @review.due < Time.now + 1.hour %>
+    <%= link_to "Start reviewing!", @review %>
+  <% else %>
+    No reviews due. The next review is due <%= @review.due %>.
+  <% end %>
+</div>

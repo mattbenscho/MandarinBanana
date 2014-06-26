@@ -1,7 +1,7 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "MandarinBanana.com", root_path, id: "logo" %>
+      <%= link_to "Home", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
           <li><%= link_to "Hanzis", hanzis_path %></li>
@@ -11,6 +11,7 @@
           <li><%= link_to "Wall", wallposts_path %></li>
           <% if signed_in? %>
 	    <li><%= link_to "Users", users_path %></li>
+	    <li><%= link_to "Review", reviews_path %></li>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Account <b class="caret"></b>

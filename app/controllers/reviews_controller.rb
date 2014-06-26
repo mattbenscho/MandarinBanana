@@ -2,7 +2,9 @@ class ReviewsController < ApplicationController
   before_action :signed_in_user
   before_action :correct_user, only: [:destroy]
 
-  def index
+  def index    
+    @review = pick_review(current_user.reviews.first)
+    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
   end
 
   def new
@@ -10,7 +12,7 @@ class ReviewsController < ApplicationController
 
   def create
     @review = current_user.reviews.build(review_params)
-    @review.due = DateTime.current
+    @review.due = Time.now
     @review.failed = 0
     if @review.save
       flash[:success] = "Review created!"
@@ -22,6 +24,46 @@ class ReviewsController < ApplicationController
   end
 
   def show
+    @review = current_user.reviews.find_by(id: params[:id])
+    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+  end
+
+  def answer
+    @review = current_user.reviews.find_by(id: params[:review_id])
+    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+    @examples = @hanzi.subtitles
+    @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+  end
+
+  def fail
+    @review = current_user.reviews.find_by(id: params[:review_id])
+    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+    @review.failed += 1
+    @review.due = Time.now
+    @review.save
+  end
+
+  def validate
+    @review = current_user.reviews.find_by(id: params[:review_id])
+    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+    @rating = params[:rating]
+    @factor = case @rating
+              when "2" then 1
+              when "3" then 2
+              when "4" then 4
+              end
+    @interval = (Time.now - @review.updated_at).to_i() * @factor 
+    if @interval < 1.day
+      @interval = 10.hours
+    end
+    @review.due = Time.now + @interval
+    @review.save
+    @next = pick_review(current_user.reviews.first)
+    if Time.now > @next.due
+      redirect_to review_path(@next.id)
+    else 
+      redirect_to reviews_path
+    end
   end
 
   def update
@@ -49,4 +91,21 @@ class ReviewsController < ApplicationController
       redirect_to root_url if @review.nil?
     end
 
+    def pick_review(review)
+      @hanzi = Hanzi.find_by(id: review.hanzi_id)
+      @candidate_has_due_component = nil
+      Review.where("due > ? AND due < ?", review.due, Time.now + 1.hours).each do |candidate|
+        @candidate_hanzi = Hanzi.find_by(id: candidate.hanzi_id)
+        @candidate = candidate
+        if !@hanzi.components[@candidate_hanzi.character].nil?        
+          @candidate_has_due_component = true
+          break
+        end
+      end 
+      if @candidate_has_due_component.nil?
+        return review
+      else
+        pick_review(@candidate)
+      end
+    end
 end

@@ -1,0 +1,24 @@
+<% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
+  <div class="row-fluid">
+    <div class="span2 pagination-centered">
+      <b><%= pinyindefinition.pinyin %>
+      <% if pinyindefinition.gbeginning.present? %>
+        | <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning
+      %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
+      <% end %>
+    </b></div>
+    <div class="span10">
+      <%= pinyindefinition.definition.gsub @hanzi.character, '[?]' %> | <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add a mnemonic for this meaning of [?]</a>
+      <% if signed_in? && current_user.admin? %>
+        | <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
+        | <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>
+      <br/><br/>
+    </div>
+  </div>
+<% end %>
+
+<div class="row-fluid">
+  <%= link_to "Show answer", controller: "reviews", action: "answer", review_id: @review.id %>
+</div>
+
