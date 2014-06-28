@@ -22,6 +22,7 @@ class HanzisController < ApplicationController
     @topic = "hanzi"
     @topic_id = @hanzi.id
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @stroke_order = check_stroke_order(@hanzi.character)
   end
 
   def edit
@@ -46,5 +47,17 @@ class HanzisController < ApplicationController
 
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    def check_stroke_order(character)      
+      if Rails.application.assets.find_asset 'stroke-order-imgs/' + character + '-order.gif'
+        return 'stroke-order-imgs/' + character + '-order.gif'
+      elsif Rails.application.assets.find_asset 'stroke-order-imgs/' + character + '-red.png'
+        return 'stroke-order-imgs/' + character + '-red.png'
+      elsif Rails.application.assets.find_asset 'stroke-order-imgs/' + character + '-bw.png'
+        return 'stroke-order-imgs/' + character + '-bw.png'
+      else
+        return nil
+      end
     end
 end

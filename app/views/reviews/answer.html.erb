@@ -1,6 +1,7 @@
 <h1>
   <%= link_to @hanzi.character, @hanzi %><br/>
 </h1>
+
 <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
   <div class="row-fluid">
     <div class="span2 pagination-centered">
@@ -23,6 +24,16 @@
     </div>
   </div>
 <% end %>
+
+<% if !@stroke_order.nil? %>
+<h2>Wikimedia Commons:Stroke Order Project</h2>
+  <div class="row-fluid text-center">
+    <a href="http://commons.wikimedia.org/wiki/Commons:Stroke_Order_Project" target="_blank">
+      <%= image_tag @stroke_order %>
+    </a>
+  </div>
+<% end %>
+
 <h2>Elements of <%= @hanzi.character %></h2>
 <%= decompose @hanzi.components %>
 

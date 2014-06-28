@@ -33,6 +33,7 @@ class ReviewsController < ApplicationController
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
     @examples = @hanzi.subtitles
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @stroke_order = check_stroke_order(@hanzi.character)
   end
 
   def fail
@@ -106,6 +107,18 @@ class ReviewsController < ApplicationController
         return review
       else
         pick_review(@candidate)
+      end
+    end
+
+    def check_stroke_order(character)      
+      if Rails.application.assets.find_asset 'stroke-order-imgs/' + character + '-order.gif'
+        return 'stroke-order-imgs/' + character + '-order.gif'
+      elsif Rails.application.assets.find_asset 'stroke-order-imgs/' + character + '-red.png'
+        return 'stroke-order-imgs/' + character + '-red.png'
+      elsif Rails.application.assets.find_asset 'stroke-order-imgs/' + character + '-bw.png'
+        return 'stroke-order-imgs/' + character + '-bw.png'
+      else
+        return nil
       end
     end
 end
