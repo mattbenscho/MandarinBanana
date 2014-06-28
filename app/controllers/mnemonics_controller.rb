@@ -23,11 +23,19 @@ class MnemonicsController < ApplicationController
     @mnemonic = current_user.mnemonics.build(mnemonic_params)
     if @mnemonic.save
       flash[:success] = "Mnemonic saved."
-      redirect_to @mnemonic
+      if !@mnemonic.pinyindefinition_id.nil?
+        @pinyindefinition = Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id)
+        @hanzi = Hanzi.find_by(id: @pinyindefinition.hanzi_id)
+        redirect_to @hanzi
+      elsif !@mnemonic.gorodish_id.nil?
+        @gorodish = Gorodish.find_by(id: @mnemonic.gorodish_id)
+        redirect_to @gorodish
+      else
+        render 'new'
+      end
     else
       render 'new'
     end
-
   end
 
   def show 
