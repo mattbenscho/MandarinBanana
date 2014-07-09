@@ -37,10 +37,37 @@
 <h2>Elements of <%= @hanzi.character %></h2>
 <%= decompose @hanzi.components %>
 
-<h2>Example sentences</h2>
-<% @examples.each do |example| %>
-  <%= example.sentence %> <a href="/subtitles/<%= example.id %>">more...</a><br/>
-<% end %>
+<div class="row-fluid, center">
+  <% @examples.each do |example| %>
+    <iframe id="ytplayer" type="text/html" width="200" height="200"
+     src="https://www.youtube.com/embed/<%= Movie.find(example.movie_id).youtube_id %>?autoplay=0&rel=0&start=<%= example.start %>&end=<%= example.stop %>&showinfo=0"
+     frameborder="0"></iframe>
+    <div class="example-sentence">
+      <% example.sentence.each_char do |char| %>
+        <% @sentence_hanzi = Hanzi.find_by(character: char) %>
+        <% if !@sentence_hanzi.nil? %>
+	  <div class="unknown-char">
+	  <span class="big-char">
+          <%= link_to @sentence_hanzi.character, @hanzi %>
+          </span></br>
+	  <% if current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
+	    <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+              <%= pd.pinyin %></br>
+	    <% end %>
+	  <% elsif @hanzi.id == @sentence_hanzi.id %>
+	    <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+              <%= pd.pinyin %></br>
+	    <% end %>
+	  <% end %>
+          </div>
+        <% else %>
+          <%= char %>
+        <% end %>
+      <% end %>
+      <a href="/subtitles/<%= example.id %>">more...</a><br/>
+    </div>
+  <% end %>
+</div>
 
 <h2>Review</h2>
 <% if signed_in? %>

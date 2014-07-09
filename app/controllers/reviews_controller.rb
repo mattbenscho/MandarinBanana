@@ -26,12 +26,13 @@ class ReviewsController < ApplicationController
   def show
     @review = current_user.reviews.find_by(id: params[:id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+    @examples = @hanzi.subtitles.limit(7)
   end
 
   def answer
     @review = current_user.reviews.find_by(id: params[:review_id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
-    @examples = @hanzi.subtitles
+    @examples = @hanzi.subtitles.limit(7)
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     @stroke_order = check_stroke_order(@hanzi.character)
   end
