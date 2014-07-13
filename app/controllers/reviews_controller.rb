@@ -35,14 +35,45 @@ class ReviewsController < ApplicationController
     @examples = @hanzi.subtitles.limit(7)
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     @stroke_order = check_stroke_order(@hanzi.character)
+    @comments = @hanzi.comments
   end
 
   def fail
     @review = current_user.reviews.find_by(id: params[:review_id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+    @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+  end
+
+  def fail_action
+    @review = current_user.reviews.find_by(id: params[:review_id])
+    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+    if params[:antedate] == 'yes'
+      Hanzi.where('components LIKE ?', "%#{@hanzi.character}%").each do |h|
+        @child_review = current_user.reviews.where("hanzi_id = ?", h.id).first
+        if !@child_review.nil?
+          @child_review.due = Time.now
+          @child_review.save
+        end
+      end
+    end
+    @hanzi.components.each_char do |c|
+      if params["#{c}"] == "1"
+        @parent_review = current_user.reviews.find_by(id: Hanzi.find_by(character: c).id)
+        if !@parent_review.nil?
+          @parent_review.due = Time.now
+          @parent_review.save
+        end
+      end
+    end
     @review.failed += 1
     @review.due = Time.now
     @review.save
+    if params["next"] == "continue"
+      @next = pick_review(current_user.reviews.first)
+      redirect_to @next
+    else 
+      redirect_to @hanzi
+    end
   end
 
   def validate

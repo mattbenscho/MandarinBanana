@@ -1,1 +1,31 @@
-You failed to remember <%= @hanzi.character %>.
+You failed to remember <%= @hanzi.character %>.<br/><br/>
+
+<%= form_for :review, :url => "fail_action", :html => { :method => :get } do |f| %>
+  <input type="hidden" name="review_id" value="<%= @review.id %>">
+  <% if !@appearances.nil? %>
+    <div class="field">
+      <div class="form_row">
+        <label for="choice1">Do you want to antedate the reviews for the x characters it appears in?</label>
+	<%= radio_button_tag 'antedate', "yes" %> yes <br/>
+	<%= radio_button_tag 'antedate', "no" %> no <br/>
+      </div>
+    </div>
+  <% end %>
+  <p>
+    Do you want to fail one of it's components?<br/>    
+    <% @hanzi.components.each_char do |char| %>
+      <span><%= check_box_tag char %> <%= char %></span>
+    <% end %>
+  </p>
+  <div class="field">
+    <div class="form_row">
+      <label for="choice2">What do you want to do next?</label>
+      <%= radio_button_tag 'next', "visit" %> Visit the character's page<br/>      
+      <%= radio_button_tag 'next', "continue" %> Continue reviewing<br/>      
+    </div>
+  </div>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+   
