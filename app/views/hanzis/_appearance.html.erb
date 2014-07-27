@@ -1,0 +1,6 @@
+<% @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%") %>
+<h2>Appears in:</h2>
+<% @appearances.each do |a| %>
+  <a href="/hanzis/<%= a.id %>"><%= a.character %></a>
+<% end %>
+

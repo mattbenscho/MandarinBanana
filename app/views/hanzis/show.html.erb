@@ -46,10 +46,7 @@
   <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %> | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
 <% end %>
 
-<h2>Appears in:</h2>
-<% @appearances.each do |a| %>
-  <a href="/hanzis/<%= a.id %>"><%= a.character %></a>
-<% end %>
+<%= render partial: "appearance" %>
 
 <h2>Example sentences</h2>
 <% @examples.each do |example| %>

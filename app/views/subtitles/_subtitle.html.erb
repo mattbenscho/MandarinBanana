@@ -1,0 +1,35 @@
+<div class="center">
+<iframe id="ytplayer" type="text/html" width="<%= width %>" height="<%= height %>"
+	src="https://www.youtube.com/embed/<%= Movie.find(subtitle.movie_id).youtube_id %>?autoplay=<%= autoplay %>&rel=0&start=<%= subtitle.start %>&end=<%= subtitle.stop %>&showinfo=0"
+	frameborder="0"></iframe>
+<div class="example-sentence">
+  <% subtitle.sentence.each_char do |char| %>
+    <% @sentence_hanzi = Hanzi.find_by(character: char) %>
+    <% if !@sentence_hanzi.nil? %>
+      <div class="unknown-char">
+        <span class="big-char">
+	  <% if replace %>
+            <%= link_to @sentence_hanzi.character.gsub(@hanzi.character, '[?]'), @sentence_hanzi %>
+          <% else %>
+            <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
+          <% end %>
+        </span></br>
+        <% if current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
+          <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+            <%= pd.pinyin %></br>
+          <% end %>
+        <% elsif @hanzi.id == @sentence_hanzi.id %>
+          <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+            <%= pd.pinyin %></br>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <%= char %>
+    <% end %>
+  <% end %>
+  <% if morelink %>
+    &nbsp;<a href="/subtitles/<%= subtitle.id %>" class="morelink">&rarr;</a><br/>
+  <% end %>
+</div>
+</div>

@@ -47,7 +47,7 @@ class MnemonicsController < ApplicationController
   end
 
   def index
-    @mnemonics = Mnemonic.paginate(page: params[:page])
+    @mnemonics = Mnemonic.paginate(page: params[:page], order: "created_at DESC")
   end
 
   private

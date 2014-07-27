@@ -21,7 +21,6 @@ class HanzisController < ApplicationController
     @comment = current_user.comments.build if signed_in?
     @topic = "hanzi"
     @topic_id = @hanzi.id
-    @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     @stroke_order = check_stroke_order(@hanzi.character)
   end
 
