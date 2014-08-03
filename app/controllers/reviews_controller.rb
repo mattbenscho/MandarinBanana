@@ -42,6 +42,16 @@ class ReviewsController < ApplicationController
     @review = current_user.reviews.find_by(id: params[:review_id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @reviewed_appearances_counter = 0
+    @unknown_appearances = ""
+    @appearances.each do |a|
+      @is_being_reviewed = Review.find_by(hanzi_id: a.id)
+      if @is_being_reviewed.nil?
+        @unknown_appearances += a.character
+      else
+        @reviewed_appearances_counter += 1
+      end
+    end
   end
 
   def fail_action
@@ -57,23 +67,19 @@ class ReviewsController < ApplicationController
       end
     end
     @hanzi.components.each_char do |c|
-      if params["#{c}"] == "1"
-        @parent_review = current_user.reviews.find_by(id: Hanzi.find_by(character: c).id)
+      if params["#{c}"] == '1'
+        @parent_review = current_user.reviews.find_by(hanzi_id: Hanzi.find_by(character: c).id)
         if !@parent_review.nil?
           @parent_review.due = Time.now
           @parent_review.save
         end
       end
     end
-    @review.failed += 1
+    @review.increment(:failed)
     @review.due = Time.now
     @review.save
-    if params["next"] == "continue"
-      @next = pick_review(current_user.reviews.first)
-      redirect_to @next
-    else 
-      redirect_to @hanzi
-    end
+    @next = pick_review(current_user.reviews.first)
+    redirect_to @next
   end
 
   def validate
@@ -125,12 +131,12 @@ class ReviewsController < ApplicationController
     end
 
     def pick_review(review)
-      @hanzi = Hanzi.find_by(id: review.hanzi_id)
+      @picked_hanzi = Hanzi.find_by(id: review.hanzi_id)
       @candidate_has_due_component = nil
       Review.where("due > ? AND due < ?", review.due, Time.now + 1.hours).each do |candidate|
         @candidate_hanzi = Hanzi.find_by(id: candidate.hanzi_id)
         @candidate = candidate
-        if !@hanzi.components[@candidate_hanzi.character].nil?        
+        if !@picked_hanzi.components[@candidate_hanzi.character].nil?        
           @candidate_has_due_component = true
           break
         end

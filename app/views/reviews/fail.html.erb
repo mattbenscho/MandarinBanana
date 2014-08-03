@@ -1,31 +1,37 @@
-You failed to remember <%= @hanzi.character %>.<br/><br/>
+<p>You failed to remember <%= link_to @hanzi.character, @hanzi %>. You failed this character <%= pluralize @review.failed+1, 'time' %>.</p>
 
 <%= form_for :review, :url => "fail_action", :html => { :method => :get } do |f| %>
   <input type="hidden" name="review_id" value="<%= @review.id %>">
-  <% if !@appearances.nil? %>
-    <div class="field">
-      <div class="form_row">
-        <label for="choice1">Do you want to antedate the reviews for the x characters it appears in?</label>
-	<%= radio_button_tag 'antedate', "yes" %> yes <br/>
-	<%= radio_button_tag 'antedate', "no" %> no <br/>
-      </div>
-    </div>
+  <% if @reviewed_appearances_counter > 0 %>
+        <p>Do you want to antedate the reviews for the <%= pluralize @reviewed_appearances_counter, 'character' %> it appears in?
+	<%= radio_button_tag 'antedate', "yes", true %> yes
+	<%= radio_button_tag 'antedate', "no", false %> no <br/>
+	</p>
+  <% end %>
+  <% if !@unknown_appearances.empty? %>
+    <p>
+      Maybe you also want to review one of these characters: <% @unknown_appearances.each_char do |c| %>
+        <% @c_char = Hanzi.find_by(character: c) %>
+	<%= link_to @c_char.character, @c_char, target: "_blank" %>
+      <% end %>
+    </p> 
+  <% end %>
+  <% if !@hanzi.components.nil? %>
+    <p>
+      Do you want to antedate one of its components?<br/>    
+      <% @hanzi.components.each_char do |char| %>
+        <% @c_char = Hanzi.find_by(character: char) %>
+	<% @c_review = Review.find_by(hanzi_id: @c_char.id) %>
+	<% if !@c_review.nil? %>
+          <span><%= check_box_tag char %> <%= char %></span><br/>
+	<% else %>
+	  <span>You're not reviewing <%= link_to @hanzi.character, @hanzi, target: "_blank" %>'s component <%= link_to @c_char.character, @c_char, target: "_blank" %>!<br/>
+	<% end %>
+      <% end %>
+    </p>
   <% end %>
   <p>
-    Do you want to fail one of it's components?<br/>    
-    <% @hanzi.components.each_char do |char| %>
-      <span><%= check_box_tag char %> <%= char %></span>
-    <% end %>
-  </p>
-  <div class="field">
-    <div class="form_row">
-      <label for="choice2">What do you want to do next?</label>
-      <%= radio_button_tag 'next', "visit" %> Visit the character's page<br/>      
-      <%= radio_button_tag 'next', "continue" %> Continue reviewing<br/>      
-    </div>
-  </div>
-  <p>
-    <%= f.submit %>
+    <%= f.submit "Continue", class: "btn btn-large btn-primary" %>
   </p>
 <% end %>
    
