@@ -14,12 +14,12 @@
             <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
           <% end %>
         </span></br>
-        <% if current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
+        <% if !signed_in? || current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
           <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
             <%= pd.pinyin %></br>
           <% end %>
-        <% elsif @hanzi.id == @sentence_hanzi.id %>
-          <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+	<% elsif reviewing && @hanzi.id == @sentence_hanzi.id %>
+	  <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
             <%= pd.pinyin %></br>
           <% end %>
         <% end %>
