@@ -91,10 +91,11 @@ class ReviewsController < ApplicationController
               when "3" then 2
               when "4" then 4
               end
-    @interval = (Time.now - @review.updated_at).to_i() * @factor 
+    @interval = (Time.now - @review.updated_at).to_i() * @factor
     if @interval < 1.day
       @interval = 10.hours
     end
+    @interval += (2*rand-1) * 0.1 * @interval
     @review.due = Time.now + @interval
     @review.save
     @next = pick_review(current_user.reviews.first)
