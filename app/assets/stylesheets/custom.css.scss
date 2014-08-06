@@ -280,3 +280,15 @@ aside {
 .morelink {
   position: absolute;
 }
+
+/* mnemonics */
+
+.mnemonic {
+  padding: 5px 10px 10px 10px;
+  margin: 0px 4px 4px 0px;
+  background:cornsilk;
+  display: inline-block;
+  .timestamp {
+    float: right;
+  }
+}

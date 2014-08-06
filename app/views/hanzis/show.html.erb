@@ -21,10 +21,7 @@
       <% end %>
       <br/><br/>
       <% pinyindefinition.mnemonics.each do |mnemonic| %>
-        <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a><br/>
-        <% mnemonic.images.each do |image| %>
-          <img width=200 src="<%= image.data %>">
-        <% end %><br/>
+        <%= render mnemonic %>
       <% end %>
     </div>
   </div>

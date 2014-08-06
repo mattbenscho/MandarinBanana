@@ -1,0 +1,7 @@
+<div class="mnemonic">
+<%= mnemonic.aide %><br/>
+<span class="timestamp">- <%= User.find_by(id: mnemonic.user_id).name %>, <%= time_ago_in_words(mnemonic.created_at) %> ago. <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a></span>
+<% mnemonic.images.each do |image| %>
+  <img width=200 src="<%= image.data %>">
+<% end %><br/>
+</div>
