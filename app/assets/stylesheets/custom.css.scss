@@ -50,8 +50,7 @@ h1 {
 
 h2 {
   font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
+  margin-top: 30px;
   text-align: center;
   font-weight: normal;
   color: $grayLight;
@@ -251,6 +250,23 @@ aside {
 
 .big-char {
   font-size: 200%;
+  line-height: normal;
+}
+
+.single-char {
+  font-size: 200%;
+  padding: 20px;
+  float: left;
+}
+
+.composition-container {
+  border:1px solid black;
+  margin: 5px;
+  overflow: auto;
+}
+
+.definition-row { 
+  overflow: auto;
 }
 
 /* wallposts */
@@ -259,7 +275,7 @@ aside {
   border-left: 2px dotted black;
   padding-left: 5px;
   margin-left: 20px;
-}		   
+}
 
 /* unknown characters */
 
@@ -285,10 +301,11 @@ aside {
 
 .mnemonic {
   padding: 5px 10px 10px 10px;
-  margin: 0px 4px 4px 0px;
+  margin-right: 6px;
+  margin-top: 6px;
   background:cornsilk;
   display: inline-block;
-  .timestamp {
+  .signature {
     float: right;
   }
 }

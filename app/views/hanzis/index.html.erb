@@ -4,7 +4,7 @@
 <ul class="hanzis-ul">
   <% @hanzis.each do |hanzi| %>
     <li>
-    <a href="/hanzis/<%= hanzi.id %>"><%= hanzi.character %></a>
+    <a href="/hanzis/<%= hanzi.id %>" class="big-char"><%= hanzi.character %></a>
     </li>
   <% end %>
 </ul>

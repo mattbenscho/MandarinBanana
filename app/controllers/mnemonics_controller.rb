@@ -43,7 +43,34 @@ class MnemonicsController < ApplicationController
     @images = @mnemonic.images
   end
   
+  def edit
+    @mnemonic = Mnemonic.find(params[:id])
+  end
+
   def update
+    @mnemonic = Mnemonic.find(params[:id])
+    if @mnemonic.update_attributes(mnemonic_params)
+      flash[:success] = "Mnemonic updated."
+      if !@mnemonic.pinyindefinition_id.nil?
+        @pinyindefinition = Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id)
+        @hanzi = Hanzi.find_by(id: @pinyindefinition.hanzi_id)
+        redirect_to @hanzi
+      elsif !@mnemonic.gorodish_id.nil?
+        @gorodish = Gorodish.find_by(id: @mnemonic.gorodish_id)
+        redirect_to @gorodish
+      else
+        render 'new'
+      end
+    else
+      render 'new'
+    end
+  end
+
+  def destroy
+    @mnemonic = Mnemonic.find(params[:id])
+    @mnemonic.destroy
+    flash[:success] = "Mnemonic deleted."
+    redirect_to hanzis_url
   end
 
   def index
@@ -51,6 +78,11 @@ class MnemonicsController < ApplicationController
   end
 
   private
+
+    def correct_user
+      @user = User.find(Mnemonic.find(params[:id]).user_id)
+      redirect_to(root_url) unless current_user?(@user) || current_user.admin?
+    end
 
     def mnemonic_params
       params.require(:mnemonic).permit(:aide, :gorodish_id, :pinyindefinition_id)

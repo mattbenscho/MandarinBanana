@@ -1,6 +1,12 @@
 <% @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%") %>
-<h2>Appears in:</h2>
-<% @appearances.each do |a| %>
-  <a href="/hanzis/<%= a.id %>"><%= a.character %></a>
+<% if !@appearances.empty? %>
+  <h2>Appears as component in</h2>
+  <div class="center">
+    <% @appearances.each do |a| %>
+      <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
+    <% end %>
+  </div>
+<% else %>
+  <h2>This character is not a component of another character.</h2>
 <% end %>
 

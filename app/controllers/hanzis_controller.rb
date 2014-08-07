@@ -16,7 +16,7 @@ class HanzisController < ApplicationController
 
   def show
     @hanzi = Hanzi.find(params[:id])
-    @examples = @hanzi.subtitles
+    @examples = @hanzi.subtitles.limit(7)
     @comments = @hanzi.comments
     @comment = current_user.comments.build if signed_in?
     @topic = "hanzi"

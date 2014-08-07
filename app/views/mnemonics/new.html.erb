@@ -3,12 +3,10 @@
 
 <% if @parent == "pinyindefinitions" %>
   <h1>Invent a new mnemonic for <%= @hanzi.character %></h1>
-  <b><a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a> <%= @pinyindefinition.pinyin %>
-  <%= " | " if !@gbeginning.empty? %>
-  <%= link_to @gbeginning, @gbeginning_obj if @gbeginning %><%= link_to @gending, @ending_obj if @gending %></b>:
-  <%= @pinyindefinition.definition %>
+  <%= render @hanzi %>
   <% if !@gbeginning_obj.nil? %>
     <h2>Mnemonics for <%= @gbeginning %>:</h2>
+    <div class="center">
     <% @gbeginning_obj.mnemonics.each do |mnemonic| %>
       <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
       <% mnemonic.images.each do |image| %>
@@ -16,9 +14,11 @@
       <% end %><br/>
     <% end %>
     <a href="/gorodishes/<%= @gbeninning_obj %>/mnemonics/new">add mnemonic</a></br>
+    </div>
   <% end %>
   <% if !@gending_obj.nil? %>
     <h2>Mnemonics for <%= @gending %>:</h2>
+    <div class="center">
     <% @gending_obj.mnemonics.each do |mnemonic| %>
       <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
       <% mnemonic.images.each do |image| %>
@@ -26,23 +26,7 @@
       <% end %><br/>
     <% end %>
     <a href="/gorodishes/<%= @gending_obj %>/mnemonics/new">add mnemonic</a></br>
-  <% end %>
-  <h2>Components of <%= @hanzi.character %></h2>
-  <% if !@hanzi.components.to_s.empty? %>
-    <%= decompose @hanzi.components %>
-  <% else %>
-    <%= @hanzi.character %> has no components.
-  <% end %>
-  <% if @pinyindefinition.mnemonics.count > 0 %>
-    <h2>Current mnemonics:</h2>
-    <% @pinyindefinition.mnemonics.each do |mnemonic| %>
-      <%= mnemonic.aide %><br/>
-      <% mnemonic.images.each do |image| %>
-        <img width=100 src="<%= image.data %>">
-      <% end %><br/>
-    <% end %>
-  <% else %>
-    <h2>There are no mnemonics for <%= @hanzi.character %> yet.</h2>
+    </div>
   <% end %>
 <% end %>
 

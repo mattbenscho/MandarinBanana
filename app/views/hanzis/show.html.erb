@@ -3,29 +3,7 @@
   <%= @hanzi.character %><br/>
 </h1>
 
-<% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
-  <div class="row-fluid">
-    <div class="span2 pagination-centered">
-      <b><%= @hanzi.character %></b><br/>
-      <b><%= pinyindefinition.pinyin %>
-      <% if pinyindefinition.gbeginning.present? %>
-        | <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning
-      %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
-      <% end %>
-    </b></div>
-    <div class="span10">
-      <%= pinyindefinition.definition %> | <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add a mnemonic for this meaning of <%= @hanzi.character %></a>
-      <% if signed_in? && current_user.admin? %>
-        | <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
-        | <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "You sure?" } %>
-      <% end %>
-      <br/><br/>
-      <% pinyindefinition.mnemonics.each do |mnemonic| %>
-        <%= render mnemonic %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+<%= render @hanzi %>
 
 <% if !@stroke_order.nil? %>
 <h2>Wikimedia Commons:Stroke Order Project</h2>
@@ -36,22 +14,23 @@
   </div>
 <% end %>
 
-<h2>Elements of <%= @hanzi.character %></h2>
-<%= decompose @hanzi.components %>
-
 <% if signed_in? && current_user.admin? %>
   <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %> | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
 <% end %>
 
 <%= render partial: "appearance" %>
 
-<h2>Example sentences</h2>
-<% @examples.each do |example| %>
-  <%= example.sentence %> <a href="/subtitles/<%= example.id %>">more...</a><br/>
+<% if @examples.any? %>
+  <h2>Example sentences</h2>
+  <div class="center">
+  <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 200, height: 200, reviewing: false} %>
+  </div>
+<% else %>
+  <h2>There are no example sentences for this character.</h2>
 <% end %>
 
 <h2>See this character on</h2>
-<div>
+<div class="center">
   <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a></br>
   <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a></br>
   <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a></br>
@@ -59,9 +38,10 @@
   <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a></br>
 </div>
 
-<h2>Review</h2>
 <% if signed_in? %>
+  <h2>Review</h2>
   <% @review = current_user.reviews.find_by(hanzi_id: @hanzi.id) %>
+  <div class="center">
   <% if @review.nil? %>
     <%= form_for(current_user.reviews.build(hanzi_id: @hanzi.id)) do |f| %>
       <div><%= f.hidden_field :hanzi_id %></div>
@@ -73,6 +53,7 @@
       <%= f.submit "Stop reviewing", class: "btn btn-large btn-primary" %>
     <% end %>  
   <% end %>
+  </div>
 <% end %>
 
 <% if @hanzi.comments.any? %>

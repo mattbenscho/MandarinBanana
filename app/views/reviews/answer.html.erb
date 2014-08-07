@@ -2,28 +2,7 @@
   <%= link_to @hanzi.character, @hanzi %><br/>
 </h1>
 
-<% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
-  <div class="row-fluid">
-    <div class="span2 pagination-centered">
-      <b><%= @hanzi.character %></b><br/>
-      <b><%= pinyindefinition.pinyin %>
-      <% if pinyindefinition.gbeginning.present? %>
-        | <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning
-      %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
-      <% end %>
-    </b></div>
-    <div class="span10">
-      <%= pinyindefinition.definition %>
-      <br/><br/>
-      <% pinyindefinition.mnemonics.each do |mnemonic| %>
-        <%= mnemonic.aide %><br/>
-        <% mnemonic.images.each do |image| %>
-          <img width=200 src="<%= image.data %>">
-        <% end %><br/>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+<%= render partial: "hanzis/hanzi", locals: {hanzi: @hanzi} %>
 
 <% if !@stroke_order.nil? %>
 <h2>Wikimedia Commons:Stroke Order Project</h2>
@@ -34,9 +13,6 @@
   </div>
 <% end %>
 
-<h2>Elements of <%= @hanzi.character %></h2>
-<%= decompose @hanzi.components %>
-
 <div class="row-fluid, center">
   <%= render partial: "subtitles/subtitle", collection: @subtitles, locals: {morelink: true, replace: false, autoplay: 0, width: 200, height: 200, reviewing: true} %>
 </div>
@@ -44,6 +20,7 @@
 <h2>Review</h2>
 <% if signed_in? %>
   <% @review = current_user.reviews.find_by(hanzi_id: @hanzi.id) %>
+  <div class="center">
   <% if @review.nil? %>
     <%= form_for(current_user.reviews.build(hanzi_id: @hanzi.id)) do |f| %>
       <div><%= f.hidden_field :hanzi_id %></div>
@@ -55,6 +32,7 @@
       <%= f.submit "Stop reviewing", class: "btn btn-large btn-primary" %>
     <% end %>  
   <% end %>
+  </div>
 <% end %>
 
 <% if @hanzi.comments.any? %>
@@ -66,7 +44,7 @@
 </div>
 <% end %>
 
-<div class="row-fluid">
+<div class="row-fluid center">
   <p>Rate yourself:</p>
   <%= link_to "Again", {controller: "reviews", action: "fail", review_id: @review.id}, class: "btn btn-large btn-primary" %>
   <%= link_to "Hard", {controller: "reviews", action: "validate", review_id: @review.id, rating: 2}, class: "btn btn-large btn-primary" %>

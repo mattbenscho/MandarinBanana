@@ -1,0 +1,44 @@
+
+<div class="composition-container">
+  <div class="definition-row">
+  <div class="single-char">
+    <b><%= link_to hanzi.character, hanzi %></b>
+  </div>
+  <table>
+    <% hanzi.pinyindefinitions.each do |pinyindefinition| %>
+    <tr>
+      <td style="white-space:nowrap; vertical-align: top; padding: 5px;">
+	<%= pinyindefinition.pinyin %><% if pinyindefinition.gbeginning.present? %> / <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
+	<% end %>
+      </td>
+      <td style="padding: 5px;">
+	<%= pinyindefinition.definition %> |
+	<a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">
+	  add a mnemonic for this meaning of <%= hanzi.character %>
+	</a>
+	<% if signed_in? && current_user.admin? %>
+  	| <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
+	| <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "Are you sure?" } %>
+	<% end %>
+        </br>
+	<% pinyindefinition.mnemonics.each do |mnemonic| %>
+	<%= render mnemonic %>
+	<% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  </div>
+  <% if !hanzi.components.empty? %>
+  <div style="margin-left: 20px">
+    <% hanzi.components.each_char do |c| %>
+    <% @c_hanzi=Hanzi.find_by(character: c) %>
+    <%= render partial: "hanzis/hanzi", locals: {hanzi: @c_hanzi} %>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+
+
+
