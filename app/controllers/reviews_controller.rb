@@ -134,7 +134,7 @@ class ReviewsController < ApplicationController
     def pick_review(review)
       @picked_hanzi = Hanzi.find_by(id: review.hanzi_id)
       @candidate_has_due_component = nil
-      Review.where("due > ? AND due < ?", review.due, Time.now + 1.hours).each do |candidate|
+      Review.where("due < ? AND user_id = ?", Time.now + 1.hours, current_user.id).each do |candidate|
         @candidate_hanzi = Hanzi.find_by(id: candidate.hanzi_id)
         @candidate = candidate
         if !@picked_hanzi.components[@candidate_hanzi.character].nil?        
