@@ -1,7 +1,7 @@
 <p>You failed to remember <%= link_to @hanzi.character, @hanzi %>. You failed this character <%= pluralize @review.failed+1, 'time' %>.</p>
 
 <%= form_for :review, :url => "fail_action", :html => { :method => :get } do |f| %>
-  <input type="hidden" name="review_id" value="<%= @review.id %>">
+  <input type="hidden" name="id" value="<%= @review.id %>">
   <% if @reviewed_appearances_counter > 0 %>
         <p>Do you want to antedate the reviews for the <%= pluralize @reviewed_appearances_counter, 'character' %> it appears in?
 	<%= radio_button_tag 'antedate', "yes", true %> yes

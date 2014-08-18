@@ -46,9 +46,9 @@
 
 <div class="row-fluid center">
   <p>Rate yourself:</p>
-  <%= link_to "Again", {controller: "reviews", action: "fail", review_id: @review.id}, class: "btn btn-large btn-primary" %>
-  <%= link_to "Hard", {controller: "reviews", action: "validate", review_id: @review.id, rating: 2}, class: "btn btn-large btn-primary" %>
-  <%= link_to "Okay", {controller: "reviews", action: "validate", review_id: @review.id, rating: 3}, class: "btn btn-large btn-primary" %>
-  <%= link_to "Easy", {controller: "reviews", action: "validate", review_id: @review.id, rating: 4}, class: "btn btn-large btn-primary" %>
+  <%= link_to "Again", {controller: "reviews", action: "fail", id: @review.id}, class: "btn btn-large btn-primary" %>
+  <%= link_to "Hard", {controller: "reviews", action: "validate", id: @review.id, rating: 2}, class: "btn btn-large btn-primary" %>
+  <%= link_to "Okay", {controller: "reviews", action: "validate", id: @review.id, rating: 3}, class: "btn btn-large btn-primary" %>
+  <%= link_to "Easy", {controller: "reviews", action: "validate", id: @review.id, rating: 4}, class: "btn btn-large btn-primary" %>
 </div>
 

@@ -1,7 +1,7 @@
 <div class="row-fluid">
-  <% if @review.due < Time.now + 1.hour %>
-    <%= link_to "Start reviewing!", @review %>
+  <% if @next.nil? and @review.nil? %>
+    You are not reviewing any character. You can mark a character for review on its page, but be sure to have learned it properly before starting reviewing.
   <% else %>
-    No reviews due. The next review is due <%= @review.due %>.
+    Good job, no review due! The next review is due in <%= time_ago_in_words(@next.due) %>.
   <% end %>
 </div>

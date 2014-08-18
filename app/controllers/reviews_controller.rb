@@ -1,10 +1,13 @@
 class ReviewsController < ApplicationController
   before_action :signed_in_user
-  before_action :correct_user, only: [:destroy]
+  before_action :correct_user, only: [:show, :answer, :fail, :fail_action, :validate, :update, :destroy]
 
-  def index    
-    @review = pick_review(current_user.reviews.first)
-    @hanzi = Hanzi.find_by(id: @review.hanzi_id)
+  def index 
+    @next = current_user.reviews.first
+    @review = pick_review(@next)
+    if !@review.nil?
+      redirect_to @review
+    end
   end
 
   def new
@@ -30,7 +33,7 @@ class ReviewsController < ApplicationController
   end
 
   def answer
-    @review = current_user.reviews.find_by(id: params[:review_id])
+    @review = current_user.reviews.find_by(id: params[:id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
     @subtitles = @hanzi.subtitles.limit(7)
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
@@ -39,7 +42,7 @@ class ReviewsController < ApplicationController
   end
 
   def fail
-    @review = current_user.reviews.find_by(id: params[:review_id])
+    @review = current_user.reviews.find_by(id: params[:id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     @reviewed_appearances_counter = 0
@@ -55,7 +58,7 @@ class ReviewsController < ApplicationController
   end
 
   def fail_action
-    @review = current_user.reviews.find_by(id: params[:review_id])
+    @review = current_user.reviews.find_by(id: params[:id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
     if params[:antedate] == 'yes'
       Hanzi.where('components LIKE ?', "%#{@hanzi.character}%").each do |h|
@@ -83,7 +86,7 @@ class ReviewsController < ApplicationController
   end
 
   def validate
-    @review = current_user.reviews.find_by(id: params[:review_id])
+    @review = current_user.reviews.find_by(id: params[:id])
     @hanzi = Hanzi.find_by(id: @review.hanzi_id)
     @rating = params[:rating]
     @factor = case @rating
@@ -99,7 +102,7 @@ class ReviewsController < ApplicationController
     @review.due = Time.now + @interval
     @review.save
     @next = pick_review(current_user.reviews.first)
-    if Time.now > @next.due
+    if !@next.nil? and Time.now > @next.due
       redirect_to review_path(@next.id)
     else 
       redirect_to reviews_path
@@ -132,20 +135,29 @@ class ReviewsController < ApplicationController
     end
 
     def pick_review(review)
-      @picked_hanzi = Hanzi.find_by(id: review.hanzi_id)
-      @candidate_has_due_component = nil
-      Review.where("due < ? AND user_id = ?", Time.now + 1.hours, current_user.id).each do |candidate|
-        @candidate_hanzi = Hanzi.find_by(id: candidate.hanzi_id)
-        @candidate = candidate
-        if !@picked_hanzi.components[@candidate_hanzi.character].nil?        
-          @candidate_has_due_component = true
-          break
+      if current_user.reviews.any?
+        @review = review
+        @picked_hanzi = Hanzi.find_by(id: @review.hanzi_id)
+        @candidate_has_due_component = nil
+        Review.where("due < ? AND user_id = ?", Time.now + 1.hours, current_user.id).each do |candidate|
+          @candidate_hanzi = Hanzi.find_by(id: candidate.hanzi_id)
+          @candidate = candidate
+          if !@picked_hanzi.components[@candidate_hanzi.character].nil?        
+            @candidate_has_due_component = true
+            break
+          end
+        end 
+        if @candidate_has_due_component.nil?
+          if !@candidate.nil? and @candidate.due < Time.now + 1.hours
+            return @review
+          else
+            return nil
+          end
+        else
+          pick_review(@candidate)
         end
-      end 
-      if @candidate_has_due_component.nil?
-        return review
       else
-        pick_review(@candidate)
+        return nil
       end
     end
 
