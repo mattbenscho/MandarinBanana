@@ -1,7 +1,17 @@
 <div class="center">
-<iframe id="ytplayer" type="text/html" width="<%= width %>" height="<%= height %>"
-	src="https://www.youtube.com/embed/<%= Movie.find(subtitle.movie_id).youtube_id %>?autoplay=<%= autoplay %>&rel=0&start=<%= subtitle.start %>&end=<%= subtitle.stop %>&showinfo=0"
-	frameborder="0"></iframe>
+
+<% @file = subtitle.filename + ".ogv" %>
+
+<% if autoplay == 1 %>
+  <video controls autoplay>
+    <source src="http://mandarinbanana-assets.s3.amazonaws.com/<%= @file %>" type="video/ogg">
+  </video>
+<% else %>
+  <video controls preload="metadata">
+    <source src="http://mandarinbanana-assets.s3.amazonaws.com/<%= @file %>" type="video/ogg">
+  </video>
+<% end %>
+
 <div class="example-sentence">
   <% subtitle.sentence.each_char do |char| %>
     <% @sentence_hanzi = Hanzi.find_by(character: char) %>

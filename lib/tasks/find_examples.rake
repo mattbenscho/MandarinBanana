@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 namespace :db do
-  desc "Feed database with Hanzis"
-  task find_examples_dntg: :environment do
-    movie_id = Movie.find_by(title: "大闹天宫").id
+  desc "Find examples for hanzis based on sentences of 小城之春"
+  task find_examples_xczc: :environment do
+    movie_id = Movie.find_by(title: "小城之春").id
     Subtitle.where(movie_id: movie_id).each do |subtitle| 
       subtitle.sentence.each_char do |char|
         @hanzi = Hanzi.find_by(character: char)

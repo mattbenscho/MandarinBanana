@@ -1,6 +1,6 @@
 namespace :db do
   desc "Create movies"
   task populate_movies: :environment do
-    movie = Movie.create(title: "大闹天宫", description: "A lovely film about a monkey king wreaking havoc in heaven.", youtube_id: "9sbeiNqOsyM")
+    movie = Movie.create(title: "小城之春", description: "Spring in a Small Town")
   end
 end
