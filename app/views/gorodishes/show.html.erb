@@ -1,21 +1,27 @@
 <% provide(:title, @gorodish.element) %>
 
 <h1>Gorodish element <%= @gorodish.element %></h1>
-<%= @gorodish.element %>
-<a href="/gorodishes/<%= @gorodish.id %>/mnemonics/new">add mnemonic</a><br/><br/>
-<% @gorodish.mnemonics.each do |mnemonic| %>
-  <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a></br>
-    <% mnemonic.images.each do |image| %>
-      <img width=100 src="<%= image.data %>">
+<h2>Existing mnemonics</h2>
+<div class="center">
+  <% if @gorodish.mnemonics.any? %>
+    <% @gorodish.mnemonics.each do |mnemonic| %>
+      <%= render mnemonic %>
     <% end %>
-  </br>
-<% end %>
-
-<%= @gorodish.element %> appears in:
-<% Pinyindefinition.where(["gbeginning = ? or gending = ?", @gorodish.element, @gorodish.element]).each do |pd| %>
-  <% @hanzi = Hanzi.find(pd.hanzi_id) %>
-  <a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a>
-<% end %>
+  <% else %>
+    There are no mnemonics for <%= @gorodish.element %> yet.
+  <% end %>
+</div>
+<br/>
+<div class="center">
+  <a href="/gorodishes/<%= @gorodish.id %>/mnemonics/new">add your own mnemonic</a>
+</div>
+<h2><%= @gorodish.element %> appears in</h2>
+<div class="center">
+  <% Pinyindefinition.where(["gbeginning = ? or gending = ?", @gorodish.element, @gorodish.element]).each do |pd| %>
+    <% @hanzi = Hanzi.find(pd.hanzi_id) %>
+    <a href="/hanzis/<%= @hanzi.id %>"><%= @hanzi.character %></a>
+  <% end %>
+</div>
 
 </br></br>
-<div><a href="/gorodishes">Gorodish index</a></div>
+<div class="center"><a href="/gorodishes">visit the Gorodish index</a></div>

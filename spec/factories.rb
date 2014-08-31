@@ -30,14 +30,14 @@ FactoryGirl.define do
   end
 
   factory :gorodish do
-    element
+    element "a1"
   end
 
   factory :mnemonic do
     aide "Lorem ipsum"
     user
-    pinyindefinition_id 1
-    gorodish_id nil
+    pinyindefinition
+    gorodish
   end
 
   factory :hanzi do
@@ -46,8 +46,10 @@ FactoryGirl.define do
   end
 
   factory :pinyindefinition do
-    hanzi_id 1
+    hanzi
     definition "Lorem ipsum"
     pinyin "xx5"
+    gbeginning ""
+    gending ""
   end
 end

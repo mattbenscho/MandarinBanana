@@ -13,21 +13,22 @@ Greek deities. And for the finals: a, o, e, ai, ei, ao, ou, an, (e)n, ang, (e)ng
 front, the 2nd tone is just inside the entrance, the 3rd tone is any other location inside, the 4th tone is in the bathroom and the 5th tone is on the roof.
 </p>
 <p>
+Allmost all mnemonics precreated by me contain some hint to point to the original Gorodish element. For example, one might add the menomic "Forbidden City"
+to "(e)n" and remember it by recalling that "Forbidden" contains "en". Look for these hints if you fail to remember the mnemonic, or create your own.
+</p>
+<p>
 Basically that's it. Feel free to use any existing mnemonic, add some of your own or design your entirely own system of representations by personae!
 </p>
 </div>
 
 <h1>All Gorodishes</h1>
-<div>
+<div class="center">
 <% @all_gorodishes.each do |g| %>
   <div>
   <a href="/gorodishes/<%= g.id %>"><%= g.element %></a> - 
   <a href="/gorodishes/<%= g.id %>/mnemonics/new">add mnemonic</a><br/>
   <% g.mnemonics.each do |mnemonic| %>
-    <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a></br>
-    <% mnemonic.images.each do |image| %>
-      <img width=100 src="<%= image.data %>">
-    <% end %>
+    <%= render mnemonic %>
   <% end %>
   </div>
   </br>

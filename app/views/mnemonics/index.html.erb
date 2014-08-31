@@ -1,6 +1,7 @@
 <% provide(:title, 'Recent mnemonics') %>
 <h1>All mnemonics</h1>
 
+<div class="center">
 <%= will_paginate %>
 
   <ul class="comments">
@@ -8,15 +9,21 @@
     <li>
     <% if !mnemonic.pinyindefinition_id.nil? then %>
       <% @pydef = Pinyindefinition.find(mnemonic.pinyindefinition_id) %>
-      <%= Hanzi.find(@pydef.hanzi_id).character %> // <%= @pydef.pinyin %> // <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a>
+      <% @hanzi = Hanzi.find(@pydef.hanzi_id) %>
+      <span class="big-char">
+	<%= link_to @hanzi.character, @hanzi %>
+      </span>
+      <%= render mnemonic %>
     <% elsif !mnemonic.gorodish_id.nil? then %>
-      <%= Gorodish.find(mnemonic.gorodish_id).element %> // <%= mnemonic.aide %> - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a>
+      <% @gorodish = Gorodish.find(mnemonic.gorodish_id) %>
+      <span class="big-char">
+	<%= link_to @gorodish.element, @gorodish %>
+      </span>
+      <%= render mnemonic %>
     <% end %>
-      <% mnemonic.images.each do |image| %>
-        <img width=200 src="<%= image.data %>">
-      <% end %><br/>
     </li>
   <% end %>
   </ul>
 
 <%= will_paginate %>
+</div>

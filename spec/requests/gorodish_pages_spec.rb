@@ -3,10 +3,11 @@ require 'spec_helper'
 
 describe "GorodishPages" do
 
-  let(:gorodish) { FactoryGirl.create(:gorodish) }
+  let(:gorodish) { FactoryGirl.create(:gorodish, element: "ai1") }
+  let(:user) { FactoryGirl.create(:user) }
+  before { @mnemonic = user.mnemonics.build(aide: "Lorem ipsum", pinyindefinition: nil, gorodish: gorodish) }
+  before { @mnemonic.save }
 
-  subject { page }
-  
   describe "gorodish index" do
     
     before { visit gorodishes_path }
@@ -16,5 +17,32 @@ describe "GorodishPages" do
       expect(page).to have_selector('h1', text: "All Gorodishes")
     end
 
+    it "should have the mnemonic's aide" do
+      expect(page).to have_content(@mnemonic.aide)
+    end
+
+    describe "edit and delete links for mnemonics should not be displayed for signed out users" do
+
+      before { visit gorodishes_path }
+
+      subject { page }
+
+      it { should have_selector('a', text: 'add mnemonic') }
+      it { should have_selector('a', text: 'add a painting') }
+      it { should_not have_selector('a', text: 'edit') }
+      it { should_not have_selector('a', text: 'delete') }
+    end
+
+    describe "display the edit links for signed in users" do
+      before { sign_in user }
+      before { visit gorodishes_path }
+
+      subject { page }
+
+      it { should have_selector('a', text: 'add mnemonic') }
+      it { should have_selector('a', text: 'add a painting') }
+      it { should have_selector('a', text: 'edit') }
+      it { should have_selector('a', text: 'delete') }
+    end
   end
 end

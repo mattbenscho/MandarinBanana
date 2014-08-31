@@ -1,7 +1,7 @@
 <div class="mnemonic">
 <%= mnemonic.aide %><br/>
 <div class="signature"><span class="timestamp">- <%= User.find_by(id: mnemonic.user_id).name %>, <%= time_ago_in_words(mnemonic.created_at) %>
-  ago</span> | <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting to this mnemonic</a>
+  ago</span> | <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting</a>
   <% if signed_in? %>
     <% if current_user?(User.find_by(id: mnemonic.user_id)) || current_user.admin? %>
       | <%= link_to "edit", edit_mnemonic_path(mnemonic) %>
