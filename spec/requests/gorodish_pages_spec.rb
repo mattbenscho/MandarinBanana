@@ -43,6 +43,12 @@ describe "GorodishPages" do
       it { should have_selector('a', text: 'add a painting') }
       it { should have_selector('a', text: 'edit') }
       it { should have_selector('a', text: 'delete') }
+
+      describe "friendly forwarding back to the gorodishes index" do
+        before { click_link "delete" }
+        subject { page }
+        it { should have_selector('h1', text: "All Gorodishes") }
+      end
     end
   end
 end

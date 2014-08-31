@@ -5,5 +5,6 @@ class GorodishesController < ApplicationController
 
   def index
     @all_gorodishes = Gorodish.all
+    store_location
   end
 end

@@ -70,7 +70,7 @@ class MnemonicsController < ApplicationController
     @mnemonic = Mnemonic.find(params[:id])
     @mnemonic.destroy
     flash[:success] = "Mnemonic deleted."
-    redirect_to hanzis_url
+    redirect_back_or hanzis_url
   end
 
   def index
