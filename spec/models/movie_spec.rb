@@ -9,6 +9,6 @@ describe Movie do
   subject { movie }
 
   it { should respond_to(:title) }
-  it { should respond_to(:youtube_id) }
+  it { should respond_to(:description) }
   it { should respond_to(:subtitles) }
 end

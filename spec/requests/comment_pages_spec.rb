@@ -8,7 +8,7 @@ describe "Comment pages" do
   end
   
   let(:movie) { FactoryGirl.create(:movie) }
-  before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
+  before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
   
   before { @user.save }
   before { @subtitle.save }
@@ -29,7 +29,7 @@ describe "Comment pages" do
 
       describe "error messages" do
         before { click_button "Comment" }
-        it { should have_content('error') } 
+        it { should have_content('Comment not saved') } 
       end
     end
 

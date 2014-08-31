@@ -15,7 +15,8 @@ class CommentsController < ApplicationController
         redirect_to subtitle_path(@subtitle)
       else
         @comments = @subtitle.comments
-        render 'subtitles/show'
+        flash[:error] = "Comment not saved, please try again."
+        redirect_to subtitle_path(@subtitle)
       end
     elsif params[:comment][:topic] == "hanzi"
       @hanzi = Hanzi.find_by(id: (params[:comment][:hanzi_id]))
@@ -24,7 +25,8 @@ class CommentsController < ApplicationController
         redirect_to hanzi_path(@hanzi)
       else
         @comments = @hanzi.comments
-        render 'hanzi/show'
+        flash[:error] = "Comment not saved, please try again."
+        redirect_to hanzi_path(@hanzi)
       end
     end
   end

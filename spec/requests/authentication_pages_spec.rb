@@ -85,29 +85,6 @@ describe "Authentication" do
       end
     end
 
-    describe "in the Comments controller" do
-        
-      before do
-        @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
-      end
-      
-      let(:movie) { FactoryGirl.create(:movie) }
-      before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
-      
-      before { @user.save }
-      before { @subtitle.save }
-      
-      describe "submitting to the create action" do
-        before { post comments_path }
-        specify { response.should redirect_to(signin_path) }
-      end
-      
-      describe "submitting to the destroy action" do
-        before { delete comment_path(FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle)) }
-        specify { response.should redirect_to(signin_path) }
-      end
-    end
-    
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
@@ -134,6 +111,30 @@ describe "Authentication" do
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
         specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
+    describe "in the Comments controller" do
+        
+      before do
+        @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+      end
+      
+      let(:movie) { FactoryGirl.create(:movie) }
+      before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
+      
+      before { @user.save }
+      before { @subtitle.save }
+      
+      describe "submitting to the create action" do
+        before { post comments_path }
+        specify { response.should redirect_to(signin_path) }
+      end
+      
+      describe "submitting to the destroy action" do
+        let(:comment) { FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle, hanzi: nil) }
+        before { delete comment_path(comment) }
+        specify { response.should redirect_to(signin_path) }
       end
     end
   end

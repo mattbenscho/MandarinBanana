@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Gorodish do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:gorodish) { FactoryGirl.create(:gorodish) }
+
+  describe "it should have an element" do
+    it { should respond_to(:element) }
+  end
 end

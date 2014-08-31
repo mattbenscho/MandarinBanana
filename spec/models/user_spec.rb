@@ -120,16 +120,16 @@ describe User do
   describe "comment associations" do
 
     let(:movie) { FactoryGirl.create(:movie) }
-    before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
+    before { @subtitle = movie.subtitles.build(sentence: "大王", filename:"dntg-100-200") }
 
     before { @user.save }
     before { @subtitle.save }
 
     let!(:older_comment) do
-      FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle)
+      FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle, hanzi: nil)
     end
     let!(:newer_comment) do
-      FactoryGirl.create(:comment, user: @user, created_at: 1.hour.ago, subtitle: @subtitle)
+      FactoryGirl.create(:comment, user: @user, created_at: 1.hour.ago, subtitle: @subtitle, hanzi: nil)
     end
 
     it "should have the right comments in the right order" do

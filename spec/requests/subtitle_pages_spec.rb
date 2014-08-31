@@ -8,7 +8,7 @@ describe "SubtitlePages" do
   end
 
   let(:movie) { FactoryGirl.create(:movie) }
-  before { @subtitle = movie.subtitles.build(sentence: "大王", start: 160, stop: 170) }
+  before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
   
   before { @user.save }
   before { @subtitle.save }
@@ -17,8 +17,8 @@ describe "SubtitlePages" do
   
   describe "subtitle page" do
     
-    let!(:c1) { FactoryGirl.create(:comment, user: @user, subtitle: @subtitle, content: "Foo") }
-    let!(:c2) { FactoryGirl.create(:comment, user: @user, subtitle: @subtitle, content: "Bar") }
+    let!(:c1) { FactoryGirl.create(:comment, user: @user, subtitle: @subtitle, content: "Foo", hanzi: nil) }
+    let!(:c2) { FactoryGirl.create(:comment, user: @user, subtitle: @subtitle, content: "Bar", hanzi: nil) }
     
     before { visit subtitle_path(@subtitle) }
 
