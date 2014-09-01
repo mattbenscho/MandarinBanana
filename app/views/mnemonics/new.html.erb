@@ -8,10 +8,7 @@
     <h2>Mnemonics for <%= @gbeginning %>:</h2>
     <div class="center">
     <% @gbeginning_obj.mnemonics.each do |mnemonic| %>
-      <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
-      <% mnemonic.images.each do |image| %>
-        <img width=100 src="<%= image.data %>">
-      <% end %><br/>
+      <%= render mnemonic %>
     <% end %>
     <a href="/gorodishes/<%= @gbeninning_obj %>/mnemonics/new">add mnemonic</a></br>
     </div>
@@ -20,10 +17,7 @@
     <h2>Mnemonics for <%= @gending %>:</h2>
     <div class="center">
     <% @gending_obj.mnemonics.each do |mnemonic| %>
-      <%= mnemonic.aide %>  - <a href="/mnemonics/<%= mnemonic.id %>/images/new">add image</a><br/>
-      <% mnemonic.images.each do |image| %>
-        <img width=100 src="<%= image.data %>">
-      <% end %><br/>
+      <%= render mnemonic %>
     <% end %>
     <a href="/gorodishes/<%= @gending_obj %>/mnemonics/new">add mnemonic</a></br>
     </div>

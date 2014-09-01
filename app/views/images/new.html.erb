@@ -1,29 +1,55 @@
 <% provide(:title) %>
 
+<div class="center row">
+
 <h1>Paint something!</h1>
 
-<h2>Mnemonics</h2>
 <% if !@mnemonic.pinyindefinition_id.nil? %>
-  <% @pinyindefinition = Pinyindefinition.find_by(id: @mnemonic.pinyindefinition_id) %>
-  <% Gorodish.find_by(element: @pinyindefinition.gbeginning).mnemonics.each do |mnemonic| %>
+  <h2>Mnemonics for <%= link_to @hanzi.character, @hanzi %> - click on an image to add it to the canvas</h2>
+  <% Gorodish.find_by(element: @pydef.gbeginning).mnemonics.each do |mnemonic| %>
     <% mnemonic.images.each do |image| %>
       <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
     <% end %>
   <% end %>
-  <% Gorodish.find_by(element: @pinyindefinition.gending).mnemonics.each do |mnemonic| %>
+  <% Gorodish.find_by(element: @pydef.gending).mnemonics.each do |mnemonic| %>
     <% mnemonic.images.each do |image| %>
       <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
     <% end %>
   <% end %>
-  <% @pinyindefinition.mnemonics.each do |mnemonic| %>
-    <%= mnemonic.aide %>
+  <% @pydef.mnemonics.each do |mnemonic| %>
     <% mnemonic.images.each do |image| %>
       <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+    <% end %>
+  <% end %>
+  <% @components = @hanzi.components %>
+  <% if !@components.empty? %>
+    <% @components.each_char do |c| %>
+      <% @c = Hanzi.find_by(character: c) %>
+      <% if !@c.nil? %>
+        <% @cpydefs = Pinyindefinition.where(hanzi_id: @c.id) %>
+        <% if !@cpydefs.empty? %>
+          <% @cpydefs.each do |cpydef| %>
+            <% @submnemonics = Mnemonic.where(pinyindefinition_id: cpydef.id) %>
+	    <% if !@submnemonics.empty? %>
+              <% @submnemonics.each do |sm| %>
+                <% @subimages = Image.where(mnemonic_id: sm.id) %>
+	        <% if !@subimages.empty? %>
+  	          <% @subimages.each do |si| %>
+	            <img width="100" src="<%= si.data %>" onclick="addImage(this.src);">
+		  <% end %>
+		<% end %>
+	      <% end %>
+	    <% end %>
+	  <% end %>
+	<% end %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
 
 <% if !@mnemonic.gorodish_id.nil? %>
+  <% @gorodish = Gorodish.find_by(id: @mnemonic.gorodish_id) %>
+  <h2>Mnemonics for <%= @gorodish.element %> - click on an image to add it to the canvas</h2>
   <% Gorodish.find_by(id: @mnemonic.gorodish_id).mnemonics.each do |mnemonic| %>
     <%= mnemonic.aide %>
     <% mnemonic.images.each do |image| %>
@@ -42,5 +68,5 @@
 <%= f.submit "Save", class: "btn btn-large btn-primary"%>
 <% end %>
 
-
+</div>
 

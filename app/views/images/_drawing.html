@@ -13,22 +13,20 @@
     <div id="kineticcontainer" style="width:640px; margin:auto;">
     </div>
   </div>
-      <div class="span1">
-	<div id="brushes">
-	  Brush size:<br/>
-	  <form name="brushesForm" id="brushesForm" autocomplete="off">
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(1);">1<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(2);">2<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(3);" checked="checked">3<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(5);">5<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(7);">7<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(9);">9<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(12);">12<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(15);">15<br/>
-	    <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(20);">20<br/>
-	  </form>
-	</div>
-      </div>
+  <div class="span1">
+    <div id="brushes">
+      Brush size:<br/>
+      <form name="brushesForm" id="brushesForm" autocomplete="off">
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(1);">1<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(2);">2<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(3);" checked="checked">3<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(5);">5<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(7);">7<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(9);">9<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(12);">12<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(15);">15<br/>
+      <input type="radio" name="brushesRadio" value="1" onclick="selectBrush(20);">20<br/>
+      </form>
     </div>
   </div>
 </div>
@@ -39,157 +37,157 @@
       <input type="button" value="move" onclick="updateAction('moving');"/>
       <input type="button" value="scale" onclick="updateAction('scaling');"/>
       <input type="button" value="rotate" onclick="updateAction('rotating');"/>
-      <input type="button" value="undo" onclick="undoHistory();"/>
-      <input type="button" value="redo" onclick="redoHistory();"/>
+      <input type="button" value="undo" onclick="undoImageHistory();"/>
+      <input type="button" value="redo" onclick="redoImageHistory();"/>
       <input type="button" value="mirror" onclick="mirrorLayer();"/>
     </div>
   </div>    
 </div>    
 <div class="row">
-<div class="span12">
-<div id="palette">
-  <input type="button" value="A" onclick="updateColor('black');" style="color:black; background-color:black">
-  <input type="button" value="A" onclick="updateColor('navy');" style="color:navy; background-color:navy">
-  <input type="button" value="A" onclick="updateColor('darkblue');" style="color:darkblue; background-color:darkblue">
-  <input type="button" value="A" onclick="updateColor('mediumblue');" style="color:mediumblue; background-color:mediumblue">
-  <input type="button" value="A" onclick="updateColor('blue');" style="color:blue; background-color:blue">
-  <input type="button" value="A" onclick="updateColor('darkgreen');" style="color:darkgreen; background-color:darkgreen">
-  <input type="button" value="A" onclick="updateColor('green');" style="color:green; background-color:green">
-  <input type="button" value="A" onclick="updateColor('teal');" style="color:teal; background-color:teal">
-  <input type="button" value="A" onclick="updateColor('darkcyan');" style="color:darkcyan; background-color:darkcyan">
-  <input type="button" value="A" onclick="updateColor('deepskyblue');" style="color:deepskyblue; background-color:deepskyblue">
-  <input type="button" value="A" onclick="updateColor('darkturquoise');" style="color:darkturquoise; background-color:darkturquoise">
-  <input type="button" value="A" onclick="updateColor('mediumspringgreen');" style="color:mediumspringgreen; background-color:mediumspringgreen">
-  <input type="button" value="A" onclick="updateColor('lime');" style="color:lime; background-color:lime">
-  <input type="button" value="A" onclick="updateColor('springgreen');" style="color:springgreen; background-color:springgreen">
-  <input type="button" value="A" onclick="updateColor('aqua');" style="color:aqua; background-color:aqua">
-  <input type="button" value="A" onclick="updateColor('cyan');" style="color:cyan; background-color:cyan">
-  <input type="button" value="A" onclick="updateColor('midnightblue');" style="color:midnightblue; background-color:midnightblue">
-  <input type="button" value="A" onclick="updateColor('dodgerblue');" style="color:dodgerblue; background-color:dodgerblue">
-  <input type="button" value="A" onclick="updateColor('lightseagreen');" style="color:lightseagreen; background-color:lightseagreen">
-  <input type="button" value="A" onclick="updateColor('forestgreen');" style="color:forestgreen; background-color:forestgreen">
-  <input type="button" value="A" onclick="updateColor('seagreen');" style="color:seagreen; background-color:seagreen">
-  <input type="button" value="A" onclick="updateColor('darkslategray');" style="color:darkslategray; background-color:darkslategray">
-  <input type="button" value="A" onclick="updateColor('limegreen');" style="color:limegreen; background-color:limegreen">
-  <input type="button" value="A" onclick="updateColor('mediumseagreen');" style="color:mediumseagreen; background-color:mediumseagreen">
-  <input type="button" value="A" onclick="updateColor('turquoise');" style="color:turquoise; background-color:turquoise">
-  <input type="button" value="A" onclick="updateColor('royalblue');" style="color:royalblue; background-color:royalblue">
-  <input type="button" value="A" onclick="updateColor('steelblue');" style="color:steelblue; background-color:steelblue">
-  <input type="button" value="A" onclick="updateColor('darkslateblue');" style="color:darkslateblue; background-color:darkslateblue">
-  <input type="button" value="A" onclick="updateColor('mediumturquoise');" style="color:mediumturquoise; background-color:mediumturquoise">
-  <input type="button" value="A" onclick="updateColor('indigo');" style="color:indigo; background-color:indigo">
-  <input type="button" value="A" onclick="updateColor('darkolivegreen');" style="color:darkolivegreen; background-color:darkolivegreen">
-  <input type="button" value="A" onclick="updateColor('cadetblue');" style="color:cadetblue; background-color:cadetblue">
-  <input type="button" value="A" onclick="updateColor('cornflowerblue');" style="color:cornflowerblue; background-color:cornflowerblue">
-  <input type="button" value="A" onclick="updateColor('mediumaquamarine');" style="color:mediumaquamarine; background-color:mediumaquamarine">
-  <input type="button" value="A" onclick="updateColor('dimgray');" style="color:dimgray; background-color:dimgray">
-  <input type="button" value="A" onclick="updateColor('slateblue');" style="color:slateblue; background-color:slateblue">
-  <input type="button" value="A" onclick="updateColor('olivedrab');" style="color:olivedrab; background-color:olivedrab">
-  <input type="button" value="A" onclick="updateColor('slategray');" style="color:slategray; background-color:slategray">
-  <input type="button" value="A" onclick="updateColor('lightslategray');" style="color:lightslategray; background-color:lightslategray">
-  <input type="button" value="A" onclick="updateColor('mediumslateblue');" style="color:mediumslateblue; background-color:mediumslateblue">
-  <input type="button" value="A" onclick="updateColor('lawngreen');" style="color:lawngreen; background-color:lawngreen">
-  <input type="button" value="A" onclick="updateColor('chartreuse');" style="color:chartreuse; background-color:chartreuse">
-  <input type="button" value="A" onclick="updateColor('aquamarine');" style="color:aquamarine; background-color:aquamarine">
-  <input type="button" value="A" onclick="updateColor('maroon');" style="color:maroon; background-color:maroon">
-  <input type="button" value="A" onclick="updateColor('purple');" style="color:purple; background-color:purple">
-  <input type="button" value="A" onclick="updateColor('olive');" style="color:olive; background-color:olive">
-  <input type="button" value="A" onclick="updateColor('gray');" style="color:gray; background-color:gray">
-  <input type="button" value="A" onclick="updateColor('skyblue');" style="color:skyblue; background-color:skyblue">
-  <input type="button" value="A" onclick="updateColor('lightskyblue');" style="color:lightskyblue; background-color:lightskyblue">
-  <input type="button" value="A" onclick="updateColor('blueviolet');" style="color:blueviolet; background-color:blueviolet">
-  <input type="button" value="A" onclick="updateColor('darkred');" style="color:darkred; background-color:darkred">
-  <input type="button" value="A" onclick="updateColor('darkmagenta');" style="color:darkmagenta; background-color:darkmagenta">
-  <input type="button" value="A" onclick="updateColor('saddlebrown');" style="color:saddlebrown; background-color:saddlebrown">
-  <input type="button" value="A" onclick="updateColor('darkseagreen');" style="color:darkseagreen; background-color:darkseagreen">
-  <input type="button" value="A" onclick="updateColor('lightgreen');" style="color:lightgreen; background-color:lightgreen">
-  <input type="button" value="A" onclick="updateColor('mediumpurple');" style="color:mediumpurple; background-color:mediumpurple">
-  <input type="button" value="A" onclick="updateColor('darkviolet');" style="color:darkviolet; background-color:darkviolet">
-  <input type="button" value="A" onclick="updateColor('palegreen');" style="color:palegreen; background-color:palegreen">
-  <input type="button" value="A" onclick="updateColor('darkorchid');" style="color:darkorchid; background-color:darkorchid">
-  <input type="button" value="A" onclick="updateColor('yellowgreen');" style="color:yellowgreen; background-color:yellowgreen">
-  <input type="button" value="A" onclick="updateColor('sienna');" style="color:sienna; background-color:sienna">
-  <input type="button" value="A" onclick="updateColor('brown');" style="color:brown; background-color:brown">
-  <input type="button" value="A" onclick="updateColor('darkgray');" style="color:darkgray; background-color:darkgray">
-  <input type="button" value="A" onclick="updateColor('lightblue');" style="color:lightblue; background-color:lightblue">
-  <input type="button" value="A" onclick="updateColor('greenyellow');" style="color:greenyellow; background-color:greenyellow">
-  <input type="button" value="A" onclick="updateColor('paleturquoise');" style="color:paleturquoise; background-color:paleturquoise">
-  <input type="button" value="A" onclick="updateColor('lightsteelblue');" style="color:lightsteelblue; background-color:lightsteelblue">
-  <input type="button" value="A" onclick="updateColor('powderblue');" style="color:powderblue; background-color:powderblue">
-  <input type="button" value="A" onclick="updateColor('firebrick');" style="color:firebrick; background-color:firebrick">
-  <input type="button" value="A" onclick="updateColor('darkgoldenrod');" style="color:darkgoldenrod; background-color:darkgoldenrod">
-  <input type="button" value="A" onclick="updateColor('mediumorchid');" style="color:mediumorchid; background-color:mediumorchid">
-  <input type="button" value="A" onclick="updateColor('rosybrown');" style="color:rosybrown; background-color:rosybrown">
-  <input type="button" value="A" onclick="updateColor('darkkhaki');" style="color:darkkhaki; background-color:darkkhaki">
-  <input type="button" value="A" onclick="updateColor('silver');" style="color:silver; background-color:silver">
-  <input type="button" value="A" onclick="updateColor('mediumvioletred');" style="color:mediumvioletred; background-color:mediumvioletred">
-  <input type="button" value="A" onclick="updateColor('indianred');" style="color:indianred; background-color:indianred">
-  <input type="button" value="A" onclick="updateColor('peru');" style="color:peru; background-color:peru">
-  <input type="button" value="A" onclick="updateColor('chocolate');" style="color:chocolate; background-color:chocolate">
-  <input type="button" value="A" onclick="updateColor('tan');" style="color:tan; background-color:tan">
-  <input type="button" value="A" onclick="updateColor('lightgray');" style="color:lightgray; background-color:lightgray">
-  <input type="button" value="A" onclick="updateColor('thistle');" style="color:thistle; background-color:thistle">
-  <input type="button" value="A" onclick="updateColor('orchid');" style="color:orchid; background-color:orchid">
-  <input type="button" value="A" onclick="updateColor('goldenrod');" style="color:goldenrod; background-color:goldenrod">
-  <input type="button" value="A" onclick="updateColor('palevioletred');" style="color:palevioletred; background-color:palevioletred">
-  <input type="button" value="A" onclick="updateColor('crimson');" style="color:crimson; background-color:crimson">
-  <input type="button" value="A" onclick="updateColor('gainsboro');" style="color:gainsboro; background-color:gainsboro">
-  <input type="button" value="A" onclick="updateColor('plum');" style="color:plum; background-color:plum">
-  <input type="button" value="A" onclick="updateColor('burlywood');" style="color:burlywood; background-color:burlywood">
-  <input type="button" value="A" onclick="updateColor('lightcyan');" style="color:lightcyan; background-color:lightcyan">
-  <input type="button" value="A" onclick="updateColor('lavender');" style="color:lavender; background-color:lavender">
-  <input type="button" value="A" onclick="updateColor('darksalmon');" style="color:darksalmon; background-color:darksalmon">
-  <input type="button" value="A" onclick="updateColor('violet');" style="color:violet; background-color:violet">
-  <input type="button" value="A" onclick="updateColor('palegoldenrod');" style="color:palegoldenrod; background-color:palegoldenrod">
-  <input type="button" value="A" onclick="updateColor('lightcoral');" style="color:lightcoral; background-color:lightcoral">
-  <input type="button" value="A" onclick="updateColor('khaki');" style="color:khaki; background-color:khaki">
-  <input type="button" value="A" onclick="updateColor('aliceblue');" style="color:aliceblue; background-color:aliceblue">
-  <input type="button" value="A" onclick="updateColor('honeydew');" style="color:honeydew; background-color:honeydew">
-  <input type="button" value="A" onclick="updateColor('azure');" style="color:azure; background-color:azure">
-  <input type="button" value="A" onclick="updateColor('sandybrown');" style="color:sandybrown; background-color:sandybrown">
-  <input type="button" value="A" onclick="updateColor('wheat');" style="color:wheat; background-color:wheat">
-  <input type="button" value="A" onclick="updateColor('beige');" style="color:beige; background-color:beige">
-  <input type="button" value="A" onclick="updateColor('whitesmoke');" style="color:whitesmoke; background-color:whitesmoke">
-  <input type="button" value="A" onclick="updateColor('mintcream');" style="color:mintcream; background-color:mintcream">
-  <input type="button" value="A" onclick="updateColor('ghostwhite');" style="color:ghostwhite; background-color:ghostwhite">
-  <input type="button" value="A" onclick="updateColor('salmon');" style="color:salmon; background-color:salmon">
-  <input type="button" value="A" onclick="updateColor('antiquewhite');" style="color:antiquewhite; background-color:antiquewhite">
-  <input type="button" value="A" onclick="updateColor('linen');" style="color:linen; background-color:linen">
-  <input type="button" value="A" onclick="updateColor('lightgoldenrodyellow');" style="color:lightgoldenrodyellow; background-color:lightgoldenrodyellow">
-  <input type="button" value="A" onclick="updateColor('oldlace');" style="color:oldlace; background-color:oldlace">
-  <input type="button" value="A" onclick="updateColor('red');" style="color:red; background-color:red">
-  <input type="button" value="A" onclick="updateColor('fuchsia');" style="color:fuchsia; background-color:fuchsia">
-  <input type="button" value="A" onclick="updateColor('magenta');" style="color:magenta; background-color:magenta">
-  <input type="button" value="A" onclick="updateColor('deeppink');" style="color:deeppink; background-color:deeppink">
-  <input type="button" value="A" onclick="updateColor('orangered');" style="color:orangered; background-color:orangered">
-  <input type="button" value="A" onclick="updateColor('tomato');" style="color:tomato; background-color:tomato">
-  <input type="button" value="A" onclick="updateColor('hotpink');" style="color:hotpink; background-color:hotpink">
-  <input type="button" value="A" onclick="updateColor('coral');" style="color:coral; background-color:coral">
-  <input type="button" value="A" onclick="updateColor('darkorange');" style="color:darkorange; background-color:darkorange">
-  <input type="button" value="A" onclick="updateColor('lightsalmon');" style="color:lightsalmon; background-color:lightsalmon">
-  <input type="button" value="A" onclick="updateColor('orange');" style="color:orange; background-color:orange">
-  <input type="button" value="A" onclick="updateColor('lightpink');" style="color:lightpink; background-color:lightpink">
-  <input type="button" value="A" onclick="updateColor('pink');" style="color:pink; background-color:pink">
-  <input type="button" value="A" onclick="updateColor('gold');" style="color:gold; background-color:gold">
-  <input type="button" value="A" onclick="updateColor('peachpuff');" style="color:peachpuff; background-color:peachpuff">
-  <input type="button" value="A" onclick="updateColor('navajowhite');" style="color:navajowhite; background-color:navajowhite">
-  <input type="button" value="A" onclick="updateColor('moccasin');" style="color:moccasin; background-color:moccasin">
-  <input type="button" value="A" onclick="updateColor('bisque');" style="color:bisque; background-color:bisque">
-  <input type="button" value="A" onclick="updateColor('mistyrose');" style="color:mistyrose; background-color:mistyrose">
-  <input type="button" value="A" onclick="updateColor('blanchedalmond');" style="color:blanchedalmond; background-color:blanchedalmond">
-  <input type="button" value="A" onclick="updateColor('papayawhip');" style="color:papayawhip; background-color:papayawhip">
-  <input type="button" value="A" onclick="updateColor('lavenderblush');" style="color:lavenderblush; background-color:lavenderblush">
-  <input type="button" value="A" onclick="updateColor('seashell');" style="color:seashell; background-color:seashell">
-  <input type="button" value="A" onclick="updateColor('cornsilk');" style="color:cornsilk; background-color:cornsilk">
-  <input type="button" value="A" onclick="updateColor('lemonchiffon');" style="color:lemonchiffon; background-color:lemonchiffon">
-  <input type="button" value="A" onclick="updateColor('floralwhite');" style="color:floralwhite; background-color:floralwhite">
-  <input type="button" value="A" onclick="updateColor('snow');" style="color:snow; background-color:snow">
-  <input type="button" value="A" onclick="updateColor('yellow');" style="color:yellow; background-color:yellow">
-  <input type="button" value="A" onclick="updateColor('lightyellow');" style="color:lightyellow; background-color:lightyellow">
-  <input type="button" value="A" onclick="updateColor('ivory');" style="color:ivory; background-color:ivory">
-  <input type="button" value="A" onclick="updateColor('white');" style="color:white; background-color:white">
-</div>
-</div>
+  <div class="span12">
+    <div id="palette">
+      <input type="button" value="A" onclick="updateColor('black');" style="color:black; background-color:black">
+      <input type="button" value="A" onclick="updateColor('navy');" style="color:navy; background-color:navy">
+      <input type="button" value="A" onclick="updateColor('darkblue');" style="color:darkblue; background-color:darkblue">
+      <input type="button" value="A" onclick="updateColor('mediumblue');" style="color:mediumblue; background-color:mediumblue">
+      <input type="button" value="A" onclick="updateColor('blue');" style="color:blue; background-color:blue">
+      <input type="button" value="A" onclick="updateColor('darkgreen');" style="color:darkgreen; background-color:darkgreen">
+      <input type="button" value="A" onclick="updateColor('green');" style="color:green; background-color:green">
+      <input type="button" value="A" onclick="updateColor('teal');" style="color:teal; background-color:teal">
+      <input type="button" value="A" onclick="updateColor('darkcyan');" style="color:darkcyan; background-color:darkcyan">
+      <input type="button" value="A" onclick="updateColor('deepskyblue');" style="color:deepskyblue; background-color:deepskyblue">
+      <input type="button" value="A" onclick="updateColor('darkturquoise');" style="color:darkturquoise; background-color:darkturquoise">
+      <input type="button" value="A" onclick="updateColor('mediumspringgreen');" style="color:mediumspringgreen; background-color:mediumspringgreen">
+      <input type="button" value="A" onclick="updateColor('lime');" style="color:lime; background-color:lime">
+      <input type="button" value="A" onclick="updateColor('springgreen');" style="color:springgreen; background-color:springgreen">
+      <input type="button" value="A" onclick="updateColor('aqua');" style="color:aqua; background-color:aqua">
+      <input type="button" value="A" onclick="updateColor('cyan');" style="color:cyan; background-color:cyan">
+      <input type="button" value="A" onclick="updateColor('midnightblue');" style="color:midnightblue; background-color:midnightblue">
+      <input type="button" value="A" onclick="updateColor('dodgerblue');" style="color:dodgerblue; background-color:dodgerblue">
+      <input type="button" value="A" onclick="updateColor('lightseagreen');" style="color:lightseagreen; background-color:lightseagreen">
+      <input type="button" value="A" onclick="updateColor('forestgreen');" style="color:forestgreen; background-color:forestgreen">
+      <input type="button" value="A" onclick="updateColor('seagreen');" style="color:seagreen; background-color:seagreen">
+      <input type="button" value="A" onclick="updateColor('darkslategray');" style="color:darkslategray; background-color:darkslategray">
+      <input type="button" value="A" onclick="updateColor('limegreen');" style="color:limegreen; background-color:limegreen">
+      <input type="button" value="A" onclick="updateColor('mediumseagreen');" style="color:mediumseagreen; background-color:mediumseagreen">
+      <input type="button" value="A" onclick="updateColor('turquoise');" style="color:turquoise; background-color:turquoise">
+      <input type="button" value="A" onclick="updateColor('royalblue');" style="color:royalblue; background-color:royalblue">
+      <input type="button" value="A" onclick="updateColor('steelblue');" style="color:steelblue; background-color:steelblue">
+      <input type="button" value="A" onclick="updateColor('darkslateblue');" style="color:darkslateblue; background-color:darkslateblue">
+      <input type="button" value="A" onclick="updateColor('mediumturquoise');" style="color:mediumturquoise; background-color:mediumturquoise">
+      <input type="button" value="A" onclick="updateColor('indigo');" style="color:indigo; background-color:indigo">
+      <input type="button" value="A" onclick="updateColor('darkolivegreen');" style="color:darkolivegreen; background-color:darkolivegreen">
+      <input type="button" value="A" onclick="updateColor('cadetblue');" style="color:cadetblue; background-color:cadetblue">
+      <input type="button" value="A" onclick="updateColor('cornflowerblue');" style="color:cornflowerblue; background-color:cornflowerblue">
+      <input type="button" value="A" onclick="updateColor('mediumaquamarine');" style="color:mediumaquamarine; background-color:mediumaquamarine">
+      <input type="button" value="A" onclick="updateColor('dimgray');" style="color:dimgray; background-color:dimgray">
+      <input type="button" value="A" onclick="updateColor('slateblue');" style="color:slateblue; background-color:slateblue">
+      <input type="button" value="A" onclick="updateColor('olivedrab');" style="color:olivedrab; background-color:olivedrab">
+      <input type="button" value="A" onclick="updateColor('slategray');" style="color:slategray; background-color:slategray">
+      <input type="button" value="A" onclick="updateColor('lightslategray');" style="color:lightslategray; background-color:lightslategray">
+      <input type="button" value="A" onclick="updateColor('mediumslateblue');" style="color:mediumslateblue; background-color:mediumslateblue">
+      <input type="button" value="A" onclick="updateColor('lawngreen');" style="color:lawngreen; background-color:lawngreen">
+      <input type="button" value="A" onclick="updateColor('chartreuse');" style="color:chartreuse; background-color:chartreuse">
+      <input type="button" value="A" onclick="updateColor('aquamarine');" style="color:aquamarine; background-color:aquamarine">
+      <input type="button" value="A" onclick="updateColor('maroon');" style="color:maroon; background-color:maroon">
+      <input type="button" value="A" onclick="updateColor('purple');" style="color:purple; background-color:purple">
+      <input type="button" value="A" onclick="updateColor('olive');" style="color:olive; background-color:olive">
+      <input type="button" value="A" onclick="updateColor('gray');" style="color:gray; background-color:gray">
+      <input type="button" value="A" onclick="updateColor('skyblue');" style="color:skyblue; background-color:skyblue">
+      <input type="button" value="A" onclick="updateColor('lightskyblue');" style="color:lightskyblue; background-color:lightskyblue">
+      <input type="button" value="A" onclick="updateColor('blueviolet');" style="color:blueviolet; background-color:blueviolet">
+      <input type="button" value="A" onclick="updateColor('darkred');" style="color:darkred; background-color:darkred">
+      <input type="button" value="A" onclick="updateColor('darkmagenta');" style="color:darkmagenta; background-color:darkmagenta">
+      <input type="button" value="A" onclick="updateColor('saddlebrown');" style="color:saddlebrown; background-color:saddlebrown">
+      <input type="button" value="A" onclick="updateColor('darkseagreen');" style="color:darkseagreen; background-color:darkseagreen">
+      <input type="button" value="A" onclick="updateColor('lightgreen');" style="color:lightgreen; background-color:lightgreen">
+      <input type="button" value="A" onclick="updateColor('mediumpurple');" style="color:mediumpurple; background-color:mediumpurple">
+      <input type="button" value="A" onclick="updateColor('darkviolet');" style="color:darkviolet; background-color:darkviolet">
+      <input type="button" value="A" onclick="updateColor('palegreen');" style="color:palegreen; background-color:palegreen">
+      <input type="button" value="A" onclick="updateColor('darkorchid');" style="color:darkorchid; background-color:darkorchid">
+      <input type="button" value="A" onclick="updateColor('yellowgreen');" style="color:yellowgreen; background-color:yellowgreen">
+      <input type="button" value="A" onclick="updateColor('sienna');" style="color:sienna; background-color:sienna">
+      <input type="button" value="A" onclick="updateColor('brown');" style="color:brown; background-color:brown">
+      <input type="button" value="A" onclick="updateColor('darkgray');" style="color:darkgray; background-color:darkgray">
+      <input type="button" value="A" onclick="updateColor('lightblue');" style="color:lightblue; background-color:lightblue">
+      <input type="button" value="A" onclick="updateColor('greenyellow');" style="color:greenyellow; background-color:greenyellow">
+      <input type="button" value="A" onclick="updateColor('paleturquoise');" style="color:paleturquoise; background-color:paleturquoise">
+      <input type="button" value="A" onclick="updateColor('lightsteelblue');" style="color:lightsteelblue; background-color:lightsteelblue">
+      <input type="button" value="A" onclick="updateColor('powderblue');" style="color:powderblue; background-color:powderblue">
+      <input type="button" value="A" onclick="updateColor('firebrick');" style="color:firebrick; background-color:firebrick">
+      <input type="button" value="A" onclick="updateColor('darkgoldenrod');" style="color:darkgoldenrod; background-color:darkgoldenrod">
+      <input type="button" value="A" onclick="updateColor('mediumorchid');" style="color:mediumorchid; background-color:mediumorchid">
+      <input type="button" value="A" onclick="updateColor('rosybrown');" style="color:rosybrown; background-color:rosybrown">
+      <input type="button" value="A" onclick="updateColor('darkkhaki');" style="color:darkkhaki; background-color:darkkhaki">
+      <input type="button" value="A" onclick="updateColor('silver');" style="color:silver; background-color:silver">
+      <input type="button" value="A" onclick="updateColor('mediumvioletred');" style="color:mediumvioletred; background-color:mediumvioletred">
+      <input type="button" value="A" onclick="updateColor('indianred');" style="color:indianred; background-color:indianred">
+      <input type="button" value="A" onclick="updateColor('peru');" style="color:peru; background-color:peru">
+      <input type="button" value="A" onclick="updateColor('chocolate');" style="color:chocolate; background-color:chocolate">
+      <input type="button" value="A" onclick="updateColor('tan');" style="color:tan; background-color:tan">
+      <input type="button" value="A" onclick="updateColor('lightgray');" style="color:lightgray; background-color:lightgray">
+      <input type="button" value="A" onclick="updateColor('thistle');" style="color:thistle; background-color:thistle">
+      <input type="button" value="A" onclick="updateColor('orchid');" style="color:orchid; background-color:orchid">
+      <input type="button" value="A" onclick="updateColor('goldenrod');" style="color:goldenrod; background-color:goldenrod">
+      <input type="button" value="A" onclick="updateColor('palevioletred');" style="color:palevioletred; background-color:palevioletred">
+      <input type="button" value="A" onclick="updateColor('crimson');" style="color:crimson; background-color:crimson">
+      <input type="button" value="A" onclick="updateColor('gainsboro');" style="color:gainsboro; background-color:gainsboro">
+      <input type="button" value="A" onclick="updateColor('plum');" style="color:plum; background-color:plum">
+      <input type="button" value="A" onclick="updateColor('burlywood');" style="color:burlywood; background-color:burlywood">
+      <input type="button" value="A" onclick="updateColor('lightcyan');" style="color:lightcyan; background-color:lightcyan">
+      <input type="button" value="A" onclick="updateColor('lavender');" style="color:lavender; background-color:lavender">
+      <input type="button" value="A" onclick="updateColor('darksalmon');" style="color:darksalmon; background-color:darksalmon">
+      <input type="button" value="A" onclick="updateColor('violet');" style="color:violet; background-color:violet">
+      <input type="button" value="A" onclick="updateColor('palegoldenrod');" style="color:palegoldenrod; background-color:palegoldenrod">
+      <input type="button" value="A" onclick="updateColor('lightcoral');" style="color:lightcoral; background-color:lightcoral">
+      <input type="button" value="A" onclick="updateColor('khaki');" style="color:khaki; background-color:khaki">
+      <input type="button" value="A" onclick="updateColor('aliceblue');" style="color:aliceblue; background-color:aliceblue">
+      <input type="button" value="A" onclick="updateColor('honeydew');" style="color:honeydew; background-color:honeydew">
+      <input type="button" value="A" onclick="updateColor('azure');" style="color:azure; background-color:azure">
+      <input type="button" value="A" onclick="updateColor('sandybrown');" style="color:sandybrown; background-color:sandybrown">
+      <input type="button" value="A" onclick="updateColor('wheat');" style="color:wheat; background-color:wheat">
+      <input type="button" value="A" onclick="updateColor('beige');" style="color:beige; background-color:beige">
+      <input type="button" value="A" onclick="updateColor('whitesmoke');" style="color:whitesmoke; background-color:whitesmoke">
+      <input type="button" value="A" onclick="updateColor('mintcream');" style="color:mintcream; background-color:mintcream">
+      <input type="button" value="A" onclick="updateColor('ghostwhite');" style="color:ghostwhite; background-color:ghostwhite">
+      <input type="button" value="A" onclick="updateColor('salmon');" style="color:salmon; background-color:salmon">
+      <input type="button" value="A" onclick="updateColor('antiquewhite');" style="color:antiquewhite; background-color:antiquewhite">
+      <input type="button" value="A" onclick="updateColor('linen');" style="color:linen; background-color:linen">
+      <input type="button" value="A" onclick="updateColor('lightgoldenrodyellow');" style="color:lightgoldenrodyellow; background-color:lightgoldenrodyellow">
+      <input type="button" value="A" onclick="updateColor('oldlace');" style="color:oldlace; background-color:oldlace">
+      <input type="button" value="A" onclick="updateColor('red');" style="color:red; background-color:red">
+      <input type="button" value="A" onclick="updateColor('fuchsia');" style="color:fuchsia; background-color:fuchsia">
+      <input type="button" value="A" onclick="updateColor('magenta');" style="color:magenta; background-color:magenta">
+      <input type="button" value="A" onclick="updateColor('deeppink');" style="color:deeppink; background-color:deeppink">
+      <input type="button" value="A" onclick="updateColor('orangered');" style="color:orangered; background-color:orangered">
+      <input type="button" value="A" onclick="updateColor('tomato');" style="color:tomato; background-color:tomato">
+      <input type="button" value="A" onclick="updateColor('hotpink');" style="color:hotpink; background-color:hotpink">
+      <input type="button" value="A" onclick="updateColor('coral');" style="color:coral; background-color:coral">
+      <input type="button" value="A" onclick="updateColor('darkorange');" style="color:darkorange; background-color:darkorange">
+      <input type="button" value="A" onclick="updateColor('lightsalmon');" style="color:lightsalmon; background-color:lightsalmon">
+      <input type="button" value="A" onclick="updateColor('orange');" style="color:orange; background-color:orange">
+      <input type="button" value="A" onclick="updateColor('lightpink');" style="color:lightpink; background-color:lightpink">
+      <input type="button" value="A" onclick="updateColor('pink');" style="color:pink; background-color:pink">
+      <input type="button" value="A" onclick="updateColor('gold');" style="color:gold; background-color:gold">
+      <input type="button" value="A" onclick="updateColor('peachpuff');" style="color:peachpuff; background-color:peachpuff">
+      <input type="button" value="A" onclick="updateColor('navajowhite');" style="color:navajowhite; background-color:navajowhite">
+      <input type="button" value="A" onclick="updateColor('moccasin');" style="color:moccasin; background-color:moccasin">
+      <input type="button" value="A" onclick="updateColor('bisque');" style="color:bisque; background-color:bisque">
+      <input type="button" value="A" onclick="updateColor('mistyrose');" style="color:mistyrose; background-color:mistyrose">
+      <input type="button" value="A" onclick="updateColor('blanchedalmond');" style="color:blanchedalmond; background-color:blanchedalmond">
+      <input type="button" value="A" onclick="updateColor('papayawhip');" style="color:papayawhip; background-color:papayawhip">
+      <input type="button" value="A" onclick="updateColor('lavenderblush');" style="color:lavenderblush; background-color:lavenderblush">
+      <input type="button" value="A" onclick="updateColor('seashell');" style="color:seashell; background-color:seashell">
+      <input type="button" value="A" onclick="updateColor('cornsilk');" style="color:cornsilk; background-color:cornsilk">
+      <input type="button" value="A" onclick="updateColor('lemonchiffon');" style="color:lemonchiffon; background-color:lemonchiffon">
+      <input type="button" value="A" onclick="updateColor('floralwhite');" style="color:floralwhite; background-color:floralwhite">
+      <input type="button" value="A" onclick="updateColor('snow');" style="color:snow; background-color:snow">
+      <input type="button" value="A" onclick="updateColor('yellow');" style="color:yellow; background-color:yellow">
+      <input type="button" value="A" onclick="updateColor('lightyellow');" style="color:lightyellow; background-color:lightyellow">
+      <input type="button" value="A" onclick="updateColor('ivory');" style="color:ivory; background-color:ivory">
+      <input type="button" value="A" onclick="updateColor('white');" style="color:white; background-color:white">
+    </div>
+  </div>
 </div>
 <script>
 /*! KineticJS v4.7.4 2013-11-08 http://www.kineticjs.com by Eric Rowell @ericdrowell - MIT License https://github.com/ericdrowell/KineticJS/wiki/License*/
@@ -219,8 +217,8 @@ var newline;
 var points = [];
 var color = "black";
 var action = "drawing";
-var historyStep = 0;
-var history = [];
+var imageHistoryStep = 0;
+var imageHistory = [];
 var layerIdCounter = 0;
 var rectIdCounter = 0;
 var currentLayerId = "L0";
@@ -241,13 +239,13 @@ function addLayers (number) {
     redrawLayerForm();
 }
 	
-function makeHistory() {
-    historyStep++;
-    if (historyStep < history.length) {
-        history.length = historyStep;
+function makeImageHistory() {
+    imageHistoryStep++;
+    if (imageHistoryStep < imageHistory.length) {
+        imageHistory.length = imageHistoryStep;
     }
     var json = layer.toJSON();
-    history.push(json);
+    imageHistory.push(json);
     setimagedata();
     stage.draw();
 }
@@ -258,15 +256,15 @@ function searcharray(arr, obj) {
     }
 }
 
-function undoHistory() {
-    if (historyStep > 0) {
-        historyStep--;
+function undoImageHistory() {
+    if (imageHistoryStep > 0) {
+        imageHistoryStep--;
 	var steps = searcharray(ahierarchy,layer.getId());
 	ahierarchy.splice(searcharray(ahierarchy,layer.getId()), 1);
 	var layerid = layer.getId();
         layer.destroy();
 	rectIdCounter++;
-        layer = Kinetic.Node.create(history[historyStep], 'container')
+        layer = Kinetic.Node.create(imageHistory[imageHistoryStep], 'container')
 	var dragrect = new Kinetic.Rect({width: stage.getWidth(), height: stage.getHeight(), id: 'Rec'+rectIdCounter});
 	layer.add(dragrect);
 	layer.setListening(false);
@@ -283,15 +281,15 @@ function undoHistory() {
     }
 }
 
-function redoHistory() {
-    if (historyStep < history.length-1) {
-        historyStep++;
+function redoImageHistory() {
+    if (imageHistoryStep < imageHistory.length-1) {
+        imageHistoryStep++;
 	var steps = searcharray(ahierarchy,layer.getId());
 	ahierarchy.splice(searcharray(ahierarchy,layer.getId()), 1);
 	var layerid = layer.getId();
         layer.destroy();
 	rectIdCounter++;
-        layer = Kinetic.Node.create(history[historyStep], 'container')
+        layer = Kinetic.Node.create(imageHistory[imageHistoryStep], 'container')
 	var dragrect = new Kinetic.Rect({width: stage.getWidth(), height: stage.getHeight(), id: 'Rec'+rectIdCounter});
 	layer.add(dragrect);
 	layer.setListening(false);
@@ -360,8 +358,8 @@ function selectLayer(string) {
     layer = stage.find(eval('\'#'+string+'\''))[0];
     currentLayerId = string;
     updateAction(action);
-    history = [];
-    historyStep = 0;
+    imageHistory = [];
+    imageHistoryStep = 0;
 }
 
 function selectBrush(i) {
@@ -407,7 +405,7 @@ function addImage(imagesrc) {
     var image = new Kinetic.Image({image: imageObj});
     layer.add(image);
     imageObj.src = imagesrc;
-    makeHistory();
+    makeImageHistory();
 }
 
 stage.on('contentMousedown', function() {
@@ -460,12 +458,12 @@ stage.on('contentMousemove', function() {
 stage.on('contentMouseup', function() {
     isMousedown = false;
     layer.draw();
-    makeHistory();
+    makeImageHistory();
 });
 
 addLayers(9);
 selectLayer("L4");
 redrawLayerForm();
-makeHistory();
+makeImageHistory();
 stage.draw();
 </script>

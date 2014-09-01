@@ -22,6 +22,7 @@ class HanzisController < ApplicationController
     @topic = "hanzi"
     @topic_id = @hanzi.id
     @stroke_order = check_stroke_order(@hanzi.character)
+    store_location
   end
 
   def edit

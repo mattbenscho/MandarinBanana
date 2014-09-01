@@ -14,6 +14,6 @@
 <br/>
 <% end %>
 <% mnemonic.images.each do |image| %>
-  <img width=200 src="<%= image.data %>">
+  <%= render partial: "images/image", locals: {width: 120, image: image} %>
 <% end %><br/>
 </div>

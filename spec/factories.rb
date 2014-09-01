@@ -42,15 +42,15 @@ FactoryGirl.define do
 
   factory :hanzi do
     character "大"
-    components "一人"
+    components ""
   end
 
   factory :pinyindefinition do
     hanzi
-    definition "Lorem ipsum"
-    pinyin "xx5"
-    gbeginning ""
-    gending ""
+    definition "big"
+    pinyin "da4"
+    gbeginning "d"
+    gending "a4"
   end
 
   factory :review do
@@ -58,4 +58,5 @@ FactoryGirl.define do
     user
     due Time.now
     failed 0
+  end
 end

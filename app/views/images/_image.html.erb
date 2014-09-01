@@ -1,5 +1,15 @@
-<li>
-  <span>
-    <%= User.find_by(id: image.user_id).name %> painted <%= time_ago_in_words(image.created_at) %> ago:
-  </span><img src="<%= image.data %>" alt="image painted by <%= User.find_by(id: image.user_id).name %>">
-</li>
+<% @user = User.find_by(id: image.user_id) %>
+<div class="center image">
+  <div>
+    <a href="<%= image.data %>"><img src="<%= image.data %>" alt="image painted by <%= @user.name %>" width="<%= width %>px"></a>
+  </div>
+  <div><span class="timestamp">by <%= @user.name %>, <%= time_ago_in_words(image.created_at) %>
+      ago</span>
+    <% if signed_in? %>
+      <% if current_user?(User.find_by(id: image.user_id)) || current_user.admin? %>
+        <br/><%= link_to "delete", image, method: :delete, data: { confirm: "Are you sure?" }  %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
