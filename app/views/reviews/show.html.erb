@@ -26,3 +26,6 @@
   <%= link_to "Show answer", {controller: "reviews", action: "answer", id: @review.id}, class: "btn btn-large btn-primary" %>
 </div>
 
+<div id="meter">
+  <span style="width: <%= @progress %>%">&nbsp;</span>
+</div>

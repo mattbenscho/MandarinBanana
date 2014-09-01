@@ -52,4 +52,10 @@ FactoryGirl.define do
     gbeginning ""
     gending ""
   end
+
+  factory :review do
+    hanzi
+    user
+    due Time.now
+    failed 0
 end

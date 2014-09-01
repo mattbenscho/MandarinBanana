@@ -309,3 +309,18 @@ aside {
     float: right;
   }
 }
+
+/* reviews */
+
+#meter {
+  height: 3px;
+  position: relative;
+  background: #DDD;
+  padding: 0px;  
+  margin: 10px 0px 10px;
+  span {
+    display: block;
+    height: 100%;
+    background-color: #08C;
+  }
+}
