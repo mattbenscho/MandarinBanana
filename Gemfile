@@ -9,6 +9,8 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
+gem 'unicorn', '4.8.3'
+gem 'rack-timeout', '0.0.4'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
