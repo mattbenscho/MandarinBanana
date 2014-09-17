@@ -1,6 +1,5 @@
 class Subtitle < ActiveRecord::Base
   belongs_to :movie
-
   validates :sentence, presence: true
   validates :filename, presence: true, uniqueness: true
   validates :movie_id, presence: true

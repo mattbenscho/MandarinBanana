@@ -9,19 +9,16 @@
       <span class="timestamp">
 	<%= User.find_by(id: comment.user_id).name %> wrote <%= time_ago_in_words(comment.created_at) %> ago about
 	<% if !comment.subtitle_id.nil? %>
-          <% if Subtitle.find_by(id: comment.subtitle_id).present? %>
-	    "<a href="/subtitles/<%= Subtitle.find_by(id: comment.subtitle_id).id %>"><%= Subtitle.find_by(id: comment.subtitle_id).sentence %></a>":
-	  <% else %>
-            <%= 'a deleted subtitle' %>:
-          <% end %>
+	  "<a href="/subtitles/<%= Subtitle.find_by(id: comment.subtitle_id).id %>"><%= Subtitle.find_by(id: comment.subtitle_id).sentence %></a>":
         <% elsif !comment.hanzi_id.nil? %>
-          <% if Hanzi.find_by(id: comment.hanzi_id).present? %>
-	    "<a href="/hanzis/<%= Hanzi.find_by(id: comment.hanzi_id).id %>"><%= Hanzi.find_by(id: comment.hanzi_id).character %></a>":
-	  <% else %>
-            <%= 'a deleted hanzi' %>:
-	  <% end %>
+	  "<a href="/hanzis/<%= Hanzi.find_by(id: comment.hanzi_id).id %>"><%= Hanzi.find_by(id: comment.hanzi_id).character %></a>":
 	<% end %>
       </span><span class="content"><%= comment.content %></span>
+      <% if signed_in? %>
+        <% if current_user?(User.find_by(id: comment.user_id)) || current_user.admin? %>
+          | <%= link_to "delete", comment, method: :delete, data: { confirm: "Are you sure?" }  %>
+        <% end %>
+      <% end %>
     </li>
   <% end %>
 </ul>

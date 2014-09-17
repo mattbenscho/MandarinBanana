@@ -32,6 +32,10 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    flash[:success] = "Comment deleted."
+    redirect_back_or comments_url
   end
 
   private
@@ -39,4 +43,10 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:content,:subtitle_id,:hanzi_id)
     end
+
+    def correct_user
+      @user = User.find(Comment.find(params[:id]).user_id)
+      redirect_to(root_url) unless current_user?(@user)
+    end
+
 end

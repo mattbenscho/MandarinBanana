@@ -8,18 +8,28 @@ describe "Comment pages" do
   end
   
   let(:movie) { FactoryGirl.create(:movie) }
-  before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
-  
-  before { @user.save }
-  before { @subtitle.save }
+  let(:hanzi) { FactoryGirl.create(:hanzi) }
+
+  before do
+    @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200")
+    @user.save
+    @subtitle.save
+    @comment = Comment.new(content: "Lorem Ipsum", user_id: @user.id, subtitle_id: @subtitle.id)
+    @comment.save
+    @hanzicomment = hanzi.comments.build(content: "Lorem Ipsum", user_id: @user.id, hanzi_id: hanzi.id)
+    @hanzicomment.save
+  end
 
   subject { page }
 
-  let(:user) { FactoryGirl.create(:user) }
-  before { sign_in user }
-
   describe "comment creation" do
-    before { visit subtitle_path(@subtitle) }
+
+    let(:user) { FactoryGirl.create(:user) }
+
+    before do
+      sign_in user
+      visit subtitle_path(@subtitle)
+    end
 
     describe "with invalid information" do
 
@@ -38,6 +48,80 @@ describe "Comment pages" do
       before { fill_in 'comment_content', with: "Lorem ipsum" }
       it "should create a comment" do
         expect { click_button "Comment" }.to change(Comment, :count).by(1)
+      end
+    end
+  end
+
+  describe "comment deletion for a subtitle comment" do
+
+    before do
+      sign_in @user
+      visit subtitle_path(@subtitle)
+    end
+
+    describe "as anonymous visitor" do
+      before do
+        click_link "Sign out"
+        visit subtitle_path(@subtitle)
+      end
+      it { should_not have_link('delete') }
+    end
+
+    describe "as the comment author" do
+      it { should have_link('delete') }
+      it "should be able to delete another user" do
+        expect do
+          click_link('delete', match: :first)
+        end.to change(Comment, :count).by(-1)
+      end
+    end
+
+    describe "as another user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        sign_in user
+        visit subtitle_path(@subtitle)
+      end
+
+      describe "without delete link" do
+        it { should_not have_link('delete') }
+      end
+    end
+  end
+
+  describe "comment deletion for a hanzi comment" do
+
+    before do
+      sign_in @user
+      visit hanzi_path(hanzi)
+    end
+
+    describe "as anonymous visitor" do
+      before do
+        click_link "Sign out"
+        visit hanzi_path(hanzi)
+      end
+      it { should_not have_link('delete') }
+    end
+
+    describe "as the comment author" do
+      it { should have_link('delete') }
+      it "should be able to delete another user" do
+        expect do
+          click_link('delete', match: :first)
+        end.to change(Comment, :count).by(-1)
+      end
+    end
+
+    describe "as another user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        sign_in user
+        visit hanzi_path(hanzi)
+      end
+
+      describe "without delete link" do
+        it { should_not have_link('delete') }
       end
     end
   end
