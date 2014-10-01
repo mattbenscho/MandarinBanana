@@ -35,6 +35,10 @@ textarea {
   }
 }
 
+.left {
+  text-align: left;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -323,6 +327,24 @@ aside {
     height: 100%;
     background-color: #08C;
   }
+}
+
+.selected {
+  background-color: paleturquoise;
+}
+
+.option {
+  padding: 6px 12px;
+  display: inline;
+}
+
+.optionradiobutton {
+  display: none;
+}
+
+.antedate {
+  padding: 6px 12px;
+  display: inline;
 }
 
 /* images */

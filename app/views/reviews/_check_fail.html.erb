@@ -1,0 +1,68 @@
+<% @review = Review.find_by(id: review_id) %>
+<% @hanzi = Hanzi.find_by(id: @review.hanzi_id) %>
+<% @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%") %>
+<% @reviewed_appearances_counter = 0 %>
+<% @unknown_appearances = "" %>
+<% @appearances.each do |a| %>
+  <% @is_being_reviewed = Review.find_by(hanzi_id: a.id) %>
+  <% if @is_being_reviewed.nil? %>
+    <% @unknown_appearances += a.character %>
+  <% else %>
+    <% @reviewed_appearances_counter += 1 %>
+  <% end %>
+<% end %>
+
+<h3>Here's how to remember <%= link_to @hanzi.character, @hanzi %>:</h3>
+
+<%= render partial: "hanzis/hanzi", locals: {hanzi: @hanzi} %>
+
+<% if !@stroke_order.nil? %>
+<h2>Wikimedia Commons:Stroke Order Project</h2>
+  <div class="row-fluid text-center">
+    <a href="http://commons.wikimedia.org/wiki/Commons:Stroke_Order_Project" target="_blank">
+      <%= image_tag @stroke_order %>
+    </a>
+  </div>
+<% end %>
+
+<h2>You failed to identify this character <%= pluralize @review.failed+1, 'time' %></h2>
+
+<input type="hidden" name="id" value="<%= @review.id %>">
+
+<input type="hidden" name="to_fail_id<%= @counter %>" value="<%= @review.id %>">
+
+<% if @reviewed_appearances_counter > 0 %>
+  <p>Do you want to antedate the reviews for the <%= pluralize @reviewed_appearances_counter, 'character' %> it appears in?
+    <%= radio_button_tag 'antedate' + @review.id.to_s, "yes", true, id: "antedate_yes_" + @hanzi.character, class: "antedate" %><%= label_tag 'antedate' + "yes",
+    "yes", for: "antedate_yes_" + @hanzi.character, class: "antedate" %>
+    <%= radio_button_tag 'antedate' + @review.id.to_s, "no", false, id: "antedate_no_" + @hanzi.character, class: "antedate" %><%= label_tag 'antedate' + "no", "no", for:
+    "antedate_no_" + @hanzi.character, class: "antedate" %>
+  </p>
+<% end %>
+
+<% if !@unknown_appearances.empty? %>
+  <p>
+    Maybe you also want to review one of these characters: <% @unknown_appearances.each_char do |c| %>
+      <% @c_char = Hanzi.find_by(character: c) %>
+      <%= link_to @c_char.character, @c_char, target: "_blank" %>
+    <% end %>
+  </p> 
+<% end %>
+
+<% if !@hanzi.components.empty? %>
+  <p>
+    Do you want to antedate one of its components?<br/>    
+    <% @hanzi.components.each_char do |char| %>
+      <% @c_char = Hanzi.find_by(character: char) %>
+      <% @c_review = Review.find_by(hanzi_id: @c_char.id) %>
+      <% if !@c_review.nil? %>
+        <span><%= check_box_tag("char" + char) %> <%= char %></span><br/>
+      <% else %>
+        <span>You're not reviewing <%= link_to @hanzi.character, @hanzi, target: "_blank" %>'s component <%= link_to @c_char.character, @c_char, target:
+      "_blank" %>.<br/>
+      <% end %>
+    <% end %>
+  </p>
+<% end %>
+
+<hr>

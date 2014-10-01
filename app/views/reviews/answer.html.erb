@@ -2,6 +2,14 @@
   <%= link_to @hanzi.character, @hanzi %><br/>
 </h1>
 
+<div>Your answer: <%= @answer %></div>
+
+<% if @correct %>
+  <div>You are right!</div>
+<% else %>
+  <div>You are wrong!</div>
+<% end %>
+
 <%= render partial: "hanzis/hanzi", locals: {hanzi: @hanzi} %>
 
 <% if !@stroke_order.nil? %>

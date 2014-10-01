@@ -19,7 +19,12 @@
       <div class="unknown-char">
         <span class="big-char">
 	  <% if replace %>
-            <%= link_to @sentence_hanzi.character.gsub(@hanzi.character, '[?]'), @sentence_hanzi %>
+	    <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
+	    <% if @sub_review.nil? || @sub_review.due > Time.now %>
+              <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
+	    <% else %>
+              <%= link_to '[?]', @sentence_hanzi %>
+	    <% end %>
           <% else %>
             <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
           <% end %>
@@ -28,10 +33,13 @@
           <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
             <%= pd.pinyin %></br>
           <% end %>
-	<% elsif reviewing && @hanzi.id == @sentence_hanzi.id %>
-	  <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
-            <%= pd.pinyin %></br>
-          <% end %>
+	<% elsif reviewing %>
+	  <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
+	  <% if !@sub_review.nil? && @sub_review.due < Time.now %>
+  	    <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+              <%= pd.pinyin %></br>
+            <% end %>
+	  <% end %>
         <% end %>
       </div>
     <% else %>

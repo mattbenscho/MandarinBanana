@@ -1,29 +1,177 @@
-<div class="row-fluid, center">
-  <%= render partial: "subtitles/subtitle", collection: @subtitles, locals: {morelink: true, replace: true, autoplay: 0, width: 200, height: 200, reviewing: true} %>
-</div>
-
-<% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
-  <div class="row-fluid">
-    <div class="span2 pagination-centered">
-      <b><%= pinyindefinition.pinyin %>
-      <% if pinyindefinition.gbeginning.present? %>
-        | <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning
-      %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
-      <% end %>
-    </b></div>
-    <div class="span10">
-      <%= pinyindefinition.definition.gsub @hanzi.character, '[?]' %> | <a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">add a mnemonic for this meaning of [?]</a>
-      <% if signed_in? && current_user.admin? %>
-        | <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
-        | <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "You sure?" } %>
+<div class="center">
+  <% if @subtitle %>
+    <%= render partial: "subtitles/subtitle", locals: {morelink: false, replace: true, subtitle: @subtitle, autoplay: 0, width: 640, height: 390, reviewing: true} %>
+    <%= form_tag("/answer", method: "get") do %>
+      <%= hidden_field_tag(:id, @review.id) %>
+      <%= hidden_field_tag(:subtitle_id, @subtitle.id) %>
+      <% counter = 0 %>
+      <% @subtitle.sentence.each_char do |char| %>
+        <% counter += 1 %>
+        <% @sentence_hanzi = Hanzi.find_by(character: char) %>
+        <% if !@sentence_hanzi.nil? %>
+          <% @s_h_review = current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id) %>
+          <% if !@s_h_review.nil? %>
+            <% if @s_h_review.due < Time.now %>
+              <script>
+                $(document).ready(function() {
+                  $(".char<%= counter %>").click(function () {
+                    $(".char<%= counter %>").removeClass('selected');
+                    $(this).addClass('selected');
+                  });        
+                });
+              </script>
+              <hr>
+              <% pds = [] %>
+              <% switch = 0 %>
+                  <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+                <% if !pds.include?(pd.pinyin.gsub(/\d/, '')) %>
+                  <% if switch == 1 %>
+                     &nbsp;/&nbsp;
+                  <% end %>
+                  <b><%= pd.pinyin.gsub(/\d/, '') %></b>
+                <% end %>
+                <% switch = 1 %>
+                <% pds << pd.pinyin.gsub(/\d/, '') %>
+              <% end %>
+              <br/>
+              <% pds = [] %>
+              <% ps = [] %>
+                  <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+                <% if !pds.include?(pd.pinyin.gsub(/\d/, '')) %>
+                  <% counter2 = 0 %>
+                  <% Pinyindefinition.where('pinyin LIKE ?', "#{pd.pinyin.gsub(/\d/, '')}_").shuffle.each do |p| %>
+                    <% if !ps.include?(p.hanzi.character) %>
+                      <%= radio_button_tag("selection" + counter.to_s, p.hanzi.character, false, class: "optionradiobutton", id: "selection" + counter.to_s + p.hanzi.character) %>
+                        <%= label_tag("selection" + counter.to_s + p.hanzi.character, p.hanzi.character, class: "big-char option char" + counter.to_s, for: "selection" + counter.to_s + p.hanzi.character) %>
+                      <% counter2 += 1 %>
+                    <% end %>
+                    <% ps << p.hanzi.character %>
+                  <% end %>
+                <% end %>
+                <% pds << pd.pinyin.gsub(/\d/, '') %>
+              <% end %>
+              <hr>
+            <% else %>
+              <div class="composition-container left">
+		<div class="definition-row">
+                  <div class="single-char">
+                    <b><%= link_to @sentence_hanzi.character, @sentence_hanzi %></b>
+                  </div>
+		</div>
+	      </div>
+            <% end %>
+	  <% else %>
+            <div class="composition-container left">
+	      <div class="definition-row">
+                <div class="single-char">
+                  <b><%= link_to @sentence_hanzi.character, @sentence_hanzi %></b>
+                </div>
+                <table>
+                  <% @sentence_hanzi.pinyindefinitions.each do |pinyindefinition| %>
+                    <tr>
+		      <td style="white-space:nowrap; vertical-align: top; padding: 5px;">
+			<%= pinyindefinition.pinyin %><% if pinyindefinition.gbeginning.present? %> / <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
+			<% end %>
+		      </td>
+		      <td style="padding: 5px;">
+			<%= pinyindefinition.definition %> |
+			<a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">
+			  add a mnemonic for this meaning of <%= @sentence_hanzi.character %>
+			</a>
+			<% if signed_in? && current_user.admin? %>
+			| <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
+			| <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "Are you sure?" } %>
+			<% end %>
+			<br/>
+			<% pinyindefinition.mnemonics.each do |mnemonic| %>
+                          <%= render mnemonic %>
+			  <% end %>
+		      </td>
+                    </tr>
+                  <% end %>
+		</table>
+	      </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="composition-container">
+	    <div class="definition-row">
+              <div class="single-char">
+		<b><%= char %></b>
+              </div>
+	    </div>
+	  </div>
+	<% end %>
       <% end %>
       <br/><br/>
-    </div>
-  </div>
-<% end %>
-
-<div class="row-fluid">
-  <%= link_to "Show answer", {controller: "reviews", action: "answer", id: @review.id}, class: "btn btn-large btn-primary" %>
+      <%= submit_tag "Submit", class: "btn btn-large btn-primary" %>
+    <% end %>
+  <% else %>
+    <%= form_tag("/answer", method: "get") do %>
+      <% counter = 1 %>
+      <%= hidden_field_tag(:id, @review.id) %>
+      <div class="composition-container left">
+	<div class="definition-row">
+          <div class="single-char">
+            <b><%= link_to '[?]', @hanzi.character %></b>
+          </div>
+          <table>
+            <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
+              <tr>
+		<td style="white-space:nowrap; vertical-align: top; padding: 5px;">
+		  <%= pinyindefinition.pinyin %><% if pinyindefinition.gbeginning.present? %> / <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>"><%= pinyindefinition.gbeginning %></a><a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gending).id %>"><%= pinyindefinition.gending %></a>
+		  <% end %>
+		</td>
+		<td style="padding: 5px;">
+		  <%= pinyindefinition.definition %>
+		</td>
+              </tr>
+            <% end %>
+	  </table>
+	</div>
+      </div>
+      <script>
+	$(document).ready(function() {
+          $(".char<%= counter %>").click(function () {
+            $(".char<%= counter %>").removeClass('selected');
+            $(this).addClass('selected');
+          });        
+        });
+      </script>
+      <hr>
+      <% pds = [] %>
+      <% switch = 0 %>
+      <% @hanzi.pinyindefinitions.each do |pd| %>
+        <% if !pds.include?(pd.pinyin.gsub(/\d/, '')) %>
+          <% if switch == 1 %>
+            &nbsp;/&nbsp;
+          <% end %>
+          <b><%= pd.pinyin.gsub(/\d/, '') %></b>
+        <% end %>
+	<% switch = 1 %>
+	<% pds << pd.pinyin.gsub(/\d/, '') %>
+      <% end %>
+      <br/>
+      <% pds = [] %>
+      <% ps = [] %>
+      <% @hanzi.pinyindefinitions.each do |pd| %>
+        <% if !pds.include?(pd.pinyin.gsub(/\d/, '')) %>
+          <% counter2 = 0 %>
+          <% Pinyindefinition.where('pinyin LIKE ?', "#{pd.pinyin.gsub(/\d/, '')}_").shuffle.each do |p| %>
+            <% if !ps.include?(p.hanzi.character) %>
+              <%= radio_button_tag("selection" + counter.to_s, p.hanzi.character, false, class: "optionradiobutton", id: "selection" + counter.to_s + p.hanzi.character) %>
+              <%= label_tag("selection" + counter.to_s + p.hanzi.character, p.hanzi.character, class: "big-char option char" + counter.to_s, for: "selection" + counter.to_s + p.hanzi.character) %>
+              <% counter2 += 1 %>
+            <% end %>
+            <% ps << p.hanzi.character %>
+          <% end %>
+        <% end %>
+        <% pds << pd.pinyin.gsub(/\d/, '') %>
+      <% end %>
+      <br/><br/>
+      <%= submit_tag "Submit", class: "btn btn-large btn-primary" %>
+    <% end %>
+  <% end %>
 </div>
 
 <div id="meter">
