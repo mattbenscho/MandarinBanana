@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822195301) do
+ActiveRecord::Schema.define(version: 20141002184030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,17 @@ ActiveRecord::Schema.define(version: 20140822195301) do
   add_index "reviews", ["hanzi_id", "user_id"], name: "index_reviews_on_hanzi_id_and_user_id", unique: true, using: :btree
   add_index "reviews", ["hanzi_id"], name: "index_reviews_on_hanzi_id", using: :btree
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
+
+  create_table "simplifieds", force: true do |t|
+    t.integer  "trad_id"
+    t.integer  "simp_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "simplifieds", ["simp_id"], name: "index_simplifieds_on_simp_id", using: :btree
+  add_index "simplifieds", ["trad_id", "simp_id"], name: "index_simplifieds_on_trad_id_and_simp_id", unique: true, using: :btree
+  add_index "simplifieds", ["trad_id"], name: "index_simplifieds_on_trad_id", using: :btree
 
   create_table "subtitles", force: true do |t|
     t.text     "sentence"
