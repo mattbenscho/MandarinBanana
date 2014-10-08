@@ -45,6 +45,22 @@ class MnemonicsController < ApplicationController
   
   def edit
     @mnemonic = Mnemonic.find(params[:id])
+    if !@mnemonic.pinyindefinition.nil?
+      @parent = "pinyindefinitions"
+      @id = @mnemonic.pinyindefinition.id
+      @ancestor = @mnemonic.pinyindefinition
+      @pinyindefinition = @mnemonic.pinyindefinition
+      @hanzi = @pinyindefinition.hanzi
+      @gbeginning = @pinyindefinition.gbeginning
+      @gbeginning_obj = Gorodish.find_by(element: @gbeginning)
+      @gending = @pinyindefinition.gending
+      @gending_obj = Gorodish.find_by(element: @gending)
+    end
+    if !@mnemonic.gorodish.nil?
+      @parent = "gorodishes"
+      @id = @mnemonic.gorodish.id
+      @gorodish = @mnemonic.gorodish
+    end
   end
 
   def update
