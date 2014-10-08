@@ -23,7 +23,7 @@
 
           <% @s_h_review = current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id) %>
           <% if !@s_h_review.nil? %>
-            <% if @s_h_review.due < Time.now %>
+            <% if @s_h_review.due < Time.now + 1.hours %>
               <script>
                 $(document).ready(function() {
                   $(".char<%= counter %>").click(function () {
