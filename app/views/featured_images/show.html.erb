@@ -1,0 +1,96 @@
+<% provide(:title, @hanzi.character) %>
+<div class="row-fluid center">
+  <h1><%= @hanzi.character %></h1>
+  <div>
+    <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
+  </div>
+  <br/>
+  <div class="featured_mnemonic">
+    <%= @fimage.mnemonic_aide %>
+  </div>
+  <div class="left">
+    <%= @fimage.commentary.html_safe %>
+  </div>
+  <br/>
+  <div>
+    <%= previous_fimage_for @fimage %>
+    <%= next_fimage_for @fimage %>
+  </div>
+  <br/>
+  <div>
+    <%= render @hanzi %>
+  </div>
+  <% if !@stroke_order.nil? %>
+    <h2>Wikimedia Commons:Stroke Order Project</h2>
+    <div class="row-fluid text-center">
+      <a href="http://commons.wikimedia.org/wiki/Commons:Stroke_Order_Project" target="_blank">
+	<%= image_tag @stroke_order %>
+      </a>
+    </div>
+  <% end %>
+
+  <% if signed_in? && current_user.admin? %>
+    <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %> | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
+  <% end %>
+
+  <%= render partial: "hanzis/appearance", controller: Hanzi %>
+
+  <% if @examples.any? %>
+    <h2>Example sentences</h2>
+    <div class="center">
+      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 200, height: 200, reviewing: false} %>
+    </div>
+  <% else %>
+    <h2>There are no example sentences for this character.</h2>
+  <% end %>
+
+  <h2>See this character on</h2>
+  <div class="center">
+    <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a></br>
+    <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a></br>
+    <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a></br>
+    <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a></br>
+    <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a></br>
+  </div>
+
+  <% if signed_in? %>
+    <h2>Review</h2>
+    <% @review = current_user.reviews.find_by(hanzi_id: @hanzi.id) %>
+    <div class="center">
+      <% if @review.nil? %>
+        <%= form_for(current_user.reviews.build(hanzi_id: @hanzi.id)) do |f| %>
+	  <div><%= f.hidden_field :hanzi_id %></div>
+	  <%= f.submit "Review this character", class: "btn btn-large btn-primary" %>
+	<% end %>
+      <% else %>
+        <%= form_for(current_user.reviews.find_by(hanzi_id: @hanzi.id), html: { method: :delete}) do |f| %>
+          <div><%= f.hidden_field :hanzi_id %></div>
+	  <%= f.submit "Stop reviewing", class: "btn btn-large btn-primary" %>
+	<% end %>  
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @hanzi.comments.any? %>
+    <div>
+      <h2> Comments (<%= @hanzi.comments.count %>)</h2>
+      <ol class="comments">
+	<%= render @comments %>
+      </ol>
+    </div>
+  <% end %>
+
+  <% if signed_in? %>
+    <% if !@hanzi.comments.any? %>
+      <h2>Write the first comment</h2>
+    <% end %>
+    <div>
+      <%= render 'shared/comment_form' %>
+    </div>
+  <% end %>
+  <br/>
+  <div>
+    <%= previous_fimage_for @fimage %>
+    <%= next_fimage_for @fimage %>
+  </div>
+</div>

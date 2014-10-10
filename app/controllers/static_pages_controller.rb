@@ -1,6 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
-    @comment = current_user.comments.build if signed_in?
+    @newest_fimage = FeaturedImage.last
+    redirect_to @newest_fimage
   end
 
   def about

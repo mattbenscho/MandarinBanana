@@ -3,6 +3,15 @@ require 'spec_helper'
 
 describe "Authentication" do
 
+  before do
+    @user = User.create!(name: "foobar", password: "foobar", email: "foobar@example.com", password_confirmation: "foobar")
+    @hanzi = Hanzi.create!(character: "大", components: "")
+    @pinyindefinition = @hanzi.pinyindefinitions.create!(pinyin: "da4")
+    @mnemonic = @user.mnemonics.create!(aide: "Bla", pinyindefinition: @pinyindefinition)
+    @fimage = FeaturedImage.new(data: "data:image/png;base64,ABCDEFG", mnemonic_aide: @mnemonic.aide, hanzi_id: @hanzi.id, commentary: "bla")
+    @fimage.save
+  end
+
   subject { page }
 
   describe "signin page" do
@@ -22,7 +31,7 @@ describe "Authentication" do
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
       
       describe "after visiting another page" do
-        before { click_link "Home" }
+        before { click_link "MandarinBanana" }
         it { should_not have_selector('div.alert.alert-error') }
       end
     end
