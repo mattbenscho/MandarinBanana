@@ -2,7 +2,11 @@
 <div class="row-fluid center">
   <h1><%= @hanzi.character %></h1>
   <div>
+    <div class="prevnext"><%= first_fimage_for @fimage %></div>
+    <div class="prevnext"><%= previous_fimage_for @fimage %></div>
     <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
+    <div class="prevnext"><%= next_fimage_for @fimage %></div>
+    <div class="prevnext"><%= last_fimage_for @fimage %></div>
   </div>
   <br/>
   <div class="featured_mnemonic">
@@ -13,8 +17,6 @@
   </div>
   <br/>
   <div>
-    <%= previous_fimage_for @fimage %>
-    <%= next_fimage_for @fimage %>
   </div>
   <br/>
   <div>
@@ -90,7 +92,8 @@
   <% end %>
   <br/>
   <div>
-    <%= previous_fimage_for @fimage %>
-    <%= next_fimage_for @fimage %>
+    <span class="prevnext"><%= previous_fimage_for @fimage %></span>
+    <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
+    <span class="prevnext"><%= next_fimage_for @fimage %></span>
   </div>
 </div>
