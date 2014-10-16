@@ -1,11 +1,8 @@
 Mbv2::Application.routes.draw do
-  get "featured_images/new"
-  get "featured_images/show"
-  get "featured_images/edit"
-  get "featured_images/update"
   match '/mnemonics/:id/images/new', to: 'images#new', via: 'get'
   match '/:parent/:id/mnemonics/new', to: 'mnemonics#new', via: 'get'
   match '/wallposts/:id/new', to: 'wallposts#new', via: 'get'
+  match '/featured_images/:id/new', to: 'featured_images#new', via: 'get'
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :subtitles
@@ -18,7 +15,7 @@ Mbv2::Application.routes.draw do
   resources :pinyindefinitions
   resources :wallposts, only: [:index, :create, :destroy]
   resources :reviews, only: [:index, :show, :create, :update, :destroy, :fail_action ]
-  resources :featured_images, only: [:show]
+  resources :featured_images
   root  'static_pages#home'
   match '/signup',   to: 'users#new',            via: 'get'
   match '/signin',   to: 'sessions#new',         via: 'get'

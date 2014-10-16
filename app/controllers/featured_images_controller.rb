@@ -1,5 +1,26 @@
 class FeaturedImagesController < ApplicationController
+  before_action :signed_in_user, only: [:new, :edit, :update, :destroy]
+  before_action :admin_user,     only: [:new, :edit, :update, :destroy]
+
+  def index
+  end
+
   def new
+    @fimage = FeaturedImage.new
+    @image = Image.find(params[:id])
+    @mnemonic = @image.mnemonic
+    @pd = @mnemonic.pinyindefinition
+    @hanzi = @pd.hanzi
+  end
+
+  def create
+    @fimage = FeaturedImage.new(fimage_params)
+    if @fimage.save
+      flash[:success] = "Image featured."
+    else
+      flash[:error] = "Oh noes! Something went wrong!"
+    end
+    redirect_to root_url
   end
 
   def show
@@ -34,4 +55,11 @@ class FeaturedImagesController < ApplicationController
       end
     end
 
+    def admin_user
+      redirect_to root_url unless current_user.admin? && !current_user.nil?
+    end
+
+    def fimage_params
+      params.require(:featured_image).permit(:data, :commentary, :mnemonic_aide, :hanzi_id)
+    end
 end

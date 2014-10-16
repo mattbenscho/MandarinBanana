@@ -1,2 +1,27 @@
-<h1>FeaturedImages#new</h1>
-<p>Find me in app/views/featured_images/new.html.erb</p>
+<h1>Feature an image for <%= @hanzi.character %></h1>
+<div class="center">
+  <div>
+    <%= render partial: "images/image", locals: {width: 640, image: @image} %>
+  </div>
+  <div>
+    <%= render @mnemonic %>
+  </div>
+  <div>
+    <%= render @hanzi %>
+  </div>
+  <br/><br/>
+  <div>
+    <%= form_for(@fimage) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <div>
+	<%= f.text_area :commentary, placeholder: "..." %>
+	<%= f.hidden_field :mnemonic_aide, :value => @mnemonic.aide %>
+	<%= f.hidden_field :data, :value => @image.data %>
+	<%= f.hidden_field :hanzi_id, :value => @hanzi.id %>
+      </div>
+      <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+
+</div>
+

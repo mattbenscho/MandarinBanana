@@ -9,6 +9,9 @@
       <% if current_user?(User.find_by(id: image.user_id)) || current_user.admin? %>
         <br/><%= link_to "delete", image, method: :delete, data: { confirm: "Are you sure?" }  %>
       <% end %>
+      <% if current_user.admin? %>
+	| <a href="/featured_images/<%= image.id %>/new">+F</a>
+      <% end %>
     <% end %>
   </div>
 </div>

@@ -14,6 +14,7 @@ describe "FeaturedImage pages" do
     @other_fimage.save
     @last_fimage = FeaturedImage.new(data: "data:image/png;base64,ABCDEFG", mnemonic_aide: @mnemonic.aide, hanzi_id: @other_hanzi.id, commentary: "blubb")
     @last_fimage.save
+    @image = @user.images.create!(data: "data:image/png;base64,ABCDEFG", mnemonic: @mnemonic)
   end
 
   describe "visiting a featured image" do
@@ -37,6 +38,59 @@ describe "FeaturedImage pages" do
       it { should have_link('«', href: featured_image_path(@fimage)) }
     end
   end
+
+  describe "trying to create one as anonymous user" do
+    before do
+      visit hanzi_path(@hanzi)
+    end
+    subject { page }
+    it { should_not have_link('+F') }
+    describe "manually visiting fimage new path" do
+      before { visit "/featured_images/"  + @image.id.to_s + "/new" }
+      it "redirects" do
+        expect(current_path).to eq signin_path
+      end
+    end
+  end
+
+  describe "trying to create one as signed in user" do
+    before do 
+      sign_in @user
+      visit hanzi_path(@hanzi)
+    end
+    subject { page }
+    it { should_not have_link('+F') }
+    describe "manually visiting fimage new path" do
+      before { visit "/featured_images/"  + @image.id.to_s + "/new" }
+      it "redirects" do
+        expect(current_path).to eq featured_image_path(@last_fimage)
+      end
+    end
+  end
+
+  describe "trying to create one as admin" do
+
+    let(:admin) { FactoryGirl.create(:admin) }
+
+    before do
+      sign_in admin
+      visit hanzi_path(@hanzi)
+    end
+    subject { page }
+    it { should have_link('+F') }
+
+    describe "new fimage page" do
+      before { click_link('+F', match: :first) }
+      it { should have_content(@hanzi.character) }
+      it { should have_content(@mnemonic.aide) }
+      before { fill_in "...", with: "some looooong text" }
+      it "should create a fimage" do
+        expect { click_button "Submit" }.to change(FeaturedImage, :count).by(1)
+      end
+    end
+
+  end
+
 
 
 end
