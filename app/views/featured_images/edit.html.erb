@@ -1,2 +1,23 @@
-<h1>FeaturedImages#edit</h1>
-<p>Find me in app/views/featured_images/edit.html.erb</p>
+<h1>Edit featured image for <%= @hanzi.character %></h1>
+
+<div class="center">
+  <div>
+    <img src="<%= @fimage.data %>" alt="featured image">
+  </div>
+  <div>
+    <%= render @hanzi %>
+  </div>
+  <br/><br/>
+  <div>
+    <%= form_for(@fimage) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <div>
+	<%= f.text_area :commentary %>
+	<%= f.text_area :mnemonic_aide %>
+      </div>
+      <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+
+</div>
+

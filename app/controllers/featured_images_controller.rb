@@ -36,9 +36,18 @@ class FeaturedImagesController < ApplicationController
   end
 
   def edit
+    @fimage = FeaturedImage.find(params[:id])
+    @hanzi = Hanzi.find(@fimage.hanzi_id)
   end
 
   def update
+    @fimage = FeaturedImage.find(params[:id])
+    if @fimage.update_attributes(fimage_params)
+      flash[:success] = "Featured Image updated!"
+    else
+      flash[:error] = "Featured Image unchanged!"
+    end
+    redirect_to root_url
   end
 
   private

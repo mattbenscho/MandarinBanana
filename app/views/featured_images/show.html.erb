@@ -96,4 +96,9 @@
     <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
     <span class="prevnext"><%= next_fimage_for @fimage %></span>
   </div>
+  <% if signed_in? && current_user.admin? %>
+    <div>
+      <%= link_to "Edit featured image", edit_featured_image_path(@fimage) %>
+    </div>
+  <% end %>
 </div>
