@@ -13,7 +13,6 @@ class UsersController < ApplicationController
       @user_reviews_count = @user.reviews.count
       @due_reviews_count = Review.where("due < ? AND user_id = ?", Time.now + 1.hours, @user.id).count
       @added_first = Review.where(user_id: @user.id).sort_by(&:created_at).first.created_at
-      # @average = "%.2g" % @user_reviews_count / (Time.now - @added_first)
       @average = "%.2g" % (@user_reviews_count/((Time.now - @added_first)/(3600*24)))
     end
   end
@@ -24,11 +23,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to Mandarin Banana!"
-      redirect_to @user
+    if params[:captcha] == "yes"
+      if @user.save
+        sign_in @user
+        flash[:success] = "Welcome to Mandarin Banana!"
+        redirect_to @user
+      else
+        render 'new'
+      end
     else
+      flash[:error] = "Please try another answer to the captcha question."
       render 'new'
     end
   end
