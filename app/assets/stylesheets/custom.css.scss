@@ -244,14 +244,6 @@ aside {
 
 /* hanzis */
 
-.hanzis-ul {
-  margin: 0;
-  list-style-type: none;
-  li {
-    display: inline;
-  }
-}
-
 .big-char {
   font-size: 200%;
   line-height: normal;
@@ -369,6 +361,14 @@ aside {
 }
 
 /* featured images */
+
+.fimages-ul {	  
+  list-style-type: none;
+  li {
+    display: inline-block;
+    margin: 10px;
+  }
+}
 
 .prevnext {
   font-weight: bold;

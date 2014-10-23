@@ -100,4 +100,13 @@ describe "FeaturedImage pages" do
       end
     end
   end
+
+  describe "index page" do
+    before do
+      visit featured_images_path
+    end
+    subject { page }
+    it { should have_content(@hanzi.character) }
+    it { should have_content(@other_hanzi.character) }
+  end
 end

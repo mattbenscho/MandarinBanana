@@ -3,6 +3,7 @@ class FeaturedImagesController < ApplicationController
   before_action :admin_user,     only: [:new, :edit, :update, :destroy]
 
   def index
+    @featured_images = FeaturedImage.paginate(page: params[:page], :per_page => 25)
   end
 
   def new

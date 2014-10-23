@@ -9,6 +9,7 @@ class Hanzi < ActiveRecord::Base
   has_many :simplified_variants, through: :simplifieds, source: :simp
   has_many :traditionals, foreign_key: "simp_id", class_name: "Simplified", dependent: :destroy
   has_many :traditional_variants, through: :traditionals, source: :trad
+  has_many :featured_images
 
   def simplified_by?(other_hanzi)
     simplifieds.find_by(simp_id: other_hanzi.id)

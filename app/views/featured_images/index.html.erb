@@ -1,0 +1,18 @@
+<% provide(:title, 'Index') %>
+<h1>Featured Images Index</h1>
+
+<div class="center">
+  <ul class="fimages-ul">
+    <% @featured_images.each do |fimage| %>
+      <li>
+	<a href="/featured_images/<%= fimage.id %>"><img src="<%= fimage.data %>" alt="featured image" width="150px"></a>
+	<br/>
+	<div class="big-char">
+	  <%= link_to fimage.hanzi.character, fimage %>
+	</div>
+      </li>
+    <% end %>
+  </ul>
+  <%= will_paginate %>
+</div>
+
