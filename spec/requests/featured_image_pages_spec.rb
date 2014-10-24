@@ -4,7 +4,7 @@ require 'spec_helper'
 describe "FeaturedImage pages" do
   before do
     @user = User.create!(name: "foobar", password: "foobar", email: "foobar@example.com", password_confirmation: "foobar")
-    @hanzi = Hanzi.create!(character: "大", components: "")
+    @hanzi = Hanzi.create!(character: "大", components: "一")
     @other_hanzi = Hanzi.create!(character: "一", components: "")
     @pinyindefinition = @hanzi.pinyindefinitions.create!(pinyin: "da4")
     @mnemonic = @user.mnemonics.create!(aide: "Bla", pinyindefinition: @pinyindefinition)
