@@ -22,6 +22,16 @@ class HanzisController < ApplicationController
     @topic = "hanzi"
     @topic_id = @hanzi.id
     @stroke_order = check_stroke_order(@hanzi.character)
+    @gorodishes_all = []
+    @hanzi.pinyindefinitions.each do |pd|
+      if pd.gbeginning != ""
+        @gorodishes_all.append(Gorodish.find_by(element: pd.gbeginning))
+      end
+      if pd.gending != ""
+        @gorodishes_all.append(Gorodish.find_by(element: pd.gending))
+      end
+    end
+    @gorodishes = @gorodishes_all.uniq
     store_location
   end
 
