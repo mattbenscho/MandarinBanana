@@ -6,14 +6,18 @@
 
 <% if !@mnemonic.pinyindefinition_id.nil? %>
   <h2>Mnemonics for <%= link_to @hanzi.character, @hanzi %> - click on an image to add it to the canvas</h2>
-  <% Gorodish.find_by(element: @pydef.gbeginning).mnemonics.each do |mnemonic| %>
-    <% mnemonic.images.each do |image| %>
-      <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+  <% if @pydef.gbeginning != "" %>
+    <% Gorodish.find_by(element: @pydef.gbeginning).mnemonics.each do |mnemonic| %>
+      <% mnemonic.images.each do |image| %>
+        <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+      <% end %>
     <% end %>
   <% end %>
-  <% Gorodish.find_by(element: @pydef.gending).mnemonics.each do |mnemonic| %>
-    <% mnemonic.images.each do |image| %>
-      <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+  <% if @pydef.gending != "" %>
+    <% Gorodish.find_by(element: @pydef.gending).mnemonics.each do |mnemonic| %>
+      <% mnemonic.images.each do |image| %>
+        <img width="100" src="<%= image.data %>" onclick="addImage(this.src);">
+      <% end %>
     <% end %>
   <% end %>
   <% @pydef.mnemonics.each do |mnemonic| %>
