@@ -1,4 +1,10 @@
-<footer class="footer">
+<footer class="footer center">
+  <div class="search">
+    <%= form_tag "/search", method: :get do %>
+      <%= label_tag :hanzi_search, "Hanzi search" %>
+      <%= text_field_tag :character, "", class: "hanzi_search_field" %> <%= submit_tag "Go" %>
+    <% end %>
+  </div>
   <small>
     Mandarin Banana by Matthias Benjamin Schönborn
   </small>

@@ -2,16 +2,17 @@ class HanzisController < ApplicationController
   before_action :admin_user, only: [:edit, :update]
 
   def index
-    if params[:hanzi_search]
-      @hanzi = Hanzi.find_by(character: "#{params[:hanzi_search]}")
-      if @hanzi.nil? then
-        @hanzis = Hanzi.paginate(page: params[:page], :per_page => 500)
-      else
-        redirect_to hanzi_url(@hanzi.id)
-      end
+    @hanzis = Hanzi.paginate(page: params[:page], :per_page => 500)
+  end
+
+  def search
+    @hanzi = Hanzi.find_by(character: "#{params[:character]}")
+    if @hanzi.nil? then
+      flash[:error] = "I didn't find anything for \"" + "#{params[:character]}" + "\"."
+      redirect_back_or root_url
     else
-      @hanzis = Hanzi.paginate(page: params[:page], :per_page => 500)
-    end
+      redirect_to hanzi_url(@hanzi.id)
+    end    
   end
 
   def show

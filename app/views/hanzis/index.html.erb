@@ -11,13 +11,3 @@
 
 <%= will_paginate %>
 
-</br>
-<div class="row">
-  <div class="span4">
-    <%= form_tag hanzis_path, method: :get do %>
-      <%= label_tag :hanzi_search, "Search for a character:" %>
-      <%= text_field_tag :hanzi_search %>
-      <%= submit_tag "Search" %>
-    <% end %>
-  </div>
-</div>

@@ -88,17 +88,12 @@ p {
 
 footer {
   margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $grayMediumLight;
   color: $grayLight;
   a {
     color: $gray;
     &:hover {
       color: $grayDarker;
     }
-  }
-  small {
-    float: left;
   }
   ul {
     float: right;
@@ -109,6 +104,14 @@ footer {
     }
   }
 }
+
+.search {
+  border-top: 1px solid $grayMediumLight;
+  margin-top: 45px;
+  margin-bottom: 20px;
+  color: black;
+  padding: 10px 0px;
+}  
 
 /* miscellaneous */
 
@@ -263,6 +266,10 @@ aside {
 
 .definition-row { 
   overflow: auto;
+}
+
+.hanzi_search_field {
+  width: 30px;
 }
 
 /* wallposts */
