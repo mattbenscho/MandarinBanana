@@ -23,7 +23,11 @@
     <%= @fimage.commentary.html_safe %>
   </div>
   <div>
-    <h2>Composition</h2>
+    <% if @hanzi.components != '' %>
+      <h2>Composition: <%= @hanzi.character %> = <%= @hanzi.components.split(//).join(' + ') %></h2>
+    <% else %>
+      <h2><%= @hanzi.character %> can not be decomposed into smaller units.</h2>
+    <% end %>
     <%= render @hanzi %>
   </div>
   <% if !@stroke_order.nil? %>
