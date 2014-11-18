@@ -39,6 +39,12 @@ textarea {
   text-align: left;
 }
 
+.container {
+  width: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -57,12 +63,15 @@ h2 {
   margin-top: 30px;
   text-align: center;
   font-weight: normal;
-  color: $grayLight;
+  color: #444;
 }
 
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+  max-width: 920px;
+  text-align: left; 
+  margin: auto;
 }
 
 
@@ -303,19 +312,14 @@ aside {
 /* mnemonics */
 
 .mnemonic {
-  padding: 5px 10px 10px 10px;
-  margin-right: 6px;
-  margin-top: 6px;
-  background:cornsilk;
   display: inline-block;
-  .signature {
-    float: right;
-  }
-}
-
-.featured_mnemonic {
-  padding: 10px 10px 10px 10px;
+  padding: 7px;
+  margin: 3px;
   background:cornsilk;
+  vertical-align: top;
+  .signature {
+    display: inline;
+  }
 }
 
 /* reviews */
@@ -359,8 +363,9 @@ aside {
 
 .image {
   display:inline-block;
-  margin:10px;
-  padding:10px;
+  margin: 2px;
+  padding: 2px;
+  vertical-align: top;
   img {
     border:1px solid black;
     background-color: white;

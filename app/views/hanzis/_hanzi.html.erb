@@ -20,7 +20,7 @@
   	| <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
 	| <%= link_to "delete", pinyindefinition, method: :delete, data: { confirm: "Are you sure?" } %>
 	<% end %>
-        </br>
+	<br/>
 	<% pinyindefinition.mnemonics.each do |mnemonic| %>
 	  <%= render mnemonic %>
 	<% end %>

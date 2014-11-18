@@ -1,19 +1,18 @@
 <div class="mnemonic">
-<%= mnemonic.aide %><br/>
-<div class="signature"><span class="timestamp">- <%= User.find_by(id: mnemonic.user_id).name %>, <%= time_ago_in_words(mnemonic.created_at) %>
-  ago</span> | <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting</a>
-  <% if signed_in? %>
-    <% if current_user?(User.find_by(id: mnemonic.user_id)) || current_user.admin? %>
-      | <%= link_to "edit", edit_mnemonic_path(mnemonic) %>
-      | <%= link_to "delete", mnemonic, method: :delete, data: { confirm: "Are you sure?" }  %>
-    <% end %>
+  <div>
+    <%= mnemonic.aide %>
+    <div class="signature">
+      <span class="timestamp">- Mnemonic by <%= User.find_by(id: mnemonic.user_id).name %>, <%= time_ago_in_words(mnemonic.created_at) %>
+      ago</span> | <a href="/mnemonics/<%= mnemonic.id %>/images/new">add a painting</a>
+      <% if signed_in? %>
+        <% if current_user?(User.find_by(id: mnemonic.user_id)) || current_user.admin? %>
+          | <%= link_to "edit", edit_mnemonic_path(mnemonic) %>
+          | <%= link_to "delete", mnemonic, method: :delete, data: { confirm: "Are you sure?" }  %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <% mnemonic.images.each do |image| %>
+    <%= render partial: "images/image", locals: {width: 120, image: image} %>
   <% end %>
-</div>
-
-<% if mnemonic.images.any? %>
-<br/>
-<% end %>
-<% mnemonic.images.each do |image| %>
-  <%= render partial: "images/image", locals: {width: 120, image: image} %>
-<% end %><br/>
 </div>

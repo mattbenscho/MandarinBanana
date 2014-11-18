@@ -3,7 +3,7 @@
   <div>
     <a href="<%= image.data %>"><img src="<%= image.data %>" alt="image painted by <%= @user.name %>" width="<%= width %>px"></a>
   </div>
-  <div><span class="timestamp">by <%= @user.name %>, <%= time_ago_in_words(image.created_at) %>
+  <div><span class="timestamp">Image by <%= @user.name %>,</br><%= time_ago_in_words(image.created_at) %>
       ago</span>
     <% if signed_in? %>
       <% if current_user?(User.find_by(id: image.user_id)) || current_user.admin? %>

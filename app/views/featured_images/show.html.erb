@@ -1,25 +1,29 @@
 <% provide(:title, @hanzi.character) %>
 <div class="row-fluid center">
   <h1><%= @hanzi.character %></h1>
+  <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
+    <b><%= pinyindefinition.pinyin %></b>: 
+    <%= pinyindefinition.definition %>
+    </br>
+  <% end %>
+  </br>
   <div>
     <div class="prevnext"><%= first_fimage_for @fimage %></div>
     <div class="prevnext"><%= previous_fimage_for @fimage %></div>
-    <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
+    <div class="feature">
+      <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
+      <div class="featured_mnemonic">
+	<%= @fimage.mnemonic_aide %>
+      </div>
+    </div>
     <div class="prevnext"><%= next_fimage_for @fimage %></div>
     <div class="prevnext"><%= last_fimage_for @fimage %></div>
   </div>
-  <br/>
-  <div class="featured_mnemonic">
-    <%= @fimage.mnemonic_aide %>
-  </div>
-  <div class="left">
+  <div>
     <%= @fimage.commentary.html_safe %>
   </div>
-  <br/>
   <div>
-  </div>
-  <br/>
-  <div>
+    <h2>Composition</h2>
     <%= render @hanzi %>
   </div>
   <% if !@stroke_order.nil? %>

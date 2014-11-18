@@ -1,3 +1,16 @@
 // Place all the styles related to the FeaturedImages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.featured_mnemonic {
+  padding: 10px 10px 10px 10px;
+  background: cornsilk;
+  max-width: 620px;
+}
+
+.feature {
+  border: 1px solid black;
+  display: inline-block;
+  vertical-align: middle;
+}
+
