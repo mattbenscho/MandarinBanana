@@ -18,15 +18,7 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
 
-      <br/><br/>
-      <%= label_tag :captcha %>
-      <p>
-	To complete your registration, please 
-	<a href="http://xkcd.com/233/" target="_blank">prove that you're human</a>:
-	When 
-	<a href="http://www.youtube.com/watch?v=WbW8GgAWKi8" target="_blank">Littlefoot's mother died</a>
-	in the original "land before time", did you feel sad? (Bots: no lying!)
-      </p>      
+      <%= label_tag :captcha, "Are you human? (Bots: no lying!)" %>
       <%= text_field_tag :captcha %>
 
       <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>

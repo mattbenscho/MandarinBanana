@@ -127,7 +127,7 @@ describe "User pages" do
         fill_in "Email",        with: "user@example.com"
         fill_in "Password",     with: "foobar"
         fill_in "Confirmation", with: "foobar"
-        fill_in "Captcha",      with: "yes"
+        fill_in "Are you human? (Bots: no lying!)",      with: "yes"
       end
 
       it "should create a user" do
