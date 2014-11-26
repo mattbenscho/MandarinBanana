@@ -1,3 +1,40 @@
 // Place all the styles related to the Subtitles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.morelink {
+  position: absolute;
+}
+
+.example-sentence {
+  margin: 10px;
+}
+
+.vocabulary {
+  table {
+    margin: auto;
+    td {
+      padding: 2px;
+      min-width: 5em;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+    }
+    .voc-left {
+      text-align: center;
+    }
+    .voc-right {
+      text-align: left;
+    }
+  }
+}	
+
+.sub-navigation {
+  font-size: x-large;
+  margin: 10px;
+  padding: 10px;
+}
+
+.tv {
+  display: inline-block;
+  margin: 20px;
+}

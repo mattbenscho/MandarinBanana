@@ -1,4 +1,5 @@
 class Subtitle < ActiveRecord::Base
+  serialize :vocabulary, JSON
   belongs_to :movie
   validates :sentence, presence: true
   validates :filename, presence: true, uniqueness: true

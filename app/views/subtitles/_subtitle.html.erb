@@ -1,4 +1,4 @@
-<div class="center">
+<div class="center tv">
 
 <% @file = subtitle.filename + ".ogv" %>
 
@@ -13,41 +13,73 @@
 <% end %>
 
 <div class="example-sentence">
-  <% subtitle.sentence.each_char do |char| %>
-    <% @sentence_hanzi = Hanzi.find_by(character: char) %>
-    <% if !@sentence_hanzi.nil? %>
-      <div class="unknown-char">
-        <span class="big-char">
-	  <% if replace %>
-	    <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
-	    <% if @sub_review.nil? || @sub_review.due > Time.now %>
+  <% if extensive %>
+    <% subtitle.sentence.each_char do |char| %>
+      <% @sentence_hanzi = Hanzi.find_by(character: char) %>
+      <% if !@sentence_hanzi.nil? %>
+        <div class="unknown-char">
+          <span class="big-char">
+	    <% if replace %>
+	      <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
+	      <% if @sub_review.nil? || @sub_review.due > Time.now %>
+                <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
+	      <% else %>
+                <%= link_to '[?]', @sentence_hanzi %>
+	      <% end %>
+            <% else %>
               <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
-	    <% else %>
-              <%= link_to '[?]', @sentence_hanzi %>
-	    <% end %>
-          <% else %>
-            <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
-          <% end %>
-        </span></br>
-        <% if !signed_in? || current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
-          <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
-            <%= pd.pinyin %></br>
-          <% end %>
-	<% elsif reviewing %>
-	  <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
-	  <% if !@sub_review.nil? && @sub_review.due < Time.now %>
-  	    <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+            <% end %>
+          </span></br>
+          <% if !signed_in? || current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
+            <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
               <%= pd.pinyin %></br>
             <% end %>
-	  <% end %>
-        <% end %>
-      </div>
-    <% else %>
-      <%= char %>
+	  <% elsif reviewing %>
+	    <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
+	    <% if !@sub_review.nil? && @sub_review.due < Time.now %>
+  	      <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
+                <%= pd.pinyin %></br>
+              <% end %>
+	    <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <%= char %>
+      <% end %>
     <% end %>
-  <% end %>
+  <% else %>
+    <% subtitle.sentence.each_char do |char| %>
+      <span class="big-char"><a href="/hurl/<%= char %>"><%= char %></a></span>
+    <% end %>
+  <% end %>  
   <% if morelink %>
     &nbsp;<a href="/subtitles/<%= subtitle.id %>" class="morelink">&rarr;</a><br/>
   <% end %>
 </div>
+
+<% if !@subtitle.nil? && !@subtitle.vocabulary.nil? %>
+  <div class="vocabulary">
+    <table>
+      <% @subtitle.vocabulary.each do |v|%>
+        <tr>
+          <td class="voc-left">
+	    <% if v[0] == "----------" %>
+	      ----------
+	    <% else %>
+	      <% v[0].each_char do |char| %>
+	        <a href="/hurl/<%= char %>"><%= char %></a>
+	      <% end %>
+	    <% end %>
+	  </td>
+          <td class="voc-right">
+	    <% v[1].each do |w| %>
+	      <%= w %><br/>
+	    <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+
 </div>

@@ -1,36 +1,33 @@
 <% provide(:title, @subtitle.sentence) %>
-<h3><%= Movie.find(@subtitle.movie_id).title %></h3>
+<h1><%= Movie.find(@subtitle.movie_id).title %></h1>
 
-<div class="row">
-<div class="span1" style="float:left;">
-  <%= previous_for @subtitle %>
-</div>
-<div class="span10">
-<%= render partial: "subtitle", locals: {morelink: false, replace: false, subtitle: @subtitle, autoplay: 1, width: 640, height: 390, reviewing: false} %>
-</div>
-<div class="span1">
-  <div style="float:right;">
-    <%= next_for @subtitle %>
+<div class="center">
+  <div class="sub-navigation">
+    <%= previous_for @subtitle %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= next_for @subtitle %>
   </div>
-</div>
-</div>
 
+  <%= render partial: "subtitle", locals: {morelink: false, replace: false, subtitle: @subtitle, autoplay: 1, width: 640, height: 390, reviewing: false, extensive: true} %>
 
+  <div class="sub-navigation">
+    <%= previous_for @subtitle %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= next_for @subtitle %>
+  </div>
 
-<% if @subtitle.comments.any? %>
-<div>
-  <h3> Comments (<%= @subtitle.comments.count %>)</h3>
-  <ol class="comments">
-    <%= render @comments %>
-  </ol>
+  <% if @subtitle.comments.any? %>
+  <div>
+    <h3> Comments (<%= @subtitle.comments.count %>)</h3>
+    <ol class="comments">
+      <%= render @comments %>
+    </ol>
+  </div>
+  <% end %>
+
+  <% if signed_in? %>
+    <% if !@subtitle.comments.any? %>
+      <h2>Write the first comment</h2>
+    <% end %>
+    <div>
+      <%= render 'shared/comment_form' %>
+    </div>
+  <% end %>
+
 </div>
-<% end %>
-
-<% if signed_in? %>
-<% if !@subtitle.comments.any? %>
-  <h2>Write the first comment</h2>
-<% end %>
-<div>
-  <%= render 'shared/comment_form' %>
-</div>
-<% end %>

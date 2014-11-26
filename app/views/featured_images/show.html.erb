@@ -52,7 +52,7 @@
   <% if @examples.any? %>
     <h2>Example sentences</h2>
     <div class="center">
-      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 200, height: 200, reviewing: false} %>
+      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 200, height: 200, reviewing: false, extensive: false} %>
     </div>
   <% else %>
     <h2>There are no example sentences for this character.</h2>

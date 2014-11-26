@@ -15,6 +15,15 @@ class HanzisController < ApplicationController
     end    
   end
 
+  def hurl
+    @hanzi = Hanzi.find_by(character: params[:input])
+    if @hanzi.nil?
+      redirect_to root_url
+    else
+      redirect_to @hanzi
+    end
+  end
+
   def show
     @hanzi = Hanzi.find(params[:id])
     @examples = @hanzi.subtitles.limit(7)

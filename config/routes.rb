@@ -25,7 +25,8 @@ Mbv2::Application.routes.draw do
   match '/fail',              to: 'reviews#fail',        via: 'get'
   match '/fail_action',       to: 'reviews#fail_action', via: 'get'
   match '/answer',            to: 'reviews#answer',      via: 'get'
-  match '/search', to: 'hanzis#search',       via: 'get'
+  match '/search',            to: 'hanzis#search',       via: 'get'
+  match '/hurl/:input',       to: 'hanzis#hurl',         via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
