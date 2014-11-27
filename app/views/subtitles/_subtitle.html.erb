@@ -57,10 +57,10 @@
   <% end %>
 </div>
 
-<% if !@subtitle.nil? && !@subtitle.vocabulary.nil? %>
+<% if !@subtitle.nil? && !@vocabulary.nil? %>
   <div class="vocabulary">
     <table>
-      <% @subtitle.vocabulary.each do |v|%>
+      <% @vocabulary.each do |v|%>
         <tr>
           <td class="voc-left">
 	    <% if v[0] == "----------" %>

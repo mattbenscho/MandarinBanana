@@ -9,6 +9,7 @@ class SubtitlesController < ApplicationController
     @comment = current_user.comments.build if signed_in?
     @topic = "subtitle"
     @topic_id = @subtitle.id
+    @vocabulary = @subtitle.vocabulary
   end
 end
 
