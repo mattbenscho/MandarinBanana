@@ -30,7 +30,7 @@
     <div class="feature">
       <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
       <div class="featured_mnemonic">
-	<%= @fimage.mnemonic_aide %>
+	<%= @aide.html_safe %>
       </div>
     </div>
     <div class="prevnext"><%= next_fimage_for @fimage %></div>
@@ -46,7 +46,7 @@
 <!-- End Project Wonderful Ad Box Code -->
   </div>
   <div>
-    <%= @fimage.commentary.html_safe %>
+    <%= @commentary.html_safe %>
   </div>
   <div>
     <% if @hanzi.components != '' %>
