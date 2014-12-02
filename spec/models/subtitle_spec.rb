@@ -12,11 +12,6 @@ describe Subtitle do
   it { should respond_to(:filename) }
   it { should respond_to(:movie_id) }
 
-  describe "when sentence is not present" do
-    before { @subtitle.sentence = " " }
-    it { should_not be_valid }
-  end
-  
   describe "when filename is not present" do
     before { @subtitle.filename = "" }
     it { should_not be_valid }

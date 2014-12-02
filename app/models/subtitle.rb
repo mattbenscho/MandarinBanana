@@ -1,7 +1,7 @@
 class Subtitle < ActiveRecord::Base
   serialize :vocabulary, JSON
+  serialize :pinyin, JSON
   belongs_to :movie
-  validates :sentence, presence: true
   validates :filename, presence: true, uniqueness: true
   validates :movie_id, presence: true
   has_many :comments, dependent: :destroy

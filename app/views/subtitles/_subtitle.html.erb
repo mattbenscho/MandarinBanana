@@ -14,6 +14,7 @@
 
 <div class="example-sentence">
   <% if extensive %>
+    <% counter = 0 %>
     <% subtitle.sentence.each_char do |char| %>
       <% @sentence_hanzi = Hanzi.find_by(character: char) %>
       <% if !@sentence_hanzi.nil? %>
@@ -31,21 +32,26 @@
             <% end %>
           </span></br>
           <% if !signed_in? || current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
-            <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
-              <%= pd.pinyin %></br>
-            <% end %>
+	    <% unless @pinyin.nil? %>
+              <% @pinyin[counter].each do |p| %>
+  	        <%= p %></br>
+	      <% end %>
+	    <% end %>
 	  <% elsif reviewing %>
-	    <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
+	    <% @sub_review = current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id) %>
 	    <% if !@sub_review.nil? && @sub_review.due < Time.now %>
-  	      <% @sentence_hanzi.pinyindefinitions.each do |pd| %>
-                <%= pd.pinyin %></br>
-              <% end %>
+	      <% unless @pinyin.nil? %>
+                <% @pinyin[counter].each do |p| %>
+  	          <%= p %></br>
+	        <% end %>
+	      <% end %>
 	    <% end %>
           <% end %>
         </div>
       <% else %>
         <%= char %>
       <% end %>
+    <% counter += 1 %>
     <% end %>
   <% else %>
     <% subtitle.sentence.each_char do |char| %>
@@ -63,7 +69,7 @@
       <% @vocabulary.each do |v| %>
         <tr>
           <td class="voc-left">
-	    <% if v[0] == "----------" %>
+	    <% if v[0] == "---" %>
 	      ----------
 	    <% else %>
 	      <% v[0].each_char do |char| %>
@@ -72,9 +78,13 @@
 	    <% end %>
 	  </td>
           <td class="voc-right">
-	    <% v[1].each do |w| %>
-	      <%= w %><br/>
-	    <% end %>
+	    <% if v[0] == "---" %>
+	      Definitions for words above consisting of more than one character:
+	    <% else %>
+	      <% v[1].each do |w| %>
+	        <%= w %><br/>
+	      <% end %>
+            <% end %>
           </td>
         </tr>
       <% end %>

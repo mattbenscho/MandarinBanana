@@ -1,6 +1,6 @@
 <div class="center">
   <% if @subtitle %>
-    <%= render partial: "subtitles/subtitle", locals: {morelink: false, replace: true, subtitle: @subtitle, autoplay: 0, width: 640, height: 390, reviewing: true} %>
+    <%= render partial: "subtitles/subtitle", locals: {morelink: false, replace: true, subtitle: @subtitle, autoplay: 0, width: 640, height: 390, reviewing: true, extensive: true} %>
     <%= form_tag("/answer", method: "get") do %>
       <%= hidden_field_tag(:id, @review.id) %>
       <%= hidden_field_tag(:subtitle_id, @subtitle.id) %>

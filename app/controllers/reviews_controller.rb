@@ -33,6 +33,7 @@ class ReviewsController < ApplicationController
     if @random > 0
       @subtitle = @hanzi.subtitles.sample
       @file = @subtitle.filename + ".ogv"
+      @pinyin = @subtitle.pinyin
     end
     @reviewed_today = Review.where("updated_at >= ? AND user_id = ?", Date.today, current_user.id).count
     @due_reviews_count = Review.where("due < ? AND user_id = ?", Time.now + 1.hours, current_user.id).count

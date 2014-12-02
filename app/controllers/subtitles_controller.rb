@@ -6,6 +6,7 @@ class SubtitlesController < ApplicationController
     @topic = "subtitle"
     @topic_id = @subtitle.id
     @vocabulary = @subtitle.vocabulary
+    @pinyin = @subtitle.pinyin
   end
 end
 

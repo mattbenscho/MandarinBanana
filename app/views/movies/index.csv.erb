@@ -3,22 +3,65 @@
     <% @vocabulary = s.vocabulary %>
     <% @voc = "" %>
     <% @voc << "<table>" %>
-    <% @vocabulary.each do |v| %>
-      <% @voc << '<tr><td class="voc-left">' %>
-      <% if v[0] == "----------" %>
-        <% @voc << "----------" %>
-      <% else %>
-        <% v[0].each_char do |char| %>
-  	  <% @voc << "<a href=\"https://mandarinbanana.herokuapp.com/hurl/#{char}\">#{char}</a>" %>
+    <% unless @vocabulary.nil? %>
+      <% @vocabulary.each do |v| %>
+        <% @voc << '<tr><td class="voc-left">' %>
+        <% if v[0] == "---" %>
+          <% @voc << "---" %>
+        <% else %>
+          <% v[0].each_char do |char| %>
+  	    <% @voc << "<a href=\"https://mandarinbanana.herokuapp.com/hurl/#{char}\">#{char}</a>" %>
+	  <% end %>
+        <% end %>
+        <% @voc << "<\/td><td class=\"voc-right\">" %>
+	<% if v[0] == "---" %>
+	  <% @voc << "Definitions for words above consisting of more than one character:" %>
+	<% else %>
+          <% v[1].each do |w| %>
+	    <% @voc << "#{w}<br\/>" %>
+          <% end %>
 	<% end %>
+        <% @voc << "<\/td><\/tr>" %>
       <% end %>
-      <% @voc << "<\/td><td class=\"voc-right\">" %>
-      <% v[1].each do |w| %>
-	<% @voc << "#{w}<br\/>" %>
-      <% end %>
-      <% @voc << "<\/td><\/tr>" %>
     <% end %>
     <% @voc << "<\/table>" %>
-<%= CSV.generate_line([s.sentence, "[sound:#{s.filename}.ogv]", @voc.to_s], col_sep: "\t", quote_char:"\0").html_safe %>
+    <% @pinyin = s.pinyin %>
+    <% @py = " " %>
+    <% counter = 0 %>
+    <% unless @pinyin.nil? %>
+      <% @pinyin.each do %>
+        <% @py << "<div style=\"display:inline-block; vertical-align:top;\">" %>
+        <% @pinyin[counter].each do |p| %>
+          <% @py << "<span>" + p + "</span><br/>" %>
+	<% end %>
+	<% if @pinyin[counter].empty? %>
+	  <% @py << "<span>,</span>" %>
+        <% end %>
+	<% @py << "</div>&nbsp;" %>
+	<% counter += 1 %>
+      <% end %>
+    <% end %>
+
+    <% @sentence_pinyin = "" %>
+    <% counter = 0 %>
+    <% s.sentence.each_char do |char| %>
+      <% @sentence_pinyin << "<div>" %>
+      <% @sentence_pinyin << "<span class=\"big-char\">" %>
+      <% @sentence_pinyin << "<a href=\"https://mandarinbanana.herokuapp.com/hurl/#{char}\">#{char}</a>" %>
+      <% @sentence_pinyin << "</span></br>" %>
+      <% unless @pinyin.nil? %>
+	<% unless @pinyin[counter].empty? %>
+          <% @pinyin[counter].each do |p| %>
+	    <% @sentence_pinyin << "<span>#{p}</span><br/>" %>
+	  <% end %>
+	<% end %>
+      <% end %>
+      <% @sentence_pinyin << "</div>" %>
+      <% counter += 1 %>
+    <% end %>
+
+
+<%= CSV.generate_line(["[sound:#{s.filename}.ogv]", s.sentence, @py.to_s, @voc.to_s, @sentence_pinyin.to_s,
+  "<a href=\"https://mandarinbanana.herokuapp.com/subtitles/#{s.id}\">Post a comment</a>"], col_sep: "\t", quote_char:"\0").html_safe %>
   <%- end -%>
 <% end %>
