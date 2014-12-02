@@ -1,8 +1,4 @@
 class SubtitlesController < ApplicationController
-  def new
-    @user = User.new
-  end
-
   def show
     @subtitle = Subtitle.find(params[:id])
     @comments = @subtitle.comments

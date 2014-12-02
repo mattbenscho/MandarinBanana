@@ -10,3 +10,10 @@
   <% end %>
 </ul>
 
+
+<% if signed_in? %>
+  <hr>
+  <div class="center">
+    <%= link_to "Download Anki import file", movies_path(format: :csv) %>
+  </div>
+<% end %>
