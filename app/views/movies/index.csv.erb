@@ -60,8 +60,17 @@
       <% counter += 1 %>
     <% end %>
 
+    <% if s.sentence.empty? %>
+      <% @sentence = "---" %>
+      <% @py = "---" %>
+      <% @sentence_pinyin = "---" %>
+      <% @voc = "---" %>
+    <% else %>
+      <% @sentence = s.sentence.to_s %>
+    <% end %>
 
-<%= CSV.generate_line(["[sound:#{s.filename}.ogv]", s.sentence, @py.to_s, @voc.to_s, @sentence_pinyin.to_s,
+
+<%= CSV.generate_line(["[sound:#{s.filename}.ogv]", @sentence, @py.to_s, @voc.to_s, @sentence_pinyin.to_s,
   "<a href=\"https://mandarinbanana.herokuapp.com/subtitles/#{s.id}\">Post a comment</a>"], col_sep: "\t", quote_char:"\0").html_safe %>
   <%- end -%>
 <% end %>

@@ -31,6 +31,8 @@
     <% if current_user.admin? %>
       <%= link_to "edit subtitle", edit_subtitle_path(@subtitle) %>
     <% end %>
+  <% else %>
+    <p class="center">Please log in to post comments.</p>
   <% end %>
 
 </div>
