@@ -28,6 +28,9 @@
     <div>
       <%= render 'shared/comment_form' %>
     </div>
+    <% if current_user.admin? %>
+      <%= link_to "edit subtitle", edit_subtitle_path(@subtitle) %>
+    <% end %>
   <% end %>
 
 </div>

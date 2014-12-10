@@ -1,0 +1,22 @@
+<% provide(:title, @subtitle.sentence) %>
+<h1><%= Movie.find(@subtitle.movie_id).title %></h1>
+
+<div class="center">
+  <%= render partial: "subtitle", locals: {morelink: false, replace: false, subtitle: @subtitle, autoplay: 1, width: 640, height: 390, reviewing: false, extensive: true} %>
+
+  <%= form_for(@subtitle) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.label :sentence %>
+    <%= f.text_field :sentence %>
+
+    <%= f.label :words %>
+    <%= f.text_field :words %>
+
+    <%= f.label :filename %>
+    <%= f.text_field :filename %>
+
+    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+  <% end %>
+
+</div>
