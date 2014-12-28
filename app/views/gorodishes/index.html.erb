@@ -1,5 +1,5 @@
-<h1>Introduction</h1>
-<div>
+<h2>Introduction</h2>
+<div class="center">
 <p>In 2010, Serge Gorodish posted a technique for memorizing the pronunciation of Chinese
 characters <a target="_blank" href="http://countryoftheblind.blogspot.de/2012/01/mnemonics-for-pronouncing-chinese.html">on his blog "Country of the Blind"</a>—maybe his
 greatest contribution to civilization, as he states in the article. Basically, pinyin syllabels are broken down into several pieces, initials and finals
@@ -21,14 +21,14 @@ Basically that's it. Feel free to use any existing mnemonic, add some of your ow
 </p>
 </div>
 
-<h1>All Gorodishes</h1>
+<h2>All Gorodishes</h2>
 <div class="center">
 <% @all_gorodishes.each do |g| %>
   <div>
   <a href="/gorodishes/<%= g.id %>"><%= g.element %></a> - 
   <a href="/gorodishes/<%= g.id %>/mnemonics/new">add mnemonic</a><br/>
   <% g.mnemonics.each do |mnemonic| %>
-    <%= render mnemonic %>
+    <%= render mnemonic %><br/>
   <% end %>
   </div>
   </br>

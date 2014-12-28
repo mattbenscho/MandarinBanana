@@ -13,6 +13,7 @@ class MnemonicsController < ApplicationController
       @gbeginning_obj = Gorodish.find_by(element: @gbeginning)
       @gending = @pinyindefinition.gending
       @gending_obj = Gorodish.find_by(element: @gending)
+      @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     end
     if @parent == "gorodishes"
       @ancestor = Gorodish.find_by(id: @id).element
@@ -55,6 +56,7 @@ class MnemonicsController < ApplicationController
       @gbeginning_obj = Gorodish.find_by(element: @gbeginning)
       @gending = @pinyindefinition.gending
       @gending_obj = Gorodish.find_by(element: @gending)
+      @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     end
     if !@mnemonic.gorodish.nil?
       @parent = "gorodishes"

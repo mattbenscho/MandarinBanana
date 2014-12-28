@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class FeaturedImagesController < ApplicationController
   before_action :signed_in_user, only: [:new, :edit, :update, :destroy]
   before_action :admin_user,     only: [:new, :edit, :update, :destroy]
@@ -26,8 +27,8 @@ class FeaturedImagesController < ApplicationController
 
   def show
     @fimage = FeaturedImage.find(params[:id])
-    @aide = @fimage.mnemonic_aide.gsub /([^\p{ASCII}])/, '<a href=/hurl/\1>\1</a>'
-    @commentary = @fimage.commentary.gsub /([^\p{ASCII}])/, '<a href=/hurl/\1>\1</a>'
+    @aide = @fimage.mnemonic_aide.gsub /([^\p{ASCII}—])/, '<a href=/hurl/\1>\1</a>'
+    @commentary = @fimage.commentary.gsub /([^\p{ASCII}—])/, '<a href=/hurl/\1>\1</a>'
     @hanzi = Hanzi.find(@fimage.hanzi_id)
     @examples = @hanzi.subtitles.limit(7)
     @comments = @hanzi.comments
@@ -45,6 +46,7 @@ class FeaturedImagesController < ApplicationController
       end
     end
     @gorodishes = @gorodishes_all.uniq
+    @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     store_location
   end
 

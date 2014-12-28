@@ -1,7 +1,6 @@
-<% @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%") %>
 <% if !@appearances.empty? %>
-  <h2>Appears as component in</h2>
-  <div class="center">
+  <h2><%= @hanzi.character %> appears as component in</h2>
+  <div class="appearances center">
     <% @appearances.each do |a| %>
       <% if a.featured_images.any? %>
         <div class="appearance">

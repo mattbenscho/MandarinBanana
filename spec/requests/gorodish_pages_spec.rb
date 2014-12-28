@@ -13,8 +13,8 @@ describe "GorodishPages" do
     before { visit gorodishes_path }
 
     it "should have an introduction and all gorodishes as headings" do
-      expect(page).to have_selector('h1', text: "Introduction")
-      expect(page).to have_selector('h1', text: "All Gorodishes")
+      expect(page).to have_selector('h2', text: "Introduction")
+      expect(page).to have_selector('h2', text: "All Gorodishes")
     end
 
     it "should have the mnemonic's aide" do
@@ -47,7 +47,7 @@ describe "GorodishPages" do
       describe "friendly forwarding back to the gorodishes index" do
         before { click_link "delete" }
         subject { page }
-        it { should have_selector('h1', text: "All Gorodishes") }
+        it { should have_selector('h2', text: "All Gorodishes") }
       end
     end
   end

@@ -42,6 +42,7 @@ class HanzisController < ApplicationController
       end
     end
     @gorodishes = @gorodishes_all.uniq
+    @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
     store_location
   end
 

@@ -1,26 +1,21 @@
 <% provide(:title, 'The Wall') %>
-<div class="row">
-  <div class="span8">
-    <% if @wallposts.any? %>
-      <% @wallposts.each do |post| %>
-        <% @user = User.find(post.user_id) %>
-	<span class="timestamp">
+<div class="center">
+  <% if @wallposts.any? %>
+    <% @wallposts.each do |post| %>
+      <% @user = User.find(post.user_id) %>
+      <span class="timestamp">
 	<%= @user.name %> posted <%= time_ago_in_words(post.created_at) %> ago:
-	</span>
-	<span class="content">
+      </span>
+      <span class="content">
         <%= post.content %>
-	</span>
-	<span><a href="wallposts/<%= post.id %>/new"> // Reply</a></span></br>
-	<%= recursive_wallposts(post.id).html_safe %>
-	<div class="span12">
-          </br>
-	</div>
-      <% end %>
+      </span>
+      <span><a href="wallposts/<%= post.id %>/new"> // Reply</a></span></br>
+      <%= recursive_wallposts(post.id).html_safe %>
+      <br/>
     <% end %>
-    <%= will_paginate @wallposts %>
-  </div>
+  <% end %>
+  <%= will_paginate @wallposts %>
   <% if signed_in? %>
-  <div class="span8">
     <%= form_for(@wallpost) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="field">
@@ -28,6 +23,5 @@
       </div>
       <%= f.submit "Post", class: "btn btn-large btn-primary" %>
     <% end %>
-  </div>
   <% end %>
 </div>

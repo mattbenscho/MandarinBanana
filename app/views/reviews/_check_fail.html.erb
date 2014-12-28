@@ -31,8 +31,9 @@
 
 <input type="hidden" name="to_fail_id<%= @counter %>" value="<%= @review.id %>">
 
+<div class="center">
 <% if @reviewed_appearances_counter > 0 %>
-  <p>Do you want to antedate the reviews for the <%= pluralize @reviewed_appearances_counter, 'character' %> it appears in?
+  <p class="center">Do you want to antedate the reviews for the <%= pluralize @reviewed_appearances_counter, 'character' %> it appears in?<br/>
     <%= radio_button_tag 'antedate' + @review.id.to_s, "yes", true, id: "antedate_yes_" + @hanzi.character, class: "antedate" %><%= label_tag 'antedate' + "yes",
     "yes", for: "antedate_yes_" + @hanzi.character, class: "antedate" %>
     <%= radio_button_tag 'antedate' + @review.id.to_s, "no", false, id: "antedate_no_" + @hanzi.character, class: "antedate" %><%= label_tag 'antedate' + "no", "no", for:
@@ -41,7 +42,7 @@
 <% end %>
 
 <% if !@unknown_appearances.empty? %>
-  <p>
+  <p class="center">
     Maybe you also want to review one of these characters: <% @unknown_appearances.each_char do |c| %>
       <% @c_char = Hanzi.find_by(character: c) %>
       <%= link_to @c_char.character, @c_char, target: "_blank" %>
@@ -50,7 +51,7 @@
 <% end %>
 
 <% if !@hanzi.components.empty? %>
-  <p>
+  <p class="center">
     Do you want to antedate one of its components?<br/>    
     <% @hanzi.components.each_char do |char| %>
       <% @c_char = Hanzi.find_by(character: char) %>
@@ -64,5 +65,5 @@
     <% end %>
   </p>
 <% end %>
-
+</div>
 <hr>

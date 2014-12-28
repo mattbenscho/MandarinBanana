@@ -1,18 +1,18 @@
 <% if !@gorodishes[0].nil? %>
-  <h2>Pronunciation: Gorodish elements and their mnemonics</h2>
+<h2>Pronunciation: Gorodish elements and their mnemonics (<%= link_to "what's this?", "/gorodishes/" %>)</h2>
   <div class="center">
-    <%= link_to "What's this?", "/gorodishes/" %>
-    <br/><br/>
-  </div>
-  <div class="center">
-    <% @gorodishes.each do |g| %>
-      <%= link_to g.element, g %>
-      <div>
-        <% g.mnemonics.each do |m| %>
-          <%= render m %>
-        <% end %>
-      </div>
-    <% end %>
+    <table class="center gorodishes">
+      <% @gorodishes.each do |g| %>
+        <tr>
+	  <td><span class="gorodish"><%= link_to g.element, g %></span></td>
+	  <td>
+            <% g.mnemonics.each do |m| %>
+              <%= render m %>
+            <% end %>
+	  </td>
+	</tr>
+      <% end %>
+    </table>
   </div>
 <% end %>
 

@@ -12,6 +12,10 @@ $grayMediumLight: #eaeaea;
 
 /* universal */
 
+.shrink {
+  display: inline-block;
+}
+
 html {
   overflow-y: scroll;
 }
@@ -33,16 +37,19 @@ textarea {
   h1 {
     margin-bottom: 10px;
   }
+  margin: auto;
 }
 
 .left {
   text-align: left;
 }
 
-.container {
+.shelf {
+  margin: auto;
   width: auto;
-  margin-left: 10px;
-  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 /* typography */
@@ -52,26 +59,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
+  font-size: 4em;
+  letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
+  font-weight: lighter;
 }
 
 h2 {
-  font-size: 1.2em;
+  font-size: 1.6em;
+  letter-spacing: -1px;
   margin-top: 30px;
   text-align: center;
   font-weight: normal;
-  color: #444;
+  font-style: italic;
+  color: #666;
 }
 
 p {
   font-size: 1.1em;
-  line-height: 1.7em;
-  max-width: 920px;
+  max-width: 600px;
   text-align: left; 
-  margin: auto;
 }
 
 
@@ -97,6 +105,7 @@ p {
 
 footer {
   margin-top: 45px;
+  text-align: center;
   color: $grayLight;
   a {
     color: $gray;
@@ -269,12 +278,12 @@ aside {
 
 .composition-container {
   border:1px solid black;
-  margin: 5px;
+  margin: auto;
   overflow: auto;
 }
 
-.definition-row { 
-  overflow: auto;
+.recursive-container {
+  margin: auto;
 }
 
 .hanzi_search_field {

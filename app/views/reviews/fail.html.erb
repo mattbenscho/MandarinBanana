@@ -1,3 +1,4 @@
+<div class="center">
 <%= form_tag("/fail_action", method: "get") do %>
 
   <% @counter = 0 %>
@@ -6,8 +7,9 @@
     <%= render partial: "reviews/check_fail", locals: {review_id: review_id} %>
   <% end %>
    
-  <p>
+  <p class="center">
     <%= submit_tag "Continue", class: "btn btn-large btn-primary" %>
   </p>
 
 <% end %>
+</div>

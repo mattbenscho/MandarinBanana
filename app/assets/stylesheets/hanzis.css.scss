@@ -1,3 +1,57 @@
 // Place all the styles related to the Hanzi controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.hanzitable {
+  width: auto;
+  max-width: none;
+  border: 1px solid black;
+  vertical-align: top;
+  margin: auto auto auto 0px;
+  text-align: left;
+  margin: 3px;
+  tr {
+    td {
+      vertical-align: top;
+    }
+  }
+}
+
+.definition-row { 
+  overflow: auto;
+  border-collapse: collapse;
+}
+
+.decomposition {
+  text-align: center;
+  font-size: 200%;
+  padding: 20px;
+  span {
+    line-height: 1em;
+  }
+}
+
+.decomposition_container {
+  display: table;
+}
+
+.appearances {
+  max-width: 600px;
+}
+
+img.stroke_order_image {
+  max-height: 150px;
+  max-width: 150px;
+}
+
+table.gorodishes {
+  td {
+    border: 1px solid black;
+    padding: 10px;
+  }  
+}
+
+span.gorodish {
+  font-size: 200%;
+}
+

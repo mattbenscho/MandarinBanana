@@ -3,11 +3,11 @@
 <% @file = subtitle.filename + ".ogv" %>
 
 <% if autoplay == 1 %>
-  <video controls autoplay>
+  <video controls autoplay width="<%= width %>" height="<%= height %>">
     <source src="http://mandarinbanana-assets.s3.amazonaws.com/<%= @file %>" type="video/ogg">
   </video>
 <% else %>
-  <video controls preload="metadata">
+  <video controls preload="metadata" width="<%= width %>" height="<%= height %>">
     <source src="http://mandarinbanana-assets.s3.amazonaws.com/<%= @file %>" type="video/ogg">
   </video>
 <% end %>

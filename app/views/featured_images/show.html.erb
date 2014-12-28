@@ -15,8 +15,17 @@
     window.addEventListener('load',pw_load,false);}})();
 </script>
 <!-- End Project Wonderful Ad Box Loader -->
+
 <% provide(:title, @hanzi.character) %>
-<div class="row-fluid center">
+
+<% if signed_in? && current_user.admin? %>
+  <div class="center">
+    <br/>
+    <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %> | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
+  </div>
+<% end %>
+
+<div class="center">
   <h1><%= @hanzi.character %></h1>
   <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
     <b><%= pinyindefinition.pinyin %></b>: 
@@ -45,46 +54,52 @@
 </noscript>
 <!-- End Project Wonderful Ad Box Code -->
   </div>
-  <div>
+  <div class="center shrink">
     <%= @commentary.html_safe %>
   </div>
-  <div>
-    <% if @hanzi.components != '' %>
-      <h2>Composition: <%= @hanzi.character %> = <%= @hanzi.components.split(//).join(' + ') %></h2>
-    <% else %>
-      <h2><%= @hanzi.character %> can not be decomposed into smaller units.</h2>
-    <% end %>
-    <%= render @hanzi %>
-  </div>
+  <br/>
+
+  <% if @hanzi.components != '' %>
+    <h2>Composition: <%= @hanzi.character %> = <%= @hanzi.components.split(//).join(' + ') %></h2>
+    <div class="center decomposition_container">
+      <%= render @hanzi %>
+    </div>
+  <% else %>
+    <h2><%= @hanzi.character %> can not be decomposed into smaller units.</h2>
+    <div class="center decomposition_container">
+      <%= render @hanzi %>
+    </div>      
+  <% end %>
+
   <% if !@stroke_order.nil? %>
     <h2>Wikimedia Commons:Stroke Order Project</h2>
-    <div class="row-fluid text-center">
-      <a href="http://commons.wikimedia.org/wiki/Commons:Stroke_Order_Project" target="_blank">
-	<%= image_tag @stroke_order %>
-      </a>
-    </div>
+    <a href="http://commons.wikimedia.org/wiki/Commons:Stroke_Order_Project" target="_blank">
+      <%= image_tag @stroke_order, class: "stroke_order_image" %>
+    </a>
   <% end %>
 
-  <% if signed_in? && current_user.admin? %>
-    <%= link_to "Edit hanzi", edit_hanzi_path(@hanzi) %> | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
-  <% end %>
+  <div class="center">
+    <%= render partial: "hanzis/appearance", controller: Hanzi %>
+  </div>
 
-  <%= render partial: "hanzis/appearance", controller: Hanzi %>
+  <div class="center">
+    <%= render partial: "hanzis/tradsimp", controller: Hanzi %>
+  </div>
 
-  <%= render partial: "hanzis/pronunciations", controller: Hanzi %>
-
-  <%= render partial: "hanzis/tradsimp", controller: Hanzi %>
+  <div class="center">
+    <%= render partial: "hanzis/pronunciations", controller: Hanzi %>
+  </div>
 
   <% if @examples.any? %>
-    <h2>Example sentences</h2>
+    <h2>Example sentences for <%= @hanzi.character %></h2>
     <div class="center">
-      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 200, height: 200, reviewing: false, extensive: false} %>
+      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 250, height: 150, reviewing: false, extensive: false} %>
     </div>
   <% else %>
     <h2>There are no example sentences for this character.</h2>
   <% end %>
 
-  <h2>See this character on</h2>
+  <h2>See <%= @hanzi.character %> on</h2>
   <div class="center">
     <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a></br>
     <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a></br>
@@ -109,6 +124,8 @@
 	<% end %>  
       <% end %>
     </div>
+  <% else %>
+    <h2>Log in to add <%= @hanzi.character %> to your reviews.</h2>
   <% end %>
 
   <% if @hanzi.comments.any? %>
@@ -127,16 +144,21 @@
     <div>
       <%= render 'shared/comment_form' %>
     </div>
+  <% else %>
+    <h2>Log in to write the first comment.</h2>
   <% end %>
   <br/>
+
   <div>
     <span class="prevnext"><%= previous_fimage_for @fimage %></span>
     <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
     <span class="prevnext"><%= next_fimage_for @fimage %></span>
   </div>
+
   <% if signed_in? && current_user.admin? %>
     <div>
       <%= link_to "Edit featured image", edit_featured_image_path(@fimage) %>
     </div>
   <% end %>
+
 </div>
