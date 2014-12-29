@@ -47,6 +47,20 @@ class FeaturedImagesController < ApplicationController
     end
     @gorodishes = @gorodishes_all.uniq
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @featured_images = FeaturedImage.all    
+    @previous_featured_image = @featured_images[@featured_images.index(@fimage) - 1]
+    @first_featured_image = FeaturedImage.first
+    if @fimage == @first_featured_image or @previous_featured_image == @first_featured_image
+      @first_featured_image = nil
+    end
+    @next_featured_image = @featured_images[@featured_images.index(@fimage) + 1]
+    if @previous_featured_image == @featured_images.last
+      @previous_featured_image = nil
+    end
+    @last_featured_image = FeaturedImage.last
+    if @fimage == @last_featured_image or @next_featured_image == @last_featured_image
+      @last_featured_image = nil
+    end
     store_location
   end
 

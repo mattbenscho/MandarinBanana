@@ -42,13 +42,14 @@
   <h2>There are no example sentences for <%= @hanzi.character %>.</h2>
 <% end %>
 
-<h2>See <%= @hanzi.character %> on</h2>
+<h2>See <%= @hanzi.character %> on (opens in new window/tab)</h2>
 <div class="center">
-  <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a></br>
-  <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a></br>
-  <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a></br>
-  <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a></br>
-  <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a></br>
+  <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a><br/>
+  <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a><br/>
+  <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a><br/>
+  <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a><br/>
+  <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a><br/>
+  <a target="_blank" href="http://tatoeba.org/eng/sentences/search?query=<%= @hanzi.character %>&from=cmn&to=und">Tatoeba</a><br/>
 </div>
 
 <% if signed_in? %>

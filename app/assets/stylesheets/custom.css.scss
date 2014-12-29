@@ -16,6 +16,10 @@ $grayMediumLight: #eaeaea;
   display: inline-block;
 }
 
+.bordered {
+  border: 1px solid black;
+}
+
 html {
   overflow-y: scroll;
 }
@@ -369,23 +373,6 @@ aside {
   }   	       
 }
 
-/* featured images */
-
-.fimages-ul {	  
-  list-style-type: none;
-  li {
-    display: inline-block;
-    margin: 10px;
-  }
-}
-
-.prevnext {
-  font-weight: bold;
-  font-size: 500%;
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-}
 
 .appearance {
   display: inline-block;

@@ -24,17 +24,17 @@ describe "FeaturedImage pages" do
     it { should have_content(@fimage.commentary) }
 
     describe "prev next links first image" do
-      it { should have_link('›', href: featured_image_path(@other_fimage)) }
+      it { should have_link(@other_fimage.hanzi.character, href: featured_image_path(@other_fimage)) }
       it { should have_link('»', href: featured_image_path(@last_fimage)) }
-      it { should_not have_link('‹', href: featured_image_path(@fimage)) }
+      it { should_not have_link(@fimage.hanzi.character, href: featured_image_path(@fimage)) }
       it { should_not have_link('«', href: featured_image_path(@fimage)) }
     end
 
     describe "prev next links last image" do
       before { visit featured_image_path(@last_fimage) }
-      it { should_not have_link('›', href: featured_image_path(@last_fimage)) }
+      it { should_not have_link(@last_fimage.hanzi.character, href: featured_image_path(@last_fimage)) }
       it { should_not have_link('»', href: featured_image_path(@last_fimage)) }
-      it { should have_link('‹', href: featured_image_path(@other_fimage)) }
+      it { should have_link(@other_fimage.hanzi.character, href: featured_image_path(@other_fimage)) }
       it { should have_link('«', href: featured_image_path(@fimage)) }
     end
   end

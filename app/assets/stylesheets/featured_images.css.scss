@@ -17,3 +17,31 @@
 .ads {
   margin: 10px;
 }
+
+.previous_next_image {
+  width: 90px;
+}
+
+.fimages-ul {	  
+  list-style-type: none;
+  li {
+    display: inline-block;
+    margin: 10px;
+  }
+}
+
+.firstlast {
+  a {
+    font-weight: bold;
+    font-size: 500%;
+  }
+  display: inline-block;
+  vertical-align: middle;
+  width: 40px;
+}
+
+.prevnext {
+  display: inline-block;
+  vertical-align: middle;
+  width: 92px;
+}

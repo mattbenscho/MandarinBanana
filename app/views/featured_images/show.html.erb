@@ -34,16 +34,63 @@
   <% end %>
   </br>
   <div>
-    <div class="prevnext"><%= first_fimage_for @fimage %></div>
-    <div class="prevnext"><%= previous_fimage_for @fimage %></div>
+
+    <div class="firstlast">
+      <% if !@first_featured_image.nil? %>
+        <div class="bordered">
+  	  <span>first:</span><br/>
+	  <%= link_to "«", @first_featured_image %>
+	</div>
+      <% end %>
+    </div>
+
+    <div class="prevnext">
+      <% if !@previous_featured_image.nil? %>
+        <div class="bordered">
+	  <span>previous:</span><br/>
+	  <span>
+	    <%= link_to @previous_featured_image.hanzi.character, @previous_featured_image, {class: "big-char"} %>
+	  </span>
+	  <br/>
+	  <span>
+	    <%= link_to image_tag(@previous_featured_image.data, {class: "previous_next_image"}), @previous_featured_image %>
+	  </span>
+	</div>
+      <% end %>
+    </div>
+
+
     <div class="feature">
       <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
       <div class="featured_mnemonic">
 	<%= @aide.html_safe %>
       </div>
     </div>
-    <div class="prevnext"><%= next_fimage_for @fimage %></div>
-    <div class="prevnext"><%= last_fimage_for @fimage %></div>
+
+    <div class="prevnext">
+      <% if !@next_featured_image.nil? %>
+        <div class="bordered">
+	  <span>next:</span><br/>
+	  <span>
+	    <%= link_to @next_featured_image.hanzi.character, @next_featured_image, {class: "big-char"} %>
+	  </span>
+	  <br/>
+	  <span>
+	    <%= link_to image_tag(@next_featured_image.data, {class: "previous_next_image"}), @next_featured_image %>
+	  </span>
+	</div class="bordered">
+      <% end %>
+    </div>
+
+    <div class="firstlast">
+      <% if !@last_featured_image.nil? %>
+        <div class="bordered">
+  	  <span>last:</span><br/>
+	  <%= link_to "»", @last_featured_image %>
+	</div>
+      <% end %>
+    </div>
+
   </div>
   <div class="ads">
 <!-- Project Wonderful Ad Box Code -->
@@ -99,13 +146,14 @@
     <h2>There are no example sentences for this character.</h2>
   <% end %>
 
-  <h2>See <%= @hanzi.character %> on</h2>
+  <h2>See <%= @hanzi.character %> on (opens in new window/tab)</h2>
   <div class="center">
-    <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a></br>
-    <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a></br>
-    <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a></br>
-    <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a></br>
-    <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a></br>
+    <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a><br/>
+    <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a><br/>
+    <a target="_blank" href="http://en.wikipedia.org/wiki/<%= @hanzi.character %>">The English Wikipedia</a><br/>
+    <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a><br/>
+    <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a><br/>
+    <a target="_blank" href="http://tatoeba.org/eng/sentences/search?query=<%= @hanzi.character %>&from=cmn&to=und">Tatoeba</a><br/>
   </div>
 
   <% if signed_in? %>
@@ -148,12 +196,6 @@
     <h2>Log in to write the first comment.</h2>
   <% end %>
   <br/>
-
-  <div>
-    <span class="prevnext"><%= previous_fimage_for @fimage %></span>
-    <img src="<%= @fimage.data %>" alt="featured image for <%= @hanzi.character %>">
-    <span class="prevnext"><%= next_fimage_for @fimage %></span>
-  </div>
 
   <% if signed_in? && current_user.admin? %>
     <div>
