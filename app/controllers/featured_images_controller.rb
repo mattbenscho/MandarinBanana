@@ -27,8 +27,8 @@ class FeaturedImagesController < ApplicationController
 
   def show
     @fimage = FeaturedImage.find(params[:id])
-    @aide = @fimage.mnemonic_aide.gsub /([^\p{ASCII}—])/, '<a href=/hurl/\1>\1</a>'
-    @commentary = @fimage.commentary.gsub /([^\p{ASCII}—])/, '<a href=/hurl/\1>\1</a>'
+    @aide = @fimage.mnemonic_aide.gsub /([^\p{ASCII}—Ø])/, '<a href=/hurl/\1>\1</a>'
+    @commentary = @fimage.commentary.gsub /([^\p{ASCII}—Ø])/, '<a href=/hurl/\1>\1</a>'
     @hanzi = Hanzi.find(@fimage.hanzi_id)
     @examples = @hanzi.subtitles.limit(7)
     @comments = @hanzi.comments
