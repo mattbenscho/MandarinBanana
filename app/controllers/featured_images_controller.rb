@@ -98,6 +98,6 @@ class FeaturedImagesController < ApplicationController
     end
 
     def fimage_params
-      params.require(:featured_image).permit(:data, :commentary, :mnemonic_aide, :hanzi_id)
+      params.require(:featured_image).permit(:data, :commentary, :mnemonic_aide, :hanzi_id, :pinyindefinition_id)
     end
 end

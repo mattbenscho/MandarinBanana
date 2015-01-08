@@ -1,0 +1,19 @@
+<% if signed_in? %>
+  <% FeaturedImage.all.each do |fimage| %>
+    <% @pd = fimage.pinyindefinition %>
+    <% @p1 = @pd.pinyin %>
+    <% @p2 = "= " + @pd.gbeginning + " + " + @pd.gending %>
+    <% @hanzi = fimage.hanzi %>
+    <% if @hanzi.components != '' %>
+      <% @dec = @hanzi.character + "=" + @hanzi.components.split(//).join('+').to_s %>
+    <% else %>
+      <% @dec = " " %>
+    <% end %>
+    <% @def = fimage.pinyindefinition.definition.truncate(140, separator: '/', omission: ' / ...') %>
+    <% @appearances = "" %>
+    <% Hanzi.where('components LIKE ?', "%#{@hanzi.character}%").each do |h| %>
+      <% @appearances += h.character %>
+    <% end %>
+<%= CSV.generate_line([fimage.hanzi.character, @p1, @p2, @dec, @def, @appearances, fimage.data], col_sep: "\t", quote_char: "\0", row_sep: ?\t).html_safe %>
+  <% end %>
+<% end %>

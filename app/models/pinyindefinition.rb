@@ -3,4 +3,5 @@ class Pinyindefinition < ActiveRecord::Base
   validates :pinyin, presence: true
   validates :hanzi_id, presence: true
   has_many :mnemonics, dependent: :destroy
+  has_many :featured_images
 end

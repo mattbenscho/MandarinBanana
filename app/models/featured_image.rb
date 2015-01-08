@@ -5,4 +5,5 @@ class FeaturedImage < ActiveRecord::Base
   validates :commentary, presence: true
   default_scope -> { order('created_at ASC') }
   belongs_to :hanzi
+  belongs_to :pinyindefinition
 end

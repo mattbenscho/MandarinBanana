@@ -18,6 +18,7 @@
 	<%= f.hidden_field :mnemonic_aide, :value => @mnemonic.aide %>
 	<%= f.hidden_field :data, :value => @image.data %>
 	<%= f.hidden_field :hanzi_id, :value => @hanzi.id %>
+	<%= f.hidden_field :pinyindefinition_id, :value => @mnemonic.pinyindefinition.id %>
       </div>
       <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
     <% end %>
