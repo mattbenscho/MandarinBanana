@@ -1,0 +1,23 @@
+production:
+  access_key_id: AKIAJXYO4KACVCO6G2WQ
+  secret_access_key: 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
+  video_bucket: mandarinbanana-assets
+  image_bucket: mandarinbanana-paintings
+  fimage_bucket: mandarinbanana-featured-paintings
+  region: eu-west-1
+
+development:
+  access_key_id: AKIAJXYO4KACVCO6G2WQ
+  secret_access_key: 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
+  video_bucket: mandarinbanana-dev
+  image_bucket: mandarinbanana-dev
+  fimage_bucket: mandarinbanana-dev
+  region: eu-west-1
+
+test:
+  access_key_id: AKIAJXYO4KACVCO6G2WQ
+  secret_access_key: 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
+  video_bucket: mandarinbanana-test
+  image_bucket: mandarinbanana-test
+  fimage_bucket: mandarinbanana-test
+  region: eu-west-1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107193019) do
+ActiveRecord::Schema.define(version: 20150123222041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150107193019) do
     t.integer  "hanzi_id"
   end
 
+  add_index "comments", ["hanzi_id"], name: "index_comments_on_hanzi_id", using: :btree
   add_index "comments", ["subtitle_id", "created_at"], name: "index_comments_on_subtitle_id_and_created_at", using: :btree
 
   create_table "examples", force: true do |t|
@@ -47,6 +48,9 @@ ActiveRecord::Schema.define(version: 20150107193019) do
     t.datetime "updated_at"
     t.integer  "pinyindefinition_id"
   end
+
+  add_index "featured_images", ["created_at"], name: "index_featured_images_on_created_at", using: :btree
+  add_index "featured_images", ["hanzi_id"], name: "index_featured_images_on_hanzi_id", using: :btree
 
   create_table "gorodishes", force: true do |t|
     t.string   "element"
@@ -73,6 +77,8 @@ ActiveRecord::Schema.define(version: 20150107193019) do
     t.integer  "mnemonic_id"
   end
 
+  add_index "images", ["mnemonic_id"], name: "index_images_on_mnemonic_id", using: :btree
+
   create_table "mnemonics", force: true do |t|
     t.text     "aide"
     t.integer  "user_id"
@@ -81,6 +87,9 @@ ActiveRecord::Schema.define(version: 20150107193019) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "mnemonics", ["gorodish_id"], name: "index_mnemonics_on_gorodish_id", using: :btree
+  add_index "mnemonics", ["pinyindefinition_id"], name: "index_mnemonics_on_pinyindefinition_id", using: :btree
 
   create_table "movies", force: true do |t|
     t.string   "title"
@@ -101,6 +110,7 @@ ActiveRecord::Schema.define(version: 20150107193019) do
 
   add_index "pinyindefinitions", ["hanzi_id", "pinyin", "definition"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin_and_definition", unique: true, using: :btree
   add_index "pinyindefinitions", ["hanzi_id", "pinyin"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin", using: :btree
+  add_index "pinyindefinitions", ["hanzi_id"], name: "index_pinyindefinitions_on_hanzi_id", using: :btree
 
   create_table "reviews", force: true do |t|
     t.integer  "hanzi_id"

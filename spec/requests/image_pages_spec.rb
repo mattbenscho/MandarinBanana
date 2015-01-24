@@ -28,7 +28,9 @@ describe "Image pages" do
       before { first(:link, 'add a painting').click }
       it { should have_selector('h1', text: 'Paint something!') }
       describe "hanzi: after submitting an image, the user should land at the hanzi's page" do
-        before { click_on "Save" }
+        before do
+          click_on "Save"
+        end
         subject { page }
         it { should have_selector('h1', text: @hanzi.character) }
       end
@@ -49,7 +51,9 @@ describe "Image pages" do
       it { should have_selector('h1', text: 'Paint something!') }
       
       describe "gorodish: after submitting an image, the user should land at the gorodish's page" do
-        before { click_on "Save" }
+        before do
+          click_on "Save"
+        end
         subject { page }
         before { @heading = "Gorodish element " + @gorodisha.element.to_s }
         it { should have_selector('h1', text: @heading) }

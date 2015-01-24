@@ -6,4 +6,12 @@ class FeaturedImage < ActiveRecord::Base
   default_scope -> { order('created_at ASC') }
   belongs_to :hanzi
   belongs_to :pinyindefinition
+
+  def next
+    FeaturedImage.where("created_at > ?", self.created_at).first
+  end
+
+  def previous
+    FeaturedImage.where("created_at < ?", self.created_at).last
+  end
 end

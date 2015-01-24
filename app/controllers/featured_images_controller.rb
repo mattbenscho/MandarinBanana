@@ -19,6 +19,11 @@ class FeaturedImagesController < ApplicationController
     @fimage = FeaturedImage.new(fimage_params)
     if @fimage.save
       flash[:success] = "Image featured."
+      s3 = AWS::S3.new(:access_key_id => S3_CONFIG["access_key_id"], :secret_access_key => S3_CONFIG["secret_access_key"])
+      bucket = s3.buckets[S3_CONFIG["fimage_bucket"]]
+      @name = @fimage.id.to_s + ".png"
+      @png = Base64.decode64(@fimage.data['data:image/png;base64,'.length .. -1])
+      obj = bucket.objects.create(@name, @png, {content_type: "image/png", ac1: "public_read"})
     else
       flash[:error] = "Oh noes! Something went wrong!"
     end
@@ -47,19 +52,15 @@ class FeaturedImagesController < ApplicationController
     end
     @gorodishes = @gorodishes_all.uniq
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
-    @featured_images = FeaturedImage.all    
-    @previous_featured_image = @featured_images[@featured_images.index(@fimage) - 1]
+    @previous_featured_image = @fimage.previous
     @first_featured_image = FeaturedImage.first
-    if @fimage == @first_featured_image or @previous_featured_image == @first_featured_image
-      @first_featured_image = nil
-    end
-    @next_featured_image = @featured_images[@featured_images.index(@fimage) + 1]
-    if @previous_featured_image == @featured_images.last
-      @previous_featured_image = nil
-    end
+    @next_featured_image = @fimage.next
     @last_featured_image = FeaturedImage.last
     if @fimage == @last_featured_image or @next_featured_image == @last_featured_image
       @last_featured_image = nil
+    end
+    if @fimage == @first_featured_image or @previous_featured_image == @first_featured_image
+      @first_featured_image = nil
     end
     store_location
   end
