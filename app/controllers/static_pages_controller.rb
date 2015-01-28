@@ -1,7 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @newest_fimage = FeaturedImage.last
-    redirect_to @newest_fimage
+    redirect_to FeaturedImage.last
   end
 
   def about

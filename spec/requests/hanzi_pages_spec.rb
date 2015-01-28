@@ -14,7 +14,7 @@ describe "Hanzi pages" do
 
   describe "searching for existing character" do
     before do
-      visit root_url
+      visit root_path
       fill_in "character", with: "大"
       click_button "Go"
     end
@@ -24,7 +24,7 @@ describe "Hanzi pages" do
 
   describe "searching for non-existing character" do
     before do
-      visit root_url
+      visit root_path
       fill_in "character", with: "a"
       click_button "Go"
     end
