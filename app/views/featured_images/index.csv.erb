@@ -14,6 +14,7 @@
     <% Hanzi.where('components LIKE ?', "%#{@hanzi.character}%").each do |h| %>
       <% @appearances += h.character %>
     <% end %>
-<%= CSV.generate_line([fimage.hanzi.character, @p1, @p2, @dec, @def, @appearances, fimage.data], col_sep: "\t", quote_char: "\0", row_sep: ?\t).html_safe %>
+    <% @story = fimage.mnemonic_aide %>
+<%= CSV.generate_line([fimage.hanzi.character, @p1, @p2, @dec, @def, @appearances, fimage.data, @story], col_sep: "\t", quote_char: "\0", row_sep: ?\t).html_safe %>
   <% end %>
 <% end %>
