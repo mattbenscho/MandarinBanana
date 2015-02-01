@@ -1,14 +1,17 @@
 <% if !@appearances.empty? %>
-  <h2><%= @hanzi.character %> appears as component in</h2>
+  <% if not @hanzi.nil? %>
+    <h2><%= @hanzi.character %> appears as component in</h2>
+  <% end %>
   <div class="appearances center">
     <% @appearances.each do |a| %>
-      <% if a.featured_images.any? %>
+      <% @images = check_for_fimages(@dictionary, a.id) %>
+      <% if not @images.empty? %>
         <div class="appearance">
 	  <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
 	  <br/>
-          <% a.featured_images.each do |fimage | %>
-       	    <a href="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png">
-	      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png" alt="featured image for <%= a.character %>" width="150px">
+          <% @images.each do |fimage | %>
+       	    <a href="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage %>.png">
+	      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage %>.png" alt="featured image for <%= a.character %>" width="150px">
 	    </a>
 	  <% end %>
 	</div>

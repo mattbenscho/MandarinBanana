@@ -15,25 +15,13 @@
 <div class="center">
   <a href="/gorodishes/<%= @gorodish.id %>/mnemonics/new">add your own mnemonic</a>
 </div>
+
 <h2><%= @gorodish.element %> appears in</h2>
-<div class="appearances center">
-  <% @appearances.each do |pd| %>
-    <% @hanzi = Hanzi.find(pd.hanzi_id) %>
-      <% if @hanzi.featured_images.any? %>
-        <div class="appearance">
-	  <a href="/hanzis/<%= @hanzi.id %>" class="big-char"><%= @hanzi.character %></a>
-	  <br/>
-          <% @hanzi.featured_images.each do |fimage | %>
-       	    <a href="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png">
-	      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png" alt="featured image for <%= @hanzi.character %>" width="150px">
-	    </a>
-	  <% end %>
-	</div>
-      <% else %>
-        <a href="/hanzis/<%= @hanzi.id %>" class="big-char"><%= @hanzi.character %></a>
-      <% end %>
-  <% end %>
+<div class="center">
+    <%= render partial: "hanzis/appearance", controller: Hanzi %>
 </div>
+
+
 
 </br></br>
 <div class="center"><a href="/gorodishes">visit the Gorodish index</a></div>

@@ -52,6 +52,15 @@ class FeaturedImagesController < ApplicationController
     end
     @gorodishes = @gorodishes_all.uniq
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @appearances_ids = @appearances.dup.to_a
+    @appearances_ids.collect! do |h|
+      h.id
+    end
+    @appearances_fimages = FeaturedImage.where(:hanzi_id => @appearances_ids)
+    @dictionary = @appearances_fimages.dup.to_a
+    @dictionary.collect! do |d|
+      [d.id, d.hanzi_id]
+    end
     @previous_featured_image = @fimage.previous
     @first_featured_image = FeaturedImage.first
     @next_featured_image = @fimage.next

@@ -3,13 +3,13 @@
   <% if @wallposts.any? %>
     <% @wallposts.each do |post| %>
       <% @user = User.find(post.user_id) %>
-      <span class="timestamp">
-	<%= @user.name %> posted <%= time_ago_in_words(post.created_at) %> ago:
-      </span>
-      <span class="content">
+      <p>
+	<span class="timestamp">
+	  <%= @user.name %> posted <%= time_ago_in_words(post.created_at) %> ago:
+	</span>
         <%= post.content %>
-      </span>
-      <span><a href="wallposts/<%= post.id %>/new"> // Reply</a></span></br>
+      <span><a href="wallposts/<%= post.id %>/new"> //&nbsp;Reply</a></span>
+      </p>
       <%= recursive_wallposts(post.id).html_safe %>
       <br/>
     <% end %>

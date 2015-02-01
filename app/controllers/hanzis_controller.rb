@@ -26,6 +26,9 @@ class HanzisController < ApplicationController
 
   def show
     @hanzi = Hanzi.find(params[:id])
+    unless @hanzi.featured_images.first.nil?
+      redirect_to @hanzi.featured_images.first 
+    end
     @examples = @hanzi.subtitles.limit(7)
     @comments = @hanzi.comments
     @comment = current_user.comments.build if signed_in?
@@ -43,6 +46,15 @@ class HanzisController < ApplicationController
     end
     @gorodishes = @gorodishes_all.uniq
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @appearances_ids = @appearances.dup.to_a
+    @appearances_ids.collect! do |h|
+      h.id
+    end
+    @appearances_fimages = FeaturedImage.where(:hanzi_id => @appearances_ids)
+    @dictionary = @appearances_fimages.dup.to_a
+    @dictionary.collect! do |d|
+      [d.id, d.hanzi_id]
+    end
     store_location
   end
 

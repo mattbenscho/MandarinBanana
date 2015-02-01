@@ -1,5 +1,5 @@
 class WallpostsController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy]
+  before_action :signed_in_user, only: [:new, :create, :destroy]
 
   def new
     @id = params[:id]
