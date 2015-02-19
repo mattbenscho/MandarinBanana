@@ -5,7 +5,11 @@
   <ul class="fimages-ul">
     <% @featured_images.each do |fimage| %>
       <li>
-	<a href="/featured_images/<%= fimage.id %>"><img src="<%= fimage.data %>" alt="featured image" width="150px"></a>
+	<a href="/featured_images/<%= fimage.id %>">
+	  <img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png"
+	       alt="featured image for <%= fimage.hanzi.character %>"
+	       width="150px">
+	</a>
 	<br/>
 	<div class="big-char">
 	  <%= link_to fimage.hanzi.character, fimage %>

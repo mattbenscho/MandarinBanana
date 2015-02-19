@@ -14,7 +14,6 @@
     <ul>
       <li>Reviews <%= @user_reviews_count %> characters, of which <%= @due_reviews_count %> are due for review.
       <li>First review added <%= time_ago_in_words(@added_first) %> ago.
-      <li>On average, marked <%= @average %> characters per day to be reviewed.
     </ul>
   <% else %>
     <%= @user.name %> does not review any characters.

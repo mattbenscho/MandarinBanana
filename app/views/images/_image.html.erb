@@ -1,8 +1,8 @@
 <% @user = User.find_by(id: image.user_id) %>
 <div class="center image">
   <div>
-    <a href="http://mandarinbanana-paintings.s3-eu-west-1.amazonaws.com/<%= image.id %>.png">
-      <img src="http://mandarinbanana-paintings.s3-eu-west-1.amazonaws.com/<%= image.id %>.png" alt="image painted by <%= @user.name %>" width="<%= width %>px">
+    <a href="http://<%= S3_CONFIG["image_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= image.id %>.png">
+      <img src="http://<%= S3_CONFIG["image_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= image.id %>.png" alt="image painted by <%= @user.name %>" width="<%= width %>px">
     </a>
   </div>
   <div><span class="timestamp">Image by <%= @user.name %>,</br><%= time_ago_in_words(image.created_at) %>

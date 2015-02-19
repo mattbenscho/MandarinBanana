@@ -10,8 +10,8 @@
 	  <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
 	  <br/>
           <% @images.each do |fimage | %>
-       	    <a href="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage %>.png">
-	      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= fimage %>.png" alt="featured image for <%= a.character %>" width="150px">
+       	    <a href="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage %>.png">
+	      <img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage %>.png" alt="featured image for <%= a.character %>" width="150px">
 	    </a>
 	  <% end %>
 	</div>

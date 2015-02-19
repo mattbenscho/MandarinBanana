@@ -47,7 +47,7 @@
 	  <br/>
 	  <span>
 	    <a href="/featured_images/<%= @previous_featured_image.id %>">
-	      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= @previous_featured_image.id %>.png"
+	      <img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= @previous_featured_image.id %>.png"
 		   alt="featured image for <%= @previous_featured_image.hanzi.character %>"
 		   class="previous_next_image">
 	    </a>
@@ -58,7 +58,7 @@
 
 
     <div class="feature">
-      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= @fimage.id %>.png"
+      <img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= @fimage.id %>.png"
 	   alt="featured image for <%= @hanzi.character %>">
       <div class="featured_mnemonic">
 	<%= @aide.html_safe %>
@@ -75,7 +75,7 @@
 	  <br/>
 	  <span>
 	    <a href="/featured_images/<%= @next_featured_image.id %>">
-	      <img src="http://mandarinbanana-featured-paintings.s3-eu-west-1.amazonaws.com/<%= @next_featured_image.id %>.png"
+	      <img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= @next_featured_image.id %>.png"
 		   alt="featured image for <%= @next_featured_image.hanzi.character %>"
 		   class="previous_next_image">
 	    </a>
