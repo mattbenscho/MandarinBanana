@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.text     "content"
     t.integer  "user_id"
     t.integer  "subtitle_id"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "comments", ["hanzi_id"], name: "index_comments_on_hanzi_id", using: :btree
   add_index "comments", ["subtitle_id", "created_at"], name: "index_comments_on_subtitle_id_and_created_at", using: :btree
 
-  create_table "examples", force: true do |t|
+  create_table "examples", force: :cascade do |t|
     t.integer  "expression_id"
     t.integer  "subtitle_id"
     t.datetime "created_at"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "examples", ["expression_id"], name: "index_examples_on_expression_id", using: :btree
   add_index "examples", ["subtitle_id"], name: "index_examples_on_subtitle_id", using: :btree
 
-  create_table "featured_images", force: true do |t|
+  create_table "featured_images", force: :cascade do |t|
     t.text     "data"
     t.text     "mnemonic_aide"
     t.integer  "hanzi_id"
@@ -52,24 +52,24 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "featured_images", ["created_at"], name: "index_featured_images_on_created_at", using: :btree
   add_index "featured_images", ["hanzi_id"], name: "index_featured_images_on_hanzi_id", using: :btree
 
-  create_table "gorodishes", force: true do |t|
-    t.string   "element"
+  create_table "gorodishes", force: :cascade do |t|
+    t.string   "element",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "gorodishes", ["element"], name: "index_gorodishes_on_element", unique: true, using: :btree
 
-  create_table "hanzis", force: true do |t|
-    t.string   "character"
-    t.string   "components"
+  create_table "hanzis", force: :cascade do |t|
+    t.string   "character",  limit: 255
+    t.string   "components", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "hanzis", ["character"], name: "index_hanzis_on_character", using: :btree
 
-  create_table "images", force: true do |t|
+  create_table "images", force: :cascade do |t|
     t.text     "data"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20150123222041) do
 
   add_index "images", ["mnemonic_id"], name: "index_images_on_mnemonic_id", using: :btree
 
-  create_table "mnemonics", force: true do |t|
+  create_table "mnemonics", force: :cascade do |t|
     t.text     "aide"
     t.integer  "user_id"
     t.integer  "pinyindefinition_id"
@@ -91,19 +91,19 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "mnemonics", ["gorodish_id"], name: "index_mnemonics_on_gorodish_id", using: :btree
   add_index "mnemonics", ["pinyindefinition_id"], name: "index_mnemonics_on_pinyindefinition_id", using: :btree
 
-  create_table "movies", force: true do |t|
-    t.string   "title"
+  create_table "movies", force: :cascade do |t|
+    t.string   "title",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
   end
 
-  create_table "pinyindefinitions", force: true do |t|
-    t.string   "pinyin"
+  create_table "pinyindefinitions", force: :cascade do |t|
+    t.string   "pinyin",     limit: 255
     t.text     "definition"
     t.integer  "hanzi_id"
-    t.string   "gbeginning"
-    t.string   "gending"
+    t.string   "gbeginning", limit: 255
+    t.string   "gending",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "pinyindefinitions", ["hanzi_id", "pinyin"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin", using: :btree
   add_index "pinyindefinitions", ["hanzi_id"], name: "index_pinyindefinitions_on_hanzi_id", using: :btree
 
-  create_table "reviews", force: true do |t|
+  create_table "reviews", force: :cascade do |t|
     t.integer  "hanzi_id"
     t.integer  "user_id"
     t.datetime "due"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "reviews", ["hanzi_id"], name: "index_reviews_on_hanzi_id", using: :btree
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
-  create_table "simplifieds", force: true do |t|
+  create_table "simplifieds", force: :cascade do |t|
     t.integer  "trad_id"
     t.integer  "simp_id"
     t.datetime "created_at"
@@ -138,31 +138,31 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "simplifieds", ["trad_id", "simp_id"], name: "index_simplifieds_on_trad_id_and_simp_id", unique: true, using: :btree
   add_index "simplifieds", ["trad_id"], name: "index_simplifieds_on_trad_id", using: :btree
 
-  create_table "subtitles", force: true do |t|
+  create_table "subtitles", force: :cascade do |t|
     t.text     "sentence"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "movie_id"
-    t.string   "filename"
+    t.string   "filename",   limit: 255
     t.text     "vocabulary"
     t.text     "words"
     t.text     "pinyin"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "email"
+  create_table "users", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "email",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest"
-    t.string   "remember_token"
-    t.boolean  "admin",           default: false
+    t.string   "password_digest", limit: 255
+    t.string   "remember_token",  limit: 255
+    t.boolean  "admin",                       default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
-  create_table "wallposts", force: true do |t|
+  create_table "wallposts", force: :cascade do |t|
     t.text     "content"
     t.integer  "user_id"
     t.integer  "parent_id"
