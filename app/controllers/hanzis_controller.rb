@@ -26,8 +26,10 @@ class HanzisController < ApplicationController
 
   def show
     @hanzi = Hanzi.find(params[:id])
-    unless @hanzi.featured_images.first.nil?
-      redirect_to @hanzi.featured_images.first 
+    if @hanzi.featured_images.count > 1
+      redirect_to "/select/#{@hanzi.id}"
+    elsif @hanzi.featured_images.count == 1
+      redirect_to @hanzi.featured_images.first
     end
     @examples = @hanzi.subtitles.limit(7)
     @comments = @hanzi.comments
@@ -56,6 +58,11 @@ class HanzisController < ApplicationController
       [d.id, d.hanzi_id]
     end
     store_location
+  end
+
+  def select
+    @hanzi = Hanzi.find(params[:character])
+    @fimages = @hanzi.featured_images
   end
 
   def edit

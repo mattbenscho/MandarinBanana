@@ -1,0 +1,14 @@
+<h2>There are more than one featured images for <%= @hanzi.character %>. Choose one!</h2>
+<% @fimages.each do |fimage| %>
+  <% @hanzi = fimage.hanzi %>
+  <div class="center feature">
+    <a href="/featured_images/<%= fimage.id %>">
+      <img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png"
+	   alt="featured image for <%= @hanzi.character %>">
+    </a>
+    <div class="featured_mnemonic">
+      <%= fimage.mnemonic_aide.html_safe %>
+    </div>
+  </div>
+  <div><br/></div>
+<% end %>
