@@ -19,14 +19,23 @@
 <% provide(:title, @hanzi.character) %>
 
 <div class="center">
-  <h1><%= @hanzi.character %></h1>
-  <% @hanzi.pinyindefinitions.each do |pinyindefinition| %>
-    <b><%= pinyindefinition.pinyin %></b>: 
-    <%= pinyindefinition.definition %>
-    </br>
-  <% end %>
-  </br>
-  <div>
+  <div class="header">
+    <div class="headerhanzicircle"><div class="headerhanzi"><%= @hanzi.character %></div></div>
+    <div class="fimagepinyin">
+      <span class="firstline">
+        <%= @fimage.pinyindefinition.pinyin %>
+      </span><br/>
+      <span class="secondline">
+	= 
+	<%= link_to @gbeginning.element, @gbeginning %>
+	+
+	<%= link_to @gending.element, @gending %>
+      </span>
+    </div>
+    <div class="fimagedefinition">
+      <%= @fimage.pinyindefinition.definition %>
+    </div>
+  </div>
 
     <div class="firstlast">
       <% if !@first_featured_image.nil? %>

@@ -45,3 +45,48 @@
   vertical-align: middle;
   width: 92px;
 }
+
+.headerhanzicircle {
+  border-radius: 100%;
+  width: 160px;
+  height: 160px;
+  text-align: center;
+  display: table;
+  border: 5px solid black;
+  background: white;
+}
+
+.headerhanzi {
+  display: table-cell;
+  font-size: 100px;
+  font-family: SimSun,PMingLiU,Song,Ming,MingLiu,Arial Unicode MS,Code2000,sans-serif;
+  vertical-align: middle;
+}
+
+.fimagepinyin {
+  line-height: normal;
+  border-radius: 20px;
+  padding: 8px;
+  .firstline {
+    font-size: 40px;
+  }
+  .secondline {
+    font-size: 32px;
+  }
+}
+
+.header {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.fimagedefinition {
+  max-width: 400px;
+  font-size: 26px;
+  line-height: normal;
+  border-radius: 20px;
+  padding: 8px;
+}

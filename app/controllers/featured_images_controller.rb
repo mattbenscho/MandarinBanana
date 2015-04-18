@@ -35,6 +35,8 @@ class FeaturedImagesController < ApplicationController
     @aide = @fimage.mnemonic_aide.gsub /([^\p{ASCII}—Øüäöß])/, '<a href=/hurl/\1>\1</a>'
     @commentary = @fimage.commentary.gsub /([^\p{ASCII}—Øüäöß])/, '<a href=/hurl/\1>\1</a>'
     @hanzi = Hanzi.find(@fimage.hanzi_id)
+    @gbeginning = Gorodish.find_by(element: @fimage.pinyindefinition.gbeginning)
+    @gending = Gorodish.find_by(element: @fimage.pinyindefinition.gending)
     @examples = @hanzi.subtitles.limit(7)
     @comments = @hanzi.comments
     @comment = current_user.comments.build if signed_in?
