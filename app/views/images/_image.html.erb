@@ -13,6 +13,7 @@
       <% end %>
       <% if current_user.admin? %>
 	| <a href="/featured_images/<%= image.id %>/new">+F</a>
+	| <%= link_to "edit", edit_image_path(image.id) %>
       <% end %>
     <% end %>
   </div>

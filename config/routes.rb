@@ -10,7 +10,7 @@ Mbv2::Application.routes.draw do
   resources :movies, only: [:index]
   resources :hanzis
   resources :gorodishes, only: [:show, :index]
-  resources :images, only: [:new, :create, :show, :destroy]
+  resources :images
   resources :mnemonics
   resources :pinyindefinitions
   resources :wallposts, only: [:index, :create, :destroy]

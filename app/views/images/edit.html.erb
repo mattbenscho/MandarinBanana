@@ -1,0 +1,22 @@
+<h1>Edit image for <%= @hanzi.character %></h1>
+
+<div class="center">
+  <div>
+    <img src="<%= @image.data %>" alt="featured image">
+  </div>
+  <div>
+    <%= render @hanzi %>
+  </div>
+  <br/><br/>
+  <div>
+    <%= form_for(@image) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <div>
+	<%= f.text_area :data %>
+      </div>
+      <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+
+</div>
+

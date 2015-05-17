@@ -39,6 +39,27 @@ class ImagesController < ApplicationController
     end
   end
 
+  def edit
+    @image = Image.find(params[:id])
+    @hanzi = @image.mnemonic.pinyindefinition.hanzi
+  end
+
+  def update
+    @image = Image.find(params[:id])
+    if @image.update_attributes(image_params)
+      s3 = AWS::S3.new(:access_key_id => S3_CONFIG["access_key_id"], :secret_access_key => S3_CONFIG["secret_access_key"])
+      bucket = s3.buckets[S3_CONFIG["image_bucket"]]
+      # create and upload the png
+      @name = @image.id.to_s + ".png"
+      @png = Base64.decode64(@image.data['data:image/png;base64,'.length .. -1])
+      obj = bucket.objects.create(@name, @png, {content_type: "image/png", ac1: "public_read"})
+      flash[:success] = "Image updated!"
+    else
+      flash[:error] = "Error! Image unchanged!"
+    end
+    redirect_back_or root_url
+  end
+
   def destroy
     @image = Image.find(params[:id])
     @image.destroy
