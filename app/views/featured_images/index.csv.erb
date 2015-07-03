@@ -19,10 +19,15 @@
       <% @appearances += h.character %>
     <% end %>
     <% @story = fimage.mnemonic_aide %>
-    <% @examples = [] %>
-    <% fimage.hanzi.examples.each do |e| %>
-      <% @examples.push(e.subtitle.filename) unless e.subtitle == nil %>
+    <% @subtitles = "" %>
+    <% fimage.subtitles.limit(7).each do |subtitle| %>
+      <% unless subtitle == nil %>
+        <% @subtitles += subtitle.filename + ":" + subtitle.sentence + "_" + subtitle.id.to_s + "|" %>
+      <% end %>
     <% end %>
-<%= CSV.generate_line([fimage.hanzi.character, @p1, @p2, @dec, @def, @appearances, fimage.data, @story, @id, @examples.to_s.tr('[]" ', '')], col_sep: "\t", quote_char: "\0", row_sep: ?\t).html_safe %>
+    <% @data = fimage.data %>
+    <% @data.strip! %>
+    <% @data.delete!("\n\r") %>
+<%= CSV.generate_line([fimage.hanzi.character, @p1, @p2, @dec, @def, @appearances, @data, @story, @id, @subtitles], col_sep: "\t", quote_char: "\0", row_sep: ?\t).html_safe %>
   <% end %>
 <% end %>

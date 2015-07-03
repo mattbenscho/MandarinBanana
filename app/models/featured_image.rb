@@ -7,6 +7,10 @@ class FeaturedImage < ActiveRecord::Base
   belongs_to :hanzi
   belongs_to :pinyindefinition
 
+  has_many :examples, through: :hanzi
+  has_many :subtitles, through: :examples
+
+
   def next
     FeaturedImage.where("created_at > ?", self.created_at).first
   end
