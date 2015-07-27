@@ -151,7 +151,7 @@
   <% if @examples.any? %>
     <h2>Example sentences for <%= @hanzi.character %></h2>
     <div class="center">
-      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, replace: false, autoplay: 0, width: 250, height: 150, reviewing: false, extensive: false} %>
+      <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, autoplay: 0, width: 250, height: 150, extensive: false} %>
     </div>
   <% else %>
     <h2>There are no example sentences for this character.</h2>
@@ -166,26 +166,6 @@
     <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a><br/>
     <a target="_blank" href="http://tatoeba.org/eng/sentences/search?query=<%= @hanzi.character %>&from=cmn&to=und">Tatoeba</a><br/>
   </div>
-
-  <% if signed_in? %>
-    <h2>Review</h2>
-    <% @review = current_user.reviews.find_by(hanzi_id: @hanzi.id) %>
-    <div class="center">
-      <% if @review.nil? %>
-        <%= form_for(current_user.reviews.build(hanzi_id: @hanzi.id)) do |f| %>
-	  <div><%= f.hidden_field :hanzi_id %></div>
-	  <%= f.submit "Review this character", class: "btn btn-large btn-primary" %>
-	<% end %>
-      <% else %>
-        <%= form_for(current_user.reviews.find_by(hanzi_id: @hanzi.id), html: { method: :delete}) do |f| %>
-          <div><%= f.hidden_field :hanzi_id %></div>
-	  <%= f.submit "Stop reviewing", class: "btn btn-large btn-primary" %>
-	<% end %>  
-      <% end %>
-    </div>
-  <% else %>
-    <h2>Log in to add <%= @hanzi.character %> to your reviews.</h2>
-  <% end %>
 
   <% if @hanzi.comments.any? %>
     <div>

@@ -4,7 +4,6 @@ class Hanzi < ActiveRecord::Base
   has_many :examples, foreign_key: "expression_id", dependent: :destroy
   has_many :subtitles, through: :examples, source: :subtitle
   has_many :comments, dependent: :destroy
-  has_many :reviews, dependent: :destroy
   has_many :simplifieds, foreign_key: "trad_id", dependent: :destroy
   has_many :simplified_variants, through: :simplifieds, source: :simp
   has_many :traditionals, foreign_key: "simp_id", class_name: "Simplified", dependent: :destroy

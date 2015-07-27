@@ -20,31 +20,11 @@
       <% if !@sentence_hanzi.nil? %>
         <div class="unknown-char">
           <span class="big-char">
-	    <% if replace %>
-	      <% @sub_review = Review.find_by(hanzi_id: @sentence_hanzi.id) %>
-	      <% if @sub_review.nil? || @sub_review.due > Time.now %>
-                <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
-	      <% else %>
-                <%= link_to '[?]', @sentence_hanzi %>
-	      <% end %>
-            <% else %>
-              <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
-            <% end %>
+            <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
           </span></br>
-          <% if !signed_in? || current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id).nil? %>
-	    <% unless @pinyin.nil? %>
-              <% @pinyin[counter].each do |p| %>
-  	        <%= p %></br>
-	      <% end %>
-	    <% end %>
-	  <% elsif reviewing %>
-	    <% @sub_review = current_user.reviews.find_by(hanzi_id: @sentence_hanzi.id) %>
-	    <% if !@sub_review.nil? && @sub_review.due < Time.now %>
-	      <% unless @pinyin.nil? %>
-                <% @pinyin[counter].each do |p| %>
-  	          <%= p %></br>
-	        <% end %>
-	      <% end %>
+	  <% unless @pinyin.nil? %>
+            <% @pinyin[counter].each do |p| %>
+    	      <%= p %></br>
 	    <% end %>
           <% end %>
 	  <% @sentence_hanzi.featured_images.each do |fimage | %>

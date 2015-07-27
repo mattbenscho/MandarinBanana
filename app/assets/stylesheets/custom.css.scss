@@ -316,39 +316,6 @@ aside {
   }
 }
 
-/* reviews */
-
-#meter {
-  height: 3px;
-  position: relative;
-  background: #DDD;
-  padding: 0px;  
-  margin: 10px 0px 10px;
-  span {
-    display: block;
-    height: 100%;
-    background-color: #08C;
-  }
-}
-
-.selected {
-  background-color: paleturquoise;
-}
-
-.option {
-  padding: 6px 12px;
-  display: inline;
-}
-
-.optionradiobutton {
-  display: none;
-}
-
-.antedate {
-  padding: 6px 12px;
-  display: inline;
-}
-
 /* images */
 
 #kineticcontainer {

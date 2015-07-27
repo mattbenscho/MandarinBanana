@@ -14,17 +14,12 @@ Mbv2::Application.routes.draw do
   resources :mnemonics
   resources :pinyindefinitions
   resources :wallposts, only: [:index, :create, :destroy]
-  resources :reviews, only: [:index, :show, :create, :update, :destroy, :fail_action ]
   resources :featured_images
   root  'static_pages#home'
   match '/signup',                   to: 'users#new',           via: 'get'
   match '/signin',                   to: 'sessions#new',        via: 'get'
   match '/signout',                  to: 'sessions#destroy',    via: 'delete'
   match '/about',                    to: 'static_pages#about',  via: 'get'
-  match '/validate',                 to: 'reviews#validate',    via: 'get'
-  match '/fail',                     to: 'reviews#fail',        via: 'get'
-  match '/fail_action',              to: 'reviews#fail_action', via: 'get'
-  match '/answer',                   to: 'reviews#answer',      via: 'get'
   match '/search',                   to: 'hanzis#search',       via: 'get'
   match '/hurl/:input',              to: 'hanzis#hurl',         via: 'get'
   match '/select/:character',        to: 'hanzis#select',       via: 'get'

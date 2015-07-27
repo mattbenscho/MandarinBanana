@@ -1,7 +1,0 @@
-<div class="row-fluid">
-  <% if @next.nil? and @review.nil? %>
-    You are not reviewing any character. You can mark a character for review on its page, but be sure to have learned it properly before starting reviewing.
-  <% else %>
-    Good job, no review due! The next review is due in <%= time_ago_in_words(@next.due) %>.
-  <% end %>
-</div>

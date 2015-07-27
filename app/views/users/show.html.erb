@@ -9,13 +9,3 @@
     </section>
   </aside>  
 </div>
-<div>
-  <% if @user.reviews.any? %>
-    <ul>
-      <li>Reviews <%= @user_reviews_count %> characters, of which <%= @due_reviews_count %> are due for review.
-      <li>First review added <%= time_ago_in_words(@added_first) %> ago.
-    </ul>
-  <% else %>
-    <%= @user.name %> does not review any characters.
-  <% end %>
-</div>

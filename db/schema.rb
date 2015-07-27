@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123222041) do
+ActiveRecord::Schema.define(version: 20150727204737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,21 +111,6 @@ ActiveRecord::Schema.define(version: 20150123222041) do
   add_index "pinyindefinitions", ["hanzi_id", "pinyin", "definition"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin_and_definition", unique: true, using: :btree
   add_index "pinyindefinitions", ["hanzi_id", "pinyin"], name: "index_pinyindefinitions_on_hanzi_id_and_pinyin", using: :btree
   add_index "pinyindefinitions", ["hanzi_id"], name: "index_pinyindefinitions_on_hanzi_id", using: :btree
-
-  create_table "reviews", force: :cascade do |t|
-    t.integer  "hanzi_id"
-    t.integer  "user_id"
-    t.datetime "due"
-    t.integer  "failed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "reviews", ["due"], name: "index_reviews_on_due", using: :btree
-  add_index "reviews", ["failed"], name: "index_reviews_on_failed", using: :btree
-  add_index "reviews", ["hanzi_id", "user_id"], name: "index_reviews_on_hanzi_id_and_user_id", unique: true, using: :btree
-  add_index "reviews", ["hanzi_id"], name: "index_reviews_on_hanzi_id", using: :btree
-  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "simplifieds", force: :cascade do |t|
     t.integer  "trad_id"

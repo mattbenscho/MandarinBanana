@@ -2,7 +2,7 @@
 <h1><%= Movie.find(@subtitle.movie_id).title %></h1>
 
 <div class="center">
-  <%= render partial: "subtitle", locals: {morelink: false, replace: false, subtitle: @subtitle, autoplay: 1, width: 640, height: 390, reviewing: false, extensive: true} %>
+  <%= render partial: "subtitle", locals: {morelink: false, subtitle: @subtitle, autoplay: 1, width: 640, height: 390, extensive: true} %>
 
   <%= form_for(@subtitle) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
