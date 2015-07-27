@@ -3,14 +3,8 @@ require 'spec_helper'
 
 describe "Authentication" do
 
-  before do
-    @user = User.create!(name: "foobar", password: "foobar", email: "foobar@example.com", password_confirmation: "foobar")
-    @hanzi = Hanzi.create!(character: "大", components: "")
-    @pinyindefinition = @hanzi.pinyindefinitions.create!(pinyin: "da4")
-    @mnemonic = @user.mnemonics.create!(aide: "Bla", pinyindefinition: @pinyindefinition)
-    @fimage = FeaturedImage.new(data: "data:image/png;base64,ABCDEFG", mnemonic_aide: @mnemonic.aide, hanzi_id: @hanzi.id, commentary: "bla")
-    @fimage.save
-  end
+  let(:user) { FactoryGirl.create(:user) }
+  let(:admin) { FactoryGirl.create(:admin) }
 
   subject { page }
 
@@ -37,7 +31,6 @@ describe "Authentication" do
     end
 
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
       before { sign_in user }
 
       it { should have_title(user.name) }
@@ -57,7 +50,6 @@ describe "Authentication" do
   describe "authorization", type: :request do
 
     describe "for non-signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
 
       describe "when attempting to visit a protected page" do
         before do

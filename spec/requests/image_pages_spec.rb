@@ -7,20 +7,16 @@ describe "Image pages" do
     @hanzi = Hanzi.create(character: "大", components: "")
     @gorodisha = Gorodish.create(element: "a4")
     @gorodishb = Gorodish.create(element: "d")
-    @pydef = Pinyindefinition.create(hanzi_id: @hanzi.id, gbeginning: "d", gending: "a4", pinyin: "da4")
+    @pydef = Pinyindefinition.create(hanzi_id: @hanzi.id, gbeginning: "d", gending: "a4", pinyin: "da4", definition: "bla")
     sign_in @user
     @mnemonic = @user.mnemonics.create(pinyindefinition_id: @pydef.id, gorodish_id: nil, aide: "Lorem Ipsum")
     visit hanzi_path(@hanzi)
+    @url = "/mnemonics/" + @mnemonic.id.to_s + "/images/new"
   end
   
   subject { page }
   
   describe "hanzi: there should be a link to add a painting" do
-    before do
-      @mnemonic = @user.mnemonics.create(pinyindefinition_id: @pydef.id, gorodish_id: nil, aide: "Lorem Ipsum")
-      @url = "/mnemonics/" + @mnemonic.id.to_s + "/images/new"
-      visit hanzi_path(@hanzi)
-    end
     it { should have_link('add a painting', href: @url) }
   
     describe "hanzi: should encourage the user to draw something" do

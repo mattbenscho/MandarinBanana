@@ -3,14 +3,8 @@ require 'spec_helper'
 
 describe "User pages" do
 
-  before do
-    @user = User.create!(name: "foobar", password: "foobar", email: "foobar@example.com", password_confirmation: "foobar")
-    @hanzi = Hanzi.create!(character: "大", components: "")
-    @pinyindefinition = @hanzi.pinyindefinitions.create!(pinyin: "da4")
-    @mnemonic = @user.mnemonics.create!(aide: "Bla", pinyindefinition: @pinyindefinition)
-    @fimage = FeaturedImage.new(data: "data:image/png;base64,ABCDEFG", mnemonic_aide: @mnemonic.aide, hanzi_id: @hanzi.id, commentary: "bla")
-    @fimage.save
-  end
+  let(:user) { FactoryGirl.create(:user) }
+  let(:admin) { FactoryGirl.create(:admin) }
 
   subject { page }
 
@@ -20,8 +14,6 @@ describe "User pages" do
     after(:all)  { User.delete_all }
 
     describe "as a logged in user" do
-
-      let(:user) { FactoryGirl.create(:user) }
 
       before do
         sign_in user
@@ -34,8 +26,6 @@ describe "User pages" do
     end
 
     describe "as admin" do
-
-      let(:admin) { FactoryGirl.create(:admin) }
 
       before do
         sign_in admin

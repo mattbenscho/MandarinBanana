@@ -1,4 +1,3 @@
-
 <table class="hanzitable">
   <tr class="definition-row">
     <td>
@@ -59,8 +58,8 @@
 	  </span>
 	</td>
 	<td>
-	  <% @c_hanzi=Hanzi.find_by(character: c) %>
-	  <%= render partial: "hanzis/hanzi", locals: {hanzi: @c_hanzi} %>
+	  <% @c_hanzi = Hanzi.find_by(character: c) %>
+	  <%= render partial: "hanzis/hanzi", locals: {hanzi: @c_hanzi} unless @c_hanzi.nil? %>
 	</td>
       </tr>
     <% end %>

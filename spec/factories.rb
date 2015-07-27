@@ -2,7 +2,7 @@
 FactoryGirl.define do
   factory :user do
     sequence(:name)  { |n| "Person #{n}" }
-    sequence(:email) { |n| "person_#{n}@example.com"}
+    sequence(:email) { |n| "email#{n}@example.com" }
     password "foobar"
     password_confirmation "foobar"
 
@@ -37,12 +37,15 @@ FactoryGirl.define do
     aide "Lorem ipsum"
     user
     pinyindefinition
-    gorodish
+    trait :gd do
+      pinyindefinition_id ""
+      gorodish
+    end
   end
 
   factory :hanzi do
-    character "大"
-    components ""
+    sequence(:character) { |n| [*"\u4E00".."\u9FFF"].sample(1).join("") }
+    sequence(:components) { |n| [*"\u4E00".."\u9FFF"].sample(3).join("") }
   end
 
   factory :pinyindefinition do
@@ -58,5 +61,19 @@ FactoryGirl.define do
     user
     due Time.now
     failed 0
+  end
+
+  factory :image do
+    user
+    mnemonic
+    data "data:image/png;base64,ABCDEFG"
+  end
+
+  factory :featured_image do
+    hanzi
+    pinyindefinition
+    data "data:image/png;base64,ABCDEFG"
+    mnemonic_aide "mnemonic aide text"
+    commentary "bla"
   end
 end
