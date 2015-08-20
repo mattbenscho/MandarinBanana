@@ -19,7 +19,7 @@ class FeaturedImagesController < ApplicationController
     @fimage = FeaturedImage.new(fimage_params)
     if @fimage.save
       flash[:success] = "Image featured."
-      s3 = AWS::S3.new(:access_key_id => S3_CONFIG["access_key_id"], :secret_access_key => S3_CONFIG["secret_access_key"])
+      s3 = AWS::S3.new(:access_key_id => ENV["S3_KEY_ID"], :secret_access_key => ENV["S3_SECRET"])
       bucket = s3.buckets[S3_CONFIG["fimage_bucket"]]
       @name = @fimage.id.to_s + ".png"
       @png = Base64.decode64(@fimage.data['data:image/png;base64,'.length .. -1])

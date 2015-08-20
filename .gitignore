@@ -23,3 +23,7 @@ doc/
 
 # Ignore current import file
 app/helpers/subtitles_populate/import.txt
+
+# Ignore the new AWS keys (duh!)
+config/aws_keys.csv
+
