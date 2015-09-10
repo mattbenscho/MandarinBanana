@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Static pages" do
 
-  let(:fimage) { FactoryGirl.create(:featured_image) }
+  let!(:fimage) { FactoryGirl.create(:featured_image) }
 
   subject { page }
 

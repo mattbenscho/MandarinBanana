@@ -1,13 +1,39 @@
 <div class="center hero-unit">
   <div id="hero">
-    <h1>Mandarin Banana</h1>
+    <h1>MandarinBanana</h1>
 
-    <h2>
-      Remembering Chinese characters by drawing like a four-year-old.
-    </h2>
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-
+    <h2>&nbsp;&nbsp;&nbsp;Remembering Chinese characters with comics and movies&nbsp;&nbsp;&nbsp;</h2>
+    <br/>
+    <%= link_to "first comic", featured_image_path(FeaturedImage.first), class: "btn btn-large btn-primary" unless FeaturedImage.first.nil? %>
+    &nbsp;&nbsp;&nbsp;
+    <%= link_to "newest comic", featured_image_path(FeaturedImage.last), class: "btn btn-large btn-primary" unless FeaturedImage.last.nil? %>
   </div>
-
+</div>
+<div class="center">
+  <h1>How this works</h1>
+  <p>Learning to remember Chinese characters has been a pain for a long time, but with comics and movies, it's a lot easier. Here's how it works.</p>
+  <p>In each comic, all the information about a certain Chinese character—translations, pronunciation, elements—are encoded as parts of the
+  comic. Consider the following example:</p>
+  <h2>Sherlock Holmes in the Erechtheion</h2>
+  <%= image_tag "64.png" %>
+  <p>So here's Sherlock Holmes in the Erechtheion's bathroom. These two pieces of information tell us the pronunciation: <b>Sh</b>erlock Holmes is
+  for <b>sh-</b>, the <b>E</b>rechtheion is for <b>-e</b>, and the bathroom is the fourth tone. Which gives:</p>
+  <h2>sh + e + 4 = she4</h2>
+  <p>What about the components? The monk's cowls represent "礻", a character component meaning "cult". The heap of dirt on the right hand side represents "
+  土", which means "earth". This gives:</p>
+  <h2>礻 + 土 = 社</h2>
+  <p>But what does 社 actually mean? One of the translations is "society". To combine all this information, just read the mnemonic story once and look at
+  the picture:</p>
+  <p><b>Sh</b>erlock Holmes (sh-) is doing an undercover investigation in the <b>E</b>rechtheion's bathroom (-e4). There's a forbidden mysterious cult (the monk's cowls: <a href=/hurl/礻>礻</a>, the cult itself being seen as club: <a href=/hurl/社>社</a>) praying to a fossilized heap of dirt (<a href=/hurl/土>土</a>).</p>
+  <!-- <h1>Why this works</h2>
+  <h2>Reason 1: our brains work with emotion and images, not facts and data</h2>
+  <a href="https://en.wikipedia.org/wiki/Emotion_and_memory">Emotion and memory</a>
+  <h2>Elaborate mnemonic system!</h2>
+  <h2>Memory palace!</h2>
+  <h2>Holistic learning!</h2>
+  <h2>Context!</h2> -->
+  <h2>Now you</h2>
+  Can you find mnemonics for these characters?<br/>
+  <p class="center"><%= display_next(@next) %></p>
 </div>
 

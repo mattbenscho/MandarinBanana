@@ -38,7 +38,7 @@ describe "FeaturedImage pages" do
     describe "manually visiting fimage new path" do
       before { visit "/featured_images/"  + image.id.to_s + "/new" }
       it "redirects" do
-        expect(current_path).to eq featured_image_path(FeaturedImage.last)
+        expect(current_path).to eq root_path
       end
     end
   end
@@ -65,7 +65,7 @@ describe "FeaturedImage pages" do
     end
 
     describe "edit link" do
-      before { visit root_path }
+      before { visit featured_image_path(FeaturedImage.last) }
       it { should have_link('Edit featured image') }
       
       describe "edit view" do

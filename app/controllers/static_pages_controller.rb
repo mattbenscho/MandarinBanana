@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    redirect_to FeaturedImage.last unless FeaturedImage.last.nil?
+    @next = (Hanzi.joins(:subtitles).uniq - Hanzi.includes(:mnemonics).where.not(:mnemonics => { id: nil }))[0..15]
   end
 
   def about
