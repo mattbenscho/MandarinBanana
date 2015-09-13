@@ -59,7 +59,13 @@
   <h2>Memory palace!</h2>
   <h2>Holistic learning!</h2>
   <h2>Context!</h2> -->
-  <h2>Now you</h2>
+  <br/>
+  <h1>What's new</h1>
+  Mnemonics created today: <%= @mnemonic_count_today %><br/>
+  Mnemonics created in the last seven days: <%= @mnemonic_count_7_days %>
+  <br/>
+  <br/>
+  <h1>To Be Continued</h1>
   Can you find mnemonics for these characters?<br/>
   <p class="center"><%= display_next(@next) %></p>
 </div>

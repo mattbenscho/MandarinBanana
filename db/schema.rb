@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727204737) do
+ActiveRecord::Schema.define(version: 20150913105139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150727204737) do
     t.datetime "updated_at"
   end
 
+  add_index "mnemonics", ["created_at"], name: "index_mnemonics_on_created_at", using: :btree
   add_index "mnemonics", ["gorodish_id"], name: "index_mnemonics_on_gorodish_id", using: :btree
   add_index "mnemonics", ["pinyindefinition_id"], name: "index_mnemonics_on_pinyindefinition_id", using: :btree
 
