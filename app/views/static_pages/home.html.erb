@@ -61,12 +61,17 @@
   <h2>Context!</h2> -->
   <br/>
   <h1>What's new</h1>
-  Mnemonics created today: <%= @mnemonic_count_today %><br/>
-  Mnemonics created in the last seven days: <%= @mnemonic_count_7_days %>
+    <ul class="left">
+      <li>Mnemonics count: <%= @mnemonic_total_count %></li>
+      <li>Chinese characters covered: <%= @mnemonic_uniq_count %></li>
+      <li>Characters covered in the last seven days: <%= @mnemonic_count_7_days %></li>
+      <li>Characters covered today: <%= @mnemonic_count_today %></li>
+    </ul>
   <br/>
   <br/>
   <h1>To Be Continued</h1>
-  Can you find mnemonics for these characters?<br/>
-  <p class="center"><%= display_next(@next) %></p>
+  <p class="center">Can you find mnemonics for these characters?</p>
+  <div><p class="center"><%= display_next(@next) %></p></div>
+  <p class="center">There are <%= @to_be_covered_count %> Chinese characters left to be covered in <%= link_to "the movies", movies_path %>.</p>
 </div>
 
