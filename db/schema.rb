@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913105139) do
+ActiveRecord::Schema.define(version: 20150920152107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,9 +65,11 @@ ActiveRecord::Schema.define(version: 20150913105139) do
     t.string   "components", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "frequency",              default: 0
   end
 
   add_index "hanzis", ["character"], name: "index_hanzis_on_character", using: :btree
+  add_index "hanzis", ["frequency"], name: "index_hanzis_on_frequency", using: :btree
 
   create_table "images", force: :cascade do |t|
     t.text     "data"

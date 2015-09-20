@@ -9,6 +9,7 @@ describe Hanzi do
   it { should respond_to(:traditional_variants) }
   it { should respond_to(:simplified_by?) }
   it { should respond_to(:simplify_by!) }
+  it { should respond_to(:frequency) }
 
   describe "simplification" do
     before do

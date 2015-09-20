@@ -11,7 +11,7 @@ class Hanzi < ActiveRecord::Base
   has_many :traditional_variants, through: :traditionals, source: :trad
   has_many :featured_images
 
-  default_scope { order('character') }
+  default_scope { order('frequency DESC') }
 
   def simplified_by?(other_hanzi)
     simplifieds.find_by(simp_id: other_hanzi.id)
