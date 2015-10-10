@@ -1,6 +1,13 @@
 class PinyindefinitionsController < ApplicationController
   before_action :admin_user, only: [:new, :create, :index, :edit, :update, :destroy]
 
+  def show
+    @pd = Pinyindefinition.find(params[:id])
+    @homonyms = Hanzi.includes(:pinyindefinitions).where(:pinyindefinitions => { pinyin: @pd.pinyin })
+    @gbeginning = Gorodish.find_by(element: @pd.gbeginning)
+    @gending = Gorodish.find_by(element: @pd.gending)
+  end
+
   def new
     @pinyindefinition = Pinyindefinition.new
     @hanzi_id = params[:hanzi_id]

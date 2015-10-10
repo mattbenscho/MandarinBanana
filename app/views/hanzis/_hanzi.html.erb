@@ -10,7 +10,7 @@
 	<% hanzi.pinyindefinitions.each do |pinyindefinition| %>
 	  <tr>
 	    <td style="white-space:nowrap; vertical-align: top; padding: 5px;">
-	      <%= pinyindefinition.pinyin %>
+	      <%= link_to pinyindefinition.pinyin, pinyindefinition %>
 	      <% if pinyindefinition.gbeginning.present? %>
 	        =<br/>
 	        <a href="/gorodishes/<%= Gorodish.find_by(element: pinyindefinition.gbeginning).id %>">

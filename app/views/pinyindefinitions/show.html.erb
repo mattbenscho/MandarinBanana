@@ -1,0 +1,25 @@
+<h1>
+  <%= @pd.pinyin %>
+  <% if not @gbeginning.nil? && @gending.nil? %>
+    = <%= link_to @gbeginning.element, @gbeginning %>
+    + <%= link_to @gending.element, @gending %>
+  <% end %>	    
+</h1>
+
+<div class="center">
+<% if @homonyms.count > 1 %>
+  <h2><%= @homonyms.count %> characters are pronounced "<%= @pd.pinyin %>":</h2>
+  <p class="center">
+    <% @homonyms.each do |h| %>
+      <span class="single-char"><%= link_to h.character, h %></span>
+    <% end %>
+  </p>
+<% else %>
+  <h2>
+    Only <%= link_to @pd.hanzi.character, @pd.hanzi %> is pronounced "<%= @pd.pinyin %>"!
+  </h2>
+<% end %> 
+</div>
+<div class="center">
+  <h2><%= link_to "Take me back to " + @pd.hanzi.character, @pd.hanzi %></h2>
+</div>

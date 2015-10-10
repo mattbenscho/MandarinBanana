@@ -23,7 +23,7 @@
     <div class="headerhanzicircle"><div class="headerhanzi"><%= @hanzi.character %></div></div>
     <div class="fimagepinyin">
       <span class="firstline">
-        <%= @fimage.pinyindefinition.pinyin %>
+        <%= link_to @fimage.pinyindefinition.pinyin, @fimage.pinyindefinition %>
       </span><br/>
       <span class="secondline">
 	= 
