@@ -9,7 +9,16 @@
       <%= f.label :components %>
       <%= f.text_field :components %>
 
-      <div>Here are some basic strokes for copy-pasting: ㇀㇁㇂㇃㇄㇅㇆㇇㇈㇉㇊㇋㇌㇍㇎㇏一丨<U+31D2></div>
+      <div>
+	Here are some basic strokes for copy-pasting: ㇀㇁㇂㇃㇄㇅㇆㇇㇈㇉㇊㇋㇌㇍㇎㇏一丨<U+31D2>
+      </div>
+      <br/>
+      <div>
+	Hanzis without further decomposinition:<br/>
+	<% @atoms.each do |a| %>
+	  <span><%= a.character %></span>
+	<% end %>
+      </div>
       <br/>
 
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>

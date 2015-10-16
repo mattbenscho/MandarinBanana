@@ -67,6 +67,7 @@ class HanzisController < ApplicationController
 
   def edit
     @hanzi = Hanzi.find(params[:id])
+    @atoms = Hanzi.where(components: "")
   end
 
   def update
