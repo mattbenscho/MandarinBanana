@@ -7,7 +7,7 @@
       <% @images = check_for_fimages(@dictionary, a.id) %>
       <% if not @images.empty? %>
         <div class="appearance">
-	  <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
+  	  <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
 	  <br/>
           <% @images.each do |fimage | %>
        	    <a href="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage %>.png">
@@ -16,7 +16,11 @@
 	  <% end %>
 	</div>
       <% else %>
-        <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
+	<% if @appearances_with_mnemonics.include?(a) %>
+  	  <a href="/hanzis/<%= a.id %>" class="big-char has-mnemonic"><%= a.character %></a>
+	<% else %> 
+          <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
+	<% end %>
       <% end %>
     <% end %>
   </div>

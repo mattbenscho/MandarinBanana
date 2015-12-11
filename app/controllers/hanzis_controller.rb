@@ -48,6 +48,7 @@ class HanzisController < ApplicationController
     end
     @gorodishes = @gorodishes_all.uniq
     @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+    @appearances_with_mnemonics = @appearances.joins(:mnemonics)
     @appearances_ids = @appearances.dup.to_a
     @appearances_ids.collect! do |h|
       h.id
