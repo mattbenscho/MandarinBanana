@@ -1,17 +1,14 @@
 <div class="prevnext">
   <div class="bordered">
-    <span>
+    <div>
       <%= link_to fimage.hanzi.character, fimage, {class: "big-char"} %>
-    </span>
-    <br/>
-    <span>
-      <a href="/featured_images/<%= @fimage.id %>">
-	<img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= @fimage.id %>.png"
-	     alt="featured image for <%= @fimage.hanzi.character %>"
-	     class="previous_next_image">
+    </div>
+    <div>
+      <a href="/featured_images/<%= fimage.id %>">
+	<img src="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage.id %>.png"
+	     alt="featured image for <%= @fimage.hanzi.character %>" width="160px">
       </a>
-    </span>
-    <br/>
+    </div>
     <span><%= time_ago_in_words(fimage.created_at) %> ago</span><br/>
   </div>
 </div>
