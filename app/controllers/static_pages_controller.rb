@@ -9,6 +9,10 @@ class StaticPagesController < ApplicationController
     @mnemonic_uniq_count = Hanzi.joins(:mnemonics).uniq.count
     @mnemonic_count_7_days = Hanzi.includes(:mnemonics).where(:mnemonics => { created_at: [7.days.ago..Time.zone.now] }).count
     @mnemonic_count_today = Hanzi.includes(:mnemonics).where(:mnemonics => { created_at: [Time.zone.today.beginning_of_day..Time.zone.now] }).count
+    # Last three featured images
+    @fimage = FeaturedImage.last
+    @previous_featured_image = @fimage.previous unless FeaturedImage.last.nil?
+    @previous_previous_featured_image = @previous_featured_image.previous unless @previous_featured_image.nil?
   end
 
   def about

@@ -24,7 +24,11 @@
     <br/>
     <%= link_to "first comic", featured_image_path(FeaturedImage.first), class: "btn btn-large btn-primary" unless FeaturedImage.first.nil? %>
     &nbsp;&nbsp;&nbsp;
-    <%= link_to "newest comic", featured_image_path(FeaturedImage.last), class: "btn btn-large btn-primary" unless FeaturedImage.last.nil? %>
+    <%= fimage_preview(@previous_previous_featured_image) unless @previous_previous_featured_image.nil? %>
+    &nbsp;&nbsp;&nbsp;
+    <%= fimage_preview(@previous_featured_image) unless @previous_featured_image.nil? %>
+    &nbsp;&nbsp;&nbsp;
+    <%= fimage_preview(@fimage) unless @fimage.nil? %>
   </div>
 </div>
 <div class="ads">
