@@ -14,6 +14,7 @@ class MnemonicsController < ApplicationController
       @gending = @pinyindefinition.gending
       @gending_obj = Gorodish.find_by(element: @gending)
       @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+      @appearances_with_mnemonics = @appearances.joins(:mnemonics)
       @appearances_ids = @appearances.dup.to_a
       @appearances_ids.collect! do |h|
         h.id
@@ -66,6 +67,7 @@ class MnemonicsController < ApplicationController
       @gending = @pinyindefinition.gending
       @gending_obj = Gorodish.find_by(element: @gending)
       @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
+      @appearances_with_mnemonics = @appearances.joins(:mnemonics)
       @appearances_ids = @appearances.dup.to_a
       @appearances_ids.collect! do |h|
         h.id

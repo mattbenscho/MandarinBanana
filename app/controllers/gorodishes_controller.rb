@@ -2,6 +2,7 @@ class GorodishesController < ApplicationController
   def show
     @gorodish = Gorodish.find(params[:id])
     @appearances = Hanzi.includes(:pinyindefinitions).where('pinyindefinitions.gbeginning = ? OR pinyindefinitions.gending = ?', @gorodish.element, @gorodish.element).references(:pinyindefinitions)
+    @appearances_with_mnemonics = @appearances.joins(:mnemonics)
     @appearances_ids = @appearances.dup.to_a
     @appearances_ids.collect! do |h|
       h.id

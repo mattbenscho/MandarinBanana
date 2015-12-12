@@ -195,6 +195,7 @@
       | <%= link_to "New PD", new_pinyindefinition_path(:hanzi_id => @hanzi.id) %>
       | <%= link_to "Edit featured image", edit_featured_image_path(@fimage) %>
       | <%= link_to "Fimages download", featured_images_path(format: :csv) %>
+      | <%= link_to "Mnemonics download", mnemonics_path(format: :csv) %>
     </div>
 <% end %>
 
