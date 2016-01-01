@@ -1,5 +1,6 @@
 <% if signed_in? %>
   <% Pinyindefinition.joins(:mnemonics).uniq.each do |pd| %>
+    <% puts pd.hanzi.character %>
     <% @id = pd.id %>
     <% @p1 = pd.pinyin %>
     <% @p2 = "= " + pd.gbeginning + " + " + pd.gending %>
@@ -22,19 +23,44 @@
       <% @mnemonics += "<div class\"mnemonic-container\"><div class=\"mnemonic\">#{mnemonic.aide}</div>" %>
       <% mnemonic.images.each do |image| %>
         <% unless image == nil %>
-          <% @mnemonics += "<img src=\"#{image.id}.png\">" %>
+          <% @mnemonics += "<div class=\"paintingdiv\">" %>
+          <% @mnemonics += "#{pd.hanzi.character}<br/>" %>
+          <% @mnemonics += "<img class=\"painting\" src=\"#{image.id}.png\">" %>
+          <% @mnemonics += "</div>" %>
         <% end %>
       <% end %>
       <% @mnemonics += "</div>" %>
     <% end %>
-    <% @mnemonics += "</div>" %>
-    <% @subtitles = "<div>" %>
-    <% @hanzi.subtitles.limit(7).each do |subtitle| %>
-      <% unless subtitle == nil %>
-        <% @subtitles += "<div class=\"video\"><video src=\"#{subtitle.filename}.webm\" controls></video><div>#{subtitle.sentence}</div><a class=\"subtitle_link\" href=\"http://mandarinbanana.herokuapp.com/subtitles/#{subtitle.id}\">more</a></div>" %>
+    <% pd.gorodishes.each do |gd| %>
+      <% unless gd == nil %>
+        <% gd.mnemonics.each do |mn| %>
+          <% mn.images.each do |image| %>
+            <% unless image == nil %>
+              <% @mnemonics += "<div class=\"paintingdiv\">" %>
+              <% @mnemonics += "#{gd.element}<br/>" %>
+              <% @mnemonics += "<img class=\"painting\" src=\"#{image.id}.png\">" %>
+              <% @mnemonics += "</div>" %>
+            <% end %>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
-    <% @subtitles += "</div>" %>
-<%= CSV.generate_line([@id, pd.hanzi.character, @p1, @p2, @dec, @def, @appearances, @mnemonics, @subtitles], col_sep: "\t", quote_char: "\0", row_sep: ?\t, encoding: "UTF-8").html_safe %>
+    <% unless @hanzi.components == '' %>
+      <% @hanzi.components.split(//).each do |comp| %>
+        <% comphanzi = Hanzi.find_by(character: comp) %>
+        <% unless comphanzi == nil %>
+	  <% comphanzi.images.each do |image| %>
+	    <% unless image == nil %>
+              <% @mnemonics += "<div class=\"paintingdiv\">" %>
+              <% @mnemonics += "#{comphanzi.character}<br/>" %>
+  	      <% @mnemonics += "<img class=\"painting\" src=\"#{image.id}.png\">" %>
+              <% @mnemonics += "</div>" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% @mnemonics += "</div>" %>
+<%= CSV.generate_line([@id, pd.hanzi.character, @p1, @p2, @dec, @def, @appearances, @mnemonics], col_sep: "\t", quote_char: "\0", row_sep: "\n", encoding: "UTF-8").html_safe %>
   <% end %>
 <% end %>
