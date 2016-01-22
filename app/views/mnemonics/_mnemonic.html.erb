@@ -1,6 +1,6 @@
 <div class="mnemonic">
   <p>
-    <%= mnemonic.aide %>
+    <%= sanitize mnemonic.aide.gsub(/\n/, "<br/>"), tags: %w(br) %>
     <span class="signature">
       <span class="timestamp">- Mnemonic by <%= User.find_by(id: mnemonic.user_id).name %>, <%= time_ago_in_words(mnemonic.created_at) %>
         ago</span>
