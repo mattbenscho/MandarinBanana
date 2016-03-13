@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150920152107) do
+ActiveRecord::Schema.define(version: 20160313230739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150920152107) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "frequency",              default: 0
+    t.integer  "HSK"
   end
 
   add_index "hanzis", ["character"], name: "index_hanzis_on_character", using: :btree
@@ -135,6 +136,7 @@ ActiveRecord::Schema.define(version: 20150920152107) do
     t.text     "vocabulary"
     t.text     "words"
     t.text     "pinyin"
+    t.integer  "HSK"
   end
 
   create_table "users", force: :cascade do |t|
