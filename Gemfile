@@ -17,7 +17,7 @@ group :development, :test do
   gem 'rspec-rails', '3.1.0'
   gem 'rspec-its', '1.1.0'
   gem 'guard-rspec', '4.5.0'
-  gem 'spork-rails', '4.0.0'
+  gem 'spork', github: 'sporkrb/spork'
   gem 'guard-spork', '2.1.0'
   gem 'childprocess', '0.3.6'
 end

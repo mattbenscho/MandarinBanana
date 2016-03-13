@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/sporkrb/spork.git
+  revision: 224df492657e617a0c93c0319e78f0eefee5b636
+  specs:
+    spork (1.0.0rc4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -221,10 +227,6 @@ GEM
       websocket (~> 1.0.4)
     shellany (0.0.1)
     slop (3.6.0)
-    spork (1.0.0rc4)
-    spork-rails (4.0.0)
-      rails (>= 3.0.0, < 5)
-      spork (>= 1.0rc0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -284,8 +286,11 @@ DEPENDENCIES
   sass-rails (= 5.0.1)
   sdoc (= 0.3.20)
   selenium-webdriver (= 2.35.1)
-  spork-rails (= 4.0.0)
+  spork!
   turbolinks (= 2.3.0)
   uglifier (= 2.1.1)
   unicorn (= 4.8.3)
   will_paginate (= 3.0.4)
+
+BUNDLED WITH
+   1.11.2
