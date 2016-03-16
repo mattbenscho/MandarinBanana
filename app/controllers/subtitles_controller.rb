@@ -20,12 +20,8 @@ class SubtitlesController < ApplicationController
     if current_user.admin?
       @subtitle = Subtitle.find(params[:id])
       @subtitle.sentence = params[:subtitle][:sentence]
-      @vocabulary_s = `lib/assets/find_word_definitions.rb "#{params[:subtitle][:words]}"`
-      @vocabulary = eval(@vocabulary_s)
-      @subtitle.vocabulary = @vocabulary
-      @pinyin_s = `lib/assets/find_pinyin.rb "#{params[:subtitle][:words]}"`
-      @pinyin = eval(@pinyin_s)
-      @subtitle.pinyin = @pinyin
+      @subtitle.pinyin = params[:subtitle][:pinyin]
+      @subtitle.words = params[:subtitle][:words]
       @subtitle.save!
     end
     redirect_back_or root_url

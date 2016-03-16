@@ -1,6 +1,6 @@
 class Subtitle < ActiveRecord::Base
-  serialize :vocabulary, JSON
   serialize :pinyin, JSON
+  serialize :words, JSON
   belongs_to :movie
   validates :filename, presence: true, uniqueness: true
   validates :movie_id, presence: true
@@ -24,5 +24,96 @@ class Subtitle < ActiveRecord::Base
     end
     self.HSK = @HSK
     self.save!
+  end
+
+  def find_words
+    start_index = 0
+    end_index = 3
+    length = 4
+    @words = Array.new
+    while start_index < self.sentence.length
+      # puts "start_index: #{start_index}, end_index: #{end_index}"
+      if end_index == self.sentence.length
+        end_index -= 1
+        next
+      end
+      candidate = self.sentence[start_index..end_index]
+      # puts "candidate: #{candidate}"
+      length = end_index - start_index + 1
+      if length == 1
+        @words.push(candidate)
+        start_index = start_index + 1
+        end_index = start_index + 3
+      else
+        unless Word.find_by(characters: candidate).nil?
+          @words.push(candidate)
+          start_index = start_index + length
+          end_index = start_index + 3
+        else
+          end_index -= 1
+        end
+      end
+    end
+    # puts @words
+    self.words = @words
+    self.save!
+  end
+
+  def find_pinyin
+    @pinyin = Array.new
+    self.words.each do |word|
+      if word.length > 1
+        lines = Word.find_by(characters: word).translation.split(" // ")
+        @this_pinyin = Array.new
+        lines.each do |l|
+          @this_pinyin.push(l.gsub(/\].*/, '').downcase[1..-1].split(" "))
+        end
+        @this_pinyin.transpose.each do |pinyin|
+          @pinyin.push(pinyin.sort.uniq)
+        end
+      else
+        @this_pinyin = Array.new
+        @hanzi = Hanzi.find_by(character: word)
+        unless @hanzi.nil?
+          @hanzi.pinyindefinitions.each do |pd|
+            @this_pinyin.push("#{pd.pinyin.downcase}")
+          end
+          @pinyin.push(@this_pinyin.sort.uniq)
+        else
+          @pinyin.push([word])
+        end
+      end
+      # puts @this_pinyin.to_json
+    end
+    # puts @pinyin.to_json
+    self.pinyin = @pinyin
+    self.save!
+  end
+
+  def vocabulary
+    @vocabulary = Array.new
+    if self.words.nil?
+      return nil
+    else
+      self.words.each do |word|
+        @entry = Array.new
+        if word.length > 1
+          lines = Word.find_by(characters: word).translation.split(" // ")
+          lines.each do |l|
+            @entry.push(l)
+          end
+          @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry])
+        else
+          @hanzi = Hanzi.find_by(character: word)
+          unless @hanzi.nil?
+            Hanzi.find_by(character: word).pinyindefinitions.each do |pd|
+              @entry.push("[#{pd.pinyin.downcase}] #{pd.definition}")
+            end        
+            @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry])
+          end
+        end
+      end
+      return @vocabulary
+    end
   end
 end

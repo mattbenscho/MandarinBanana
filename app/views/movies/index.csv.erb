@@ -6,17 +6,10 @@
     <% unless @vocabulary.nil? %>
       <% @vocabulary.each do |v| %>
         <% @voc << '<tr><td class="voc-left">' %>
-        <% if v[0] == "---" %>
-          <% @voc << "---" %>
-        <% else %>
-          <% v[0].each_char do |char| %>
-  	    <% @voc << "<a href=\"https://mandarinbanana.herokuapp.com/hurl/#{char}\">#{char}</a>" %>
-	  <% end %>
+        <% v[0].each_char do |char| %>
+  	  <% @voc << "<a href=\"https://mandarinbanana.herokuapp.com/hurl/#{char}\">#{char}</a>" %>
         <% end %>
         <% @voc << "<\/td><td class=\"voc-right\">" %>
-	<% if v[0] == "---" %>
-	  <% @voc << "Definitions for words above consisting of more than one character:" %>
-	<% else %>
           <% v[1].each do |w| %>
 	    <% @voc << "#{w}<br\/>" %>
           <% end %>
