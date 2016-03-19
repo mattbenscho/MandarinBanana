@@ -12,6 +12,7 @@ gem 'bootstrap-will_paginate', '0.0.9'
 gem 'unicorn', '4.8.3'
 gem 'rack-timeout', '0.0.4'
 gem 'aws-sdk', '< 2'
+gem 'multi_json', '1.11.2'
 
 group :development, :test do
   gem 'rspec-rails', '3.1.0'
@@ -45,3 +46,4 @@ group :production do
   gem 'rails_12factor', '0.0.2'
   gem 'newrelic_rpm'
 end
+
