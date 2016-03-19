@@ -13,8 +13,13 @@
     <%= f.label :words %>
     <%= f.text_field :words %>
 
+    <%= f.label :pinyin %>
+    <%= f.text_area :pinyin %>
+
     <%= f.label :filename %>
     <%= f.text_field :filename %>
+
+    </br>
 
     <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
   <% end %>

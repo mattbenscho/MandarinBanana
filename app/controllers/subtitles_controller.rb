@@ -14,14 +14,15 @@ class SubtitlesController < ApplicationController
 
   def edit
     @subtitle = Subtitle.find(params[:id])
+    @vocabulary = @subtitle.vocabulary
   end
 
   def update
     if current_user.admin?
       @subtitle = Subtitle.find(params[:id])
       @subtitle.sentence = params[:subtitle][:sentence]
-      @subtitle.pinyin = params[:subtitle][:pinyin]
-      @subtitle.words = params[:subtitle][:words]
+      @subtitle.pinyin = ActiveSupport::JSON.decode(params[:subtitle][:pinyin])
+      @subtitle.words = ActiveSupport::JSON.decode(params[:subtitle][:words])
       @subtitle.save!
     end
     redirect_back_or root_url

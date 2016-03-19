@@ -3,11 +3,11 @@ namespace :db do
   desc "Assign HSK to words"
   task assign_hsk_to_words: :environment do
     # first, assign each Hanzi the default value of 7
-    # Word.all.each do |w|
-    #   w.HSK = 7
-    #   w.save!
-    #   puts w.id
-    # end
+    Word.all.each do |w|
+      w.HSK = 7
+      w.save!
+      puts w.id
+    end
     # then, assign the right HSK to each Hanzi
     levels = File.open('lib/assets/hskwordlist.csv').read
     levels.each_line do |line|

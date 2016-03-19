@@ -52,12 +52,12 @@ describe "SubtitlePages" do
       describe "editing" do
         before do
           click_link "edit subtitle"
-          fill_in "Words", with: "大"
+          fill_in "Words", with: "[\"大\"]"
+          fill_in "Pinyin", with: "[[\"da4\"]]"
           click_button "Save changes"
         end
 
         it { should have_content "大" }
-        it { should have_content "Definitions" }
 
       end
 
