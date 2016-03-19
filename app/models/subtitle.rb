@@ -90,7 +90,7 @@ class Subtitle < ActiveRecord::Base
     self.save!
   end
 
-  def vocabulary
+  def vocabulary(level=1)
     @vocabulary = Array.new
     if self.words.nil?
       return nil
@@ -98,18 +98,19 @@ class Subtitle < ActiveRecord::Base
       self.words.each do |word|
         @entry = Array.new
         if word.length > 1
-          lines = Word.find_by(characters: word).translation.split(" // ")
+          @word = Word.find_by(characters: word)
+          lines = @word.translation.split(" // ")
           lines.each do |l|
             @entry.push(l)
           end
-          @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry])
+          @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry]) or @word.HSK < level
         else
           @hanzi = Hanzi.find_by(character: word)
           unless @hanzi.nil?
             Hanzi.find_by(character: word).pinyindefinitions.each do |pd|
               @entry.push("[#{pd.pinyin.downcase}] #{pd.definition}")
             end        
-            @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry])
+            @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry]) or @hanzi.HSK < level
           end
         end
       end

@@ -25,7 +25,7 @@ namespace :db do
           end
           @vocabulary = "<table>"
           # puts subtitle.words
-          subtitle.vocabulary.each do |entry| 
+          subtitle.vocabulary(hsk).each do |entry| 
             @entries = entry[1].join("<br/>")
             @vocabulary += "<tr><td>#{entry[0]}</td><td>#{@entries}</td></tr>"
           end
