@@ -6,6 +6,12 @@
     <%= previous_for @subtitle %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= next_for @subtitle %>
   </div>
 
+  <% if signed_in? %>
+    <% if current_user.admin? %>
+      <br/><%= link_to "edit subtitle", edit_subtitle_path(@subtitle) %><br/>
+    <% end %>
+  <% end %>
+
   <%= render partial: "subtitle", locals: {morelink: false, subtitle: @subtitle, autoplay: 1, width: 640, height: 390, extensive: true} %>
 
   <div class="sub-navigation">
@@ -28,9 +34,6 @@
     <div>
       <%= render 'shared/comment_form' %>
     </div>
-    <% if current_user.admin? %>
-      <%= link_to "edit subtitle", edit_subtitle_path(@subtitle) %>
-    <% end %>
   <% else %>
     <p class="center">Please log in to post comments.</p>
   <% end %>
