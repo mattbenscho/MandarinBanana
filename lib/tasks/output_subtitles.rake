@@ -17,10 +17,17 @@ namespace :db do
           # puts subtitle.id
           @sentence_pinyin = ""
           (0..subtitle.sentence.length-1).each do |counter|
+            if subtitle.pinyin[counter].length == 1
+              @color = "color" + subtitle.pinyin[counter][0].tr('^0-9', '')
+            else
+              @color = "color"
+            end
             @sentence_pinyin += "<div class=\"sentence_pinyin\">"
-            @sentence_pinyin += "<span class=\"big_char\">#{subtitle.sentence[counter]}</span>"
+            @sentence_pinyin += "<span class=\"big_char #{@color}\">#{subtitle.sentence[counter]}</span>"
             @sentence_pinyin += "<br/>"
-            @sentence_pinyin += subtitle.pinyin[counter].join("<br/>")
+            subtitle.pinyin[counter].each do |p|
+              @sentence_pinyin += "<span class=\"color" + p.tr('^0-9', '') + "\">" + p + "</span><br/>"
+            end
             @sentence_pinyin += "</div>"
           end
           @vocabulary = "<table>"

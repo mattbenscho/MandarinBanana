@@ -20,11 +20,18 @@
       <% if !@sentence_hanzi.nil? %>
         <div class="unknown-char">
           <span class="big-char">
-            <%= link_to @sentence_hanzi.character, @sentence_hanzi %>
+	    <% unless @pinyin.nil? %>
+	      <% if @pinyin[counter].length == 1 %>
+	        <% @color = "color" + @pinyin[counter][0].tr('^0-9', '') %>
+	      <% else %>
+	        <% @color = "color" %>
+	      <% end %>
+	    <% end %>
+            <%= link_to @sentence_hanzi.character, @sentence_hanzi, { class: @color } %>
           </span></br>
 	  <% unless @pinyin.nil? %>
             <% @pinyin[counter].each do |p| %>
-    	      <%= p %></br>
+    	      <span class="color<%= p.tr('^0-9', '') %>"><%= p %></span></br>
 	    <% end %>
           <% end %>
 	  <% @sentence_hanzi.featured_images.each do |fimage | %>
