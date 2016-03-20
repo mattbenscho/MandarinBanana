@@ -99,11 +99,13 @@ class Subtitle < ActiveRecord::Base
         @entry = Array.new
         if word.length > 1
           @word = Word.find_by(characters: word)
-          lines = @word.translation.split(" // ")
-          lines.each do |l|
-            @entry.push(l)
+          unless @word.nil?
+            lines = @word.translation.split(" // ")
+            lines.each do |l|
+              @entry.push(l)
+            end
+            @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry]) or @word.HSK < level
           end
-          @vocabulary.push([word, @entry]) unless @vocabulary.include?([word, @entry]) or @word.HSK < level
         else
           @hanzi = Hanzi.find_by(character: word)
           unless @hanzi.nil?

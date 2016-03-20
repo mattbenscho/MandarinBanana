@@ -15,14 +15,34 @@ class SubtitlesController < ApplicationController
   def edit
     @subtitle = Subtitle.find(params[:id])
     @vocabulary = @subtitle.vocabulary
+    if @subtitle.words.nil?
+      @words_string = ""
+    else
+      @words_string = @subtitle.words.join("|")
+    end
+    @pinyin_array = Array.new
+    if @subtitle.pinyin.nil?
+      @pinyin_string = ""
+    else
+      @subtitle.pinyin.each do |p|
+        @pinyin_array.push(p.join("/"))
+      end
+      @pinyin_string = @pinyin_array.join("|")
+    end
   end
 
   def update
     if current_user.admin?
       @subtitle = Subtitle.find(params[:id])
       @subtitle.sentence = params[:subtitle][:sentence]
-      @subtitle.pinyin = ActiveSupport::JSON.decode(params[:subtitle][:pinyin])
-      @subtitle.words = ActiveSupport::JSON.decode(params[:subtitle][:words])
+      @pinyin_string = params[:subtitle][:pinyin]
+      @pinyin_array = @pinyin_string.split("|")
+      @pinyin = Array.new
+      @pinyin_array.each do |p|
+        @pinyin.push(p.split("/"))
+      end
+      @subtitle.pinyin = @pinyin
+      @subtitle.words = params[:subtitle][:words].split("|")
       @subtitle.save!
     end
     redirect_back_or root_url

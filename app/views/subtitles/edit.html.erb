@@ -11,10 +11,10 @@
     <%= f.text_field :sentence %>
 
     <%= f.label :words %>
-    <%= f.text_field :words %>
+    <%= f.text_field :words, value: @words_string %>
 
     <%= f.label :pinyin %>
-    <%= f.text_area :pinyin %>
+    <%= f.text_area :pinyin, value: @pinyin_string %>
 
     <%= f.label :filename %>
     <%= f.text_field :filename %>
