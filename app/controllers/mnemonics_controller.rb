@@ -6,12 +6,18 @@ class MnemonicsController < ApplicationController
     @mnemonic = Mnemonic.new
     @parent = params[:parent]
     @id = params[:id]
+    @snippets = []
     if @parent == "pinyindefinitions"
       @pinyindefinition = Pinyindefinition.find_by(id: @id)
       @hanzi = Hanzi.find_by(id: @pinyindefinition.hanzi_id)
+      @hanzi.components.each_char do |c|
+        @snippets << c
+      end
       @gbeginning = @pinyindefinition.gbeginning
+      @snippets << @gbeginning unless @gbeginning.nil?
       @gbeginning_obj = Gorodish.find_by(element: @gbeginning)
       @gending = @pinyindefinition.gending
+      @snippets << @gending unless @gending.nil?
       @gending_obj = Gorodish.find_by(element: @gending)
       @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
       @appearances_with_mnemonics = @appearances.joins(:mnemonics)
@@ -55,6 +61,7 @@ class MnemonicsController < ApplicationController
   end
   
   def edit
+    @snippets = []
     @mnemonic = Mnemonic.find(params[:id])
     if !@mnemonic.pinyindefinition.nil?
       @parent = "pinyindefinitions"
@@ -62,9 +69,14 @@ class MnemonicsController < ApplicationController
       @ancestor = @mnemonic.pinyindefinition
       @pinyindefinition = @mnemonic.pinyindefinition
       @hanzi = @pinyindefinition.hanzi
+      @hanzi.components.each_char do |c|
+        @snippets << c
+      end
       @gbeginning = @pinyindefinition.gbeginning
+      @snippets << @gbeginning unless @gbeginning.nil?
       @gbeginning_obj = Gorodish.find_by(element: @gbeginning)
       @gending = @pinyindefinition.gending
+      @snippets << @gending unless @gending.nil?
       @gending_obj = Gorodish.find_by(element: @gending)
       @appearances = Hanzi.where('components LIKE ?', "%#{@hanzi.character}%")
       @appearances_with_mnemonics = @appearances.joins(:mnemonics)

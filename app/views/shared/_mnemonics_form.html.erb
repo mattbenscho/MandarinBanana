@@ -3,8 +3,19 @@
 <%= render 'shared/error_messages', object: f.object %>
 <div>
   <%= f.text_area :aide, placeholder: "..." %>
+  <br/>
+  <% unless @snippets.empty? %>
+    Snippets (click to add):
+    <ul onclick="addSnippet(event)">
+      <% @snippets.each do |s| %>
+        <li><%= s %></li>
+      <% end %>
+    </ul>
+  <% end %>
   <%= f.hidden_field :gorodish_id, :value => @id if @parent == "gorodishes" %>
   <%= f.hidden_field :pinyindefinition_id, :value => @id if @parent == "pinyindefinitions" %>
+  <br/>
+  <br/>
 </div>
 <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
 <% end %>
