@@ -1,3 +1,14 @@
 // Place all the styles related to the Mnemonics controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#snippetsul { 
+               list-style: none;
+             }
+
+#snippetsul li { 
+                  border: 1px solid black;
+                  display: inline-block;
+                  margin: 3px;
+                  padding: 5px;
+                }

@@ -5,8 +5,7 @@
   <%= f.text_area :aide, placeholder: "..." %>
   <br/>
   <% unless @snippets.empty? %>
-    Snippets (click to add):
-    <ul onclick="addSnippet(event)">
+    <ul onclick="addSnippet(event)" id="snippetsul">
       <% @snippets.each do |s| %>
         <li><%= s %></li>
       <% end %>

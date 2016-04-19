@@ -10,6 +10,7 @@ class MnemonicsController < ApplicationController
     if @parent == "pinyindefinitions"
       @pinyindefinition = Pinyindefinition.find_by(id: @id)
       @hanzi = Hanzi.find_by(id: @pinyindefinition.hanzi_id)
+      @snippets << @hanzi.character
       @hanzi.components.each_char do |c|
         @snippets << c
       end
@@ -69,6 +70,7 @@ class MnemonicsController < ApplicationController
       @ancestor = @mnemonic.pinyindefinition
       @pinyindefinition = @mnemonic.pinyindefinition
       @hanzi = @pinyindefinition.hanzi
+      @snippets << @hanzi.character
       @hanzi.components.each_char do |c|
         @snippets << c
       end
