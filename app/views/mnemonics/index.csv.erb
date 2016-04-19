@@ -1,14 +1,17 @@
 <% if signed_in? %>
   <% Pinyindefinition.joins(:mnemonics).uniq.each do |pd| %>
+    <% @tags = "" %>
     <% puts pd.hanzi.character %>
     <% @id = pd.id %>
     <% @p1 = pd.pinyin %>
     <% @p2 = "= " + pd.gbeginning + " + " + pd.gending %>
     <% @hanzi = pd.hanzi %>
+    <% @tags += "HSK" + @hanzi.HSK.to_s + " " %>
     <% if @hanzi.components != '' %>
       <% @dec = @hanzi.character + "=" + @hanzi.components.split(//).join('+').to_s %>
     <% else %>
       <% @dec = " " %>
+      <% @tags += "root " %>
     <% end %>
     <% @def = pd.definition %>
     <% @appearances = "<div>" %>
@@ -18,9 +21,14 @@
       <% end %>
     <% end %>
     <% @appearances += "</div>" %>
+    <% if @appearances == "<div></div>" %>
+      <% @tags += "leaf " %>
+    <% else %>
+      <% @tags += "branch " %>
+    <% end %>
     <% @mnemonics = "<div>" %>
     <% pd.mnemonics.each do |mnemonic| %>
-      <% @mnemonics += "<div class\"mnemonic-container\"><div class=\"mnemonic\">#{mnemonic.aide}</div>" %>
+      <% @mnemonics += "<div class\"mnemonic-container\"><div class=\"mnemonic\">#{sanitize mnemonic.aide.gsub(/\r\n/, "<br>"), tags: %w(br)}</div>" %>
       <% mnemonic.images.each do |image| %>
         <% unless image == nil %>
           <% @mnemonics += "<div class=\"paintingdiv\">" %>
@@ -61,6 +69,6 @@
       <% end %>
     <% end %>
     <% @mnemonics += "</div>" %>
-<%= CSV.generate_line([@id, pd.hanzi.character, @p1, @p2, @dec, @def, @appearances, @mnemonics], col_sep: "\t", quote_char: "\0", row_sep: "\n", encoding: "UTF-8").html_safe %>
+<%= CSV.generate_line([@id, pd.hanzi.character, @p1, @p2, @dec, @def, @appearances, @mnemonics, @tags], col_sep: "\t", quote_char: "\0", row_sep: "\n", encoding: "UTF-8").html_safe %>
   <% end %>
 <% end %>
