@@ -8,9 +8,10 @@ namespace :db do
       frequency = line.split(" ")[1]
       db_hanzi = Hanzi.find_by(character: hanzi)
       if not db_hanzi.nil?        
-        db_hanzi.frequency = frequency
+        a_count = Hanzi.where('components LIKE ?', "%#{db_hanzi.character}%").count
+        db_hanzi.frequency = frequency.to_i + a_count
         db_hanzi.save
-        print hanzi + " updated: " + db_hanzi.frequency.to_s + "\n"
+        print hanzi + " updated: " + frequency.to_s + "+" + a_count.to_s + "\n"
       else
         print hanzi + " not found!\n"
       end
