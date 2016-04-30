@@ -1,0 +1,17 @@
+<h2>Words with <span class="hanzi"><%= @hanzi.character %></span></h2>
+<%= will_paginate @words %>
+<table>
+  <% @words.each do |w| %>
+  <tr>
+    <td class="big-char hanzi word-characters">
+      <% w.characters.each_char do |c| %><%= link_to c, "/hurl/" + c %><% end %>
+    <td>
+    <td class="word-translation"><%= w.translation %>
+      <% if w.HSK < 7 %>
+	(HSK level <%= w.HSK %>)
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<%= will_paginate @words %>

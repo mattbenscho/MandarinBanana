@@ -152,6 +152,10 @@
     <%= render partial: "hanzis/pronunciations", controller: Hanzi %>
   </div>
 
+  <div class="center">
+    <%= render partial: "hanzis/words", controller: Hanzi %>
+  </div>
+
   <% if @examples.any? %>
     <h2>Example sentences for <span class="hanzi"><%= @hanzi.character %></span></h2>
     <div class="center">

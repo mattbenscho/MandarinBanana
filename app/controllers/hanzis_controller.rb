@@ -58,6 +58,7 @@ class HanzisController < ApplicationController
     @dictionary.collect! do |d|
       [d.id, d.hanzi_id]
     end
+    @words = Word.where('characters LIKE ?', "%#{@hanzi.character}%").paginate(page: params[:page], per_page: 40)
     store_location
   end
 
