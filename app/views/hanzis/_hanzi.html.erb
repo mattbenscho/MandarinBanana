@@ -1,8 +1,8 @@
 <table class="hanzitable">
   <tr class="definition-row">
     <td>
-      <span class="single-char">
-	<b><%= link_to hanzi.character, hanzi %></b>
+      <span class="single-char hanzi">
+	<%= link_to hanzi.character, hanzi %>
       </span>
     </td>
     <td>
@@ -26,7 +26,7 @@
 	      <p>
 		<%= pinyindefinition.definition %> |
      		<a href="/pinyindefinitions/<%= pinyindefinition.id %>/mnemonics/new">
-		  add a mnemonic for this meaning of <%= hanzi.character %>
+		  add a mnemonic for this meaning of <span class="smallhanzi"><%= hanzi.character %></span>
 		</a>
 		<% if signed_in? && current_user.admin? %>
   	          | <%= link_to "update", edit_pinyindefinition_path(pinyindefinition) %>
@@ -46,14 +46,14 @@
     <% hanzi.components.each_char do |c| %>
       <tr>
 	<td class="decomposition">
-	  <span>
+	  <span class="smallhanzi">
 	    <%= hanzi.character %>
 	  <br/>
 	  <span>
 	    = 
 	  </span>
 	  <br/>
-	  <span>
+	  <span class="smallhanzi">
 	    <%= hanzi.components.split(//).join('	</span><br/><span>+</span><br/><span>').html_safe %>
 	  </span>
 	</td>

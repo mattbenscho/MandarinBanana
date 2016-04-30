@@ -2,6 +2,6 @@
   <% if @hanzi.HSK < 7 %>
     <h2>HSK level: <%= @hanzi.HSK %></h2>
   <% else %>
-    <h2><%= @hanzi.character %> is not part of the HSK.</h2>
+    <h2><span class="hanzi"><%= @hanzi.character %></span> is not part of the HSK.</h2>
   <% end %>
 <% end %>

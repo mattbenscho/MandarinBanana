@@ -2,7 +2,7 @@
 <% @ancestor = Gorodish.find_by(id: @id).element if @parent == "gorodishes" %>
 
 <% if @parent == "pinyindefinitions" %>
-  <h1>Invent a new mnemonic for <%= @hanzi.character %></h1>
+  <h1>Invent a new mnemonic for <span class="hanzi"><%= @hanzi.character %></span></h1>
   <%= render @hanzi %>
   <% if !@gbeginning_obj.nil? %>
     <h2>Mnemonics for <%= @gbeginning %>:</h2>

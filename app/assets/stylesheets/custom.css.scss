@@ -67,7 +67,7 @@ h1 {
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 h2 {
@@ -76,7 +76,6 @@ h2 {
   margin-top: 30px;
   text-align: center;
   font-weight: normal;
-  font-style: italic;
   color: #666;
 }
 
@@ -269,6 +268,17 @@ aside {
 }
 
 /* hanzis */
+
+.hanzi {
+  font-family: "AR PL KaitiM GB", "AR PL Uming CN", FangSong, STXihei, "Hiragino Sans GB", STSong, SimHei, SimSun, PMingLiU, Song, Ming, MingLiu, "Arial Unicode MS", Code2000, sans-serif;
+;
+  font-weight: normal;
+}
+
+.smallhanzi {
+  font-family: FangSong, "AR PL Uming CN", "AR PL KaitiM GB", STXihei, "Hiragino Sans GB", STSong, SimHei, SimSun, PMingLiU, Song, Ming, MingLiu, "Arial Unicode MS", Code2000, sans-serif;
+  font-weight: normal;
+}
 
 .big-char {
   font-size: 200%;

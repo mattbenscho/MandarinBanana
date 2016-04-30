@@ -1,7 +1,7 @@
 <% provide(:title, "Edit your mnemonic") %>
 
 <% if @parent == "pinyindefinitions" %>
-  <h1>Edit your mnemonic for <%= @hanzi.character %></h1>
+  <h1>Edit your mnemonic for <span class="hanzi"><%= @hanzi.character %></span></h1>
   <%= render @hanzi %>
   <% if !@gbeginning_obj.nil? %>
     <h2>Mnemonics for <%= @gbeginning %>:</h2>

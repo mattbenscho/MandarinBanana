@@ -1,5 +1,5 @@
 <% provide(:title, "Edit hanzi") %>
-<h1>Update <%= @hanzi.character %></h1>
+<h1>Update <span class="hanzi"><%= @hanzi.character %></span></h1>
 
 <div class="center">
   <div class="center">
@@ -10,13 +10,14 @@
       <%= f.text_field :components %>
 
       <div>
-	Here are some basic strokes for copy-pasting: ㇀㇁㇂㇃㇄㇅㇆㇇㇈㇉㇊㇋㇌㇍㇎㇏一丨<U+31D2>
+	Here are some basic strokes for copy-pasting:<br/>
+	<span class="big-char hanzi">㇀㇁㇂㇃㇄㇅㇆㇇㇈㇉㇊㇋㇌㇍㇎㇏一丨<U+31D2></span>
       </div>
       <br/>
       <div>
 	Hanzis without further decomposinition:<br/>
 	<% @atoms.each do |a| %>
-	  <span><%= a.character %></span>
+	  <span class="big-char hanzi"><%= a.character %></span>
 	<% end %>
       </div>
       <br/>

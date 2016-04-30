@@ -19,7 +19,7 @@
       <% @sentence_hanzi = Hanzi.find_by(character: char) %>
       <% if !@sentence_hanzi.nil? %>
         <div class="unknown-char">
-          <span class="big-char">
+          <span class="big-char hanzi">
 	    <% unless @pinyin.nil? %>
 	      <% if @pinyin[counter].length == 1 %>
 	        <% @color = "color" + @pinyin[counter][0].tr('^0-9', '') %>
@@ -45,13 +45,13 @@
 	  <% end %>
         </div>
       <% else %>
-        <%= char %>
+        <span class="hanzi"><%= char %></span>
       <% end %>
     <% counter += 1 %>
     <% end %>
   <% else %>
     <% subtitle.sentence.each_char do |char| %>
-      <span class="big-char"><a href="/hurl/<%= char %>"><%= char %></a></span>
+      <span class="big-char hanzi"><a href="/hurl/<%= char %>"><%= char %></a></span>
     <% end %>
   <% end %>  
   <% if morelink %>

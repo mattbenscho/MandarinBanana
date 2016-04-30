@@ -20,7 +20,7 @@
 
 <div class="center">
   <div class="header">
-    <div class="headerhanzicircle"><div class="headerhanzi"><%= @hanzi.character %></div></div>
+    <div class="headerhanzicircle"><div class="headerhanzi hanzi"><%= @hanzi.character %></div></div>
     <div class="fimagepinyin">
       <span class="firstline">
         <%= link_to @fimage.pinyindefinition.pinyin, @fimage.pinyindefinition %>
@@ -51,7 +51,7 @@
         <div class="bordered">
 	  <span>previous:</span><br/>
 	  <span>
-	    <%= link_to @previous_featured_image.hanzi.character, @previous_featured_image, {class: "big-char"} %>
+	    <%= link_to @previous_featured_image.hanzi.character, @previous_featured_image, {class: "big-char hanzi"} %>
 	  </span>
 	  <br/>
 	  <span>
@@ -79,7 +79,7 @@
         <div class="bordered">
 	  <span>next:</span><br/>
 	  <span>
-	    <%= link_to @next_featured_image.hanzi.character, @next_featured_image, {class: "big-char"} %>
+	    <%= link_to @next_featured_image.hanzi.character, @next_featured_image, {class: "big-char hanzi"} %>
 	  </span>
 	  <br/>
 	  <span>
@@ -118,12 +118,12 @@
   <br/>
 
   <% if @hanzi.components != '' %>
-    <h2>Composition: <%= @hanzi.character %> = <%= @hanzi.components.split(//).join(' + ') %></h2>
+    <h2>Composition: <span class="hanzi"><%= @hanzi.character %> = <%= @hanzi.components.split(//).join(' + ') %></span></h2>
     <div class="center decomposition_container">
       <%= render @hanzi %>
     </div>
   <% else %>
-    <h2><%= @hanzi.character %> can not be decomposed into smaller units.</h2>
+    <h2><span class="hanzi"><%= @hanzi.character %></span> can not be decomposed into smaller units.</h2>
     <div class="center decomposition_container">
       <%= render @hanzi %>
     </div>      
@@ -153,7 +153,7 @@
   </div>
 
   <% if @examples.any? %>
-    <h2>Example sentences for <%= @hanzi.character %></h2>
+    <h2>Example sentences for <span class="hanzi"><%= @hanzi.character %></span></h2>
     <div class="center">
       <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, autoplay: 0, width: 250, height: 150, extensive: false} %>
     </div>
@@ -161,7 +161,7 @@
     <h2>There are no example sentences for this character.</h2>
   <% end %>
 
-  <h2>See <%= @hanzi.character %> on (opens in new window/tab)</h2>
+  <h2>See <span class="hanzi"><%= @hanzi.character %></span> on (opens in new window/tab)</h2>
   <div class="center">
     <a target="_blank" href="http://hanzicraft.com/character/<%= @hanzi.character %>">Hanzicraft</a><br/>
     <a target="_blank" href="http://www.mdbg.net/chindict/chindict.php?page=worddict&wdrst=0&wdqb=<%= @hanzi.character %>">MDBG</a><br/>

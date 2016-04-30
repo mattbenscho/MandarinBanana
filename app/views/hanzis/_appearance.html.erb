@@ -1,13 +1,13 @@
 <% if !@appearances.empty? %>
   <% if not @hanzi.nil? %>
-    <h2><%= @hanzi.character %> appears as component in</h2>
+    <h2><span class="hanzi"><%= @hanzi.character %></span> appears as component in</h2>
   <% end %>
   <div class="appearances center">
     <% @appearances.each do |a| %>
       <% @images = check_for_fimages(@dictionary, a.id) %>
       <% if not @images.empty? %>
         <div class="appearance">
-  	  <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
+  	  <a href="/hanzis/<%= a.id %>" class="big-char hanzi"><%= a.character %></a>
 	  <br/>
           <% @images.each do |fimage | %>
        	    <a href="http://<%= S3_CONFIG["fimage_bucket"] %>.s3-eu-west-1.amazonaws.com/<%= fimage %>.png">
@@ -17,14 +17,14 @@
 	</div>
       <% else %>
 	<% if @appearances_with_mnemonics.include?(a) %>
-  	  <a href="/hanzis/<%= a.id %>" class="big-char has-mnemonic"><%= a.character %></a>
+  	  <a href="/hanzis/<%= a.id %>" class="big-char has-mnemonic hanzi"><%= a.character %></a>
 	<% else %> 
-          <a href="/hanzis/<%= a.id %>" class="big-char"><%= a.character %></a>
+          <a href="/hanzis/<%= a.id %>" class="big-char hanzi"><%= a.character %></a>
 	<% end %>
       <% end %>
     <% end %>
   </div>
 <% else %>
-  <h2>This character is not a component of another character.</h2>
+  <h2><span class="hanzi"><%= @hanzi.character %></span> is not a component of another character.</h2>
 <% end %>
 

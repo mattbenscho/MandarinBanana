@@ -11,7 +11,7 @@
       <% @pydef = Pinyindefinition.find(mnemonic.pinyindefinition_id) %>
       <% @hanzi = Hanzi.find(@pydef.hanzi_id) %>
       <span class="big-char">
-	<%= link_to @hanzi.character, @hanzi %>
+	<%= link_to @hanzi.character, @hanzi, { class: "hanzi" } %>
       </span>
       <%= render mnemonic %>
     <% elsif !mnemonic.gorodish_id.nil? then %>

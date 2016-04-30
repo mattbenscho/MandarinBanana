@@ -1,5 +1,5 @@
 <% provide(:title, @hanzi.character) %>
-<h1><%= @hanzi.character %></h1>
+<h1 class="hanzi"><%= @hanzi.character %></h1>
 
 <% if signed_in? && current_user.admin? %>
   <div class="center">
@@ -38,12 +38,12 @@
 </div>
 
 <% if @examples.any? %>
-  <h2>Example sentences for <%= @hanzi.character %></h2>
+  <h2>Example sentences for <span class="hanzi"><%= @hanzi.character %></span></h2>
   <div class="center">
     <%= render partial: "subtitles/subtitle", collection: @examples, locals: {morelink: true, autoplay: 0, width: 250, height: 150, extensive: false} %>
   </div>
 <% else %>
-  <h2>There are no example sentences for <%= @hanzi.character %>.</h2>
+  <h2>There are no example sentences for <span class="hanzi"><%= @hanzi.character %></span>.</h2>
 <% end %>
 
 <h2>See <%= @hanzi.character %> on (opens in new window/tab)</h2>

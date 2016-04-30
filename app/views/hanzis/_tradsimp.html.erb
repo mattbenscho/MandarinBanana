@@ -1,13 +1,13 @@
 <% if @hanzi.traditional_variants.any? %>
-  <h2><%= @hanzi.character %> is the simplified version of 
+  <h2><span class="hanzi"><%= @hanzi.character %></span> is the simplified version of 
   <% @hanzi.traditional_variants.each do |t| %>
-    <%= link_to t.character, t %>
+    <%= link_to t.character, t, { class: "hanzi" } %>
   <% end %>.</h2>
 <% elsif @hanzi.simplified_variants.any? %>
-  <h2><%= @hanzi.character %> is the traditional variant of 
+  <h2><span class="hanzi"><%= @hanzi.character %></span> is the traditional variant of 
   <% @hanzi.simplified_variants.each do |s| %>
-    <%= link_to s.character, s %>
+    <%= link_to s.character, s, { class: "hanzi" } %>
   <% end %>.</h2>
 <% else %>
-  <h2><%= @hanzi.character %> has no simplified variant.</h2>
+  <h2><span class="hanzi"><%= @hanzi.character %></span> has no simplified variant.</h2>
 <% end %>
