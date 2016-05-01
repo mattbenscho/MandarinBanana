@@ -2,12 +2,12 @@
 <%= form_for(@mnemonic) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 <div>
-  <%= f.text_area :aide, placeholder: "..." %>
+  <%= f.text_area :aide, placeholder: "...", onclick: 'saveCursorPosition();' %>
   <br/>
   <% unless @snippets.empty? %>
-    <ul onclick="addSnippet(event)" id="snippetsul">
+    <ul id="snippetsul">
       <% @snippets.each do |s| %>
-        <li class="smallhanzi"><%= s %></li>
+        <li onclick="insertAtCursor(event)"><%= s %></li>
       <% end %>
     </ul>
   <% end %>
