@@ -1,6 +1,8 @@
 class Word < ActiveRecord::Base
-  validates :characters, length: { minimum: 2 }, uniqueness: true
+  validates :simplified, length: { minimum: 2 }
+  validates :traditional, length: { minimum: 2 }
+  validates :pinyin, presence: true
   validates :translation, presence: true
 
-  default_scope { order(:HSK, :characters) }
+  default_scope { order(:HSK, :frequency) }
 end

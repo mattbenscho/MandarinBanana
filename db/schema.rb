@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315214926) do
+ActiveRecord::Schema.define(version: 20160505175916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,14 +163,19 @@ ActiveRecord::Schema.define(version: 20160315214926) do
   add_index "wallposts", ["user_id", "created_at"], name: "index_wallposts_on_user_id_and_created_at", using: :btree
 
   create_table "words", force: :cascade do |t|
-    t.string   "characters"
+    t.string   "simplified"
     t.text     "translation"
     t.integer  "HSK"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "traditional"
+    t.string   "pinyin"
+    t.string   "frequency"
   end
 
   add_index "words", ["HSK"], name: "index_words_on_HSK", using: :btree
-  add_index "words", ["characters"], name: "index_words_on_characters", unique: true, using: :btree
+  add_index "words", ["frequency"], name: "index_words_on_frequency", using: :btree
+  add_index "words", ["simplified"], name: "index_words_on_simplified", using: :btree
+  add_index "words", ["traditional"], name: "index_words_on_traditional", using: :btree
 
 end

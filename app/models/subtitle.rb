@@ -45,7 +45,7 @@ class Subtitle < ActiveRecord::Base
         start_index = start_index + 1
         end_index = start_index + 3
       else
-        unless Word.find_by(characters: candidate).nil?
+        unless Word.find_by(simplified: candidate).nil?
           @words.push(candidate)
           start_index = start_index + length
           end_index = start_index + 3
@@ -63,7 +63,7 @@ class Subtitle < ActiveRecord::Base
     @pinyin = Array.new
     self.words.each do |word|
       if word.length > 1
-        lines = Word.find_by(characters: word).translation.split(" // ")
+        lines = Word.find_by(simplified: word).translation.split(" // ")
         @this_pinyin = Array.new
         lines.each do |l|
           @this_pinyin.push(l.gsub(/\].*/, '').downcase[1..-1].split(" "))
@@ -98,7 +98,7 @@ class Subtitle < ActiveRecord::Base
       self.words.each do |word|
         @entry = Array.new
         if word.length > 1
-          @word = Word.find_by(characters: word)
+          @word = Word.find_by(simplified: word)
           unless @word.nil?
             lines = @word.translation.split(" // ")
             lines.each do |l|

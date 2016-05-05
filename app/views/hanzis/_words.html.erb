@@ -1,10 +1,24 @@
 <h2>Words with <span class="hanzi"><%= @hanzi.character %></span></h2>
 <%= will_paginate @words %>
-<table>
+<table class="words-table">
   <% @words.each do |w| %>
   <tr>
-    <td class="big-char hanzi word-characters">
-      <% w.characters.each_char do |c| %><%= link_to c, "/hurl/" + c %><% end %>
+    <td class="word-characters">
+      <% w.simplified.each_char.with_index do |c, i| %>
+        <% pinyin = w.pinyin.split(" ")[i] %>
+	<% colorclass = "" %>
+	<% unless pinyin.nil? %>
+	  <% colornumber = pinyin[-1] %>
+ 	  <% if colornumber =~ /[1-5]/ %>
+	    <% colorclass = "color" + colornumber %>
+	  <% end %>
+        <% end %>
+        <div style="display:inline-block;" class="center <%= colorclass %>">
+          <%= link_to c, "/hurl/" + c, { class: "big-char hanzi #{colorclass}" } %>
+	  <br/>
+	  <%= pinyin %>
+	</div>
+      <% end %>
     <td>
     <td class="word-translation"><%= w.translation %>
       <% if w.HSK < 7 %>

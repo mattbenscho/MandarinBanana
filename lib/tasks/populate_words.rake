@@ -2,15 +2,22 @@
 namespace :db do
   desc "Feed database with words"
   task populate_words: :environment do
-    lines = File.open('lib/assets/cedict_uniq.csv').read
+    Word.delete_all
+    lines = File.open('lib/assets/cedict.csv').read
     counter = 0
     lines.each_line do |line|
-      puts counter
+      line.strip!
+      if line[0] == "#"
+        next
+      end
       counter += 1
-      word = line.split("\t")[0]
-      if word.length > 1      
-        translation = line.split("\t")[1]
-        @word = Word.create(characters: word, translation: translation)
+      simplified = line.split(" ")[1]
+      if simplified.length > 1      
+        traditional = line.split(" ")[0]
+        translation = line.split("/")[1..-1].join(" / ")
+        pinyin = line.gsub(/[^\[]*\[/, "").gsub(/\].*/, "").downcase
+        @word = Word.create(traditional: traditional, simplified: simplified, pinyin: pinyin, translation: translation, HSK: 7, frequency: 0)
+        puts "counter: \"#{counter}\", traditional: \"#{traditional}\", simplified: \"#{simplified}\", pinyin: \"#{pinyin}\", translation: \"#{translation}\""
       end
     end
   end
