@@ -56,14 +56,17 @@
   <p>But what does 社 actually mean? One of the translations is "society". To combine all this information, just read the mnemonic story once and look at
   the picture:</p>
   <p><b>Sh</b>erlock Holmes (sh-) is doing an undercover investigation in the <b>E</b>rechtheion's bathroom (-e4). There's a forbidden mysterious cult (the monk's cowls: <a href=/hurl/礻>礻</a>, the cult itself being seen as club: <a href=/hurl/社>社</a>) praying to a fossilized heap of dirt (<a href=/hurl/土>土</a>).</p>
-  <!-- <h1>Why this works</h2>
-  <h2>Reason 1: our brains work with emotion and images, not facts and data</h2>
-  <a href="https://en.wikipedia.org/wiki/Emotion_and_memory">Emotion and memory</a>
-  <h2>Elaborate mnemonic system!</h2>
-  <h2>Memory palace!</h2>
-  <h2>Holistic learning!</h2>
-  <h2>Context!</h2> -->
   <br/>
+  <h1>Coverage</h1>
+  <br/>
+  <% @hsktotals.each_with_index do |value, hsk| %>
+    <span>HSK <%= hsk+1 %>: <%= @hskcovereds[hsk].round %> / <%= @hsktotals[hsk].round %></span>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width:<%= (@hskcovereds[hsk] / @hsktotals[hsk] * 100).round %>%; background-color:#337ab7; color:white;">
+	<span class="sr-only"><%= (@hskcovereds[hsk] / @hsktotals[hsk] * 100).round %>%</span>
+      </div>
+    </div>
+  <% end %>
   <h1>What's new</h1>
     <ul class="left">
       <li>Mnemonics count: <%= @mnemonic_total_count %></li>

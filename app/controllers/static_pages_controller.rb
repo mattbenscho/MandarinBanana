@@ -12,6 +12,16 @@ class StaticPagesController < ApplicationController
     @fimage = FeaturedImage.last
     @previous_featured_image = @fimage.previous unless FeaturedImage.last.nil?
     @previous_previous_featured_image = @previous_featured_image.previous unless @previous_featured_image.nil?
+    @hsktotals = []
+    @hskcovereds = []
+    for hsk in 1..6
+      total = Hanzi.where(HSK: hsk).uniq.count.to_f
+      if total > 0
+        covered = Hanzi.where(HSK: hsk).joins(:mnemonics).uniq.count.to_f
+        @hsktotals << total
+        @hskcovereds << covered
+      end
+    end        
   end
 
   def about
