@@ -9,10 +9,12 @@ namespace :db do
         next
       end
       frequency = line.split("\t")[1]
-      db_word = Word.find_by(simplified: word)
-      if not db_word.nil?        
-        db_word.frequency = frequency.to_i
-        db_word.save
+      db_word = Word.where(simplified: word)
+      if not db_word.nil? 
+        db_word.each do |w|
+          w.frequency = frequency.to_i
+          w.save
+        end
         print word + " updated: " + frequency.to_s
       else
         print word + " not found!\n"

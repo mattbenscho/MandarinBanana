@@ -15,7 +15,7 @@ namespace :db do
       if simplified.length > 1      
         traditional = line.split(" ")[0]
         translation = line.split("/")[1..-1].join(" / ")
-        pinyin = line.gsub(/[^\[]*\[/, "").gsub(/\].*/, "").downcase
+        pinyin = line.split("[")[1].split("]")[0].downcase
         @word = Word.create(traditional: traditional, simplified: simplified, pinyin: pinyin, translation: translation, HSK: 7, frequency: 0)
         puts "counter: \"#{counter}\", traditional: \"#{traditional}\", simplified: \"#{simplified}\", pinyin: \"#{pinyin}\", translation: \"#{translation}\""
       end
