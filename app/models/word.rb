@@ -4,5 +4,5 @@ class Word < ActiveRecord::Base
   validates :pinyin, presence: true
   validates :translation, presence: true
 
-  default_scope { order(:HSK, :frequency) }
+  default_scope { order('"HSK" ASC', 'frequency DESC') }
 end

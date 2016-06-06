@@ -7,11 +7,13 @@ namespace :db do
       level = line.split(",")[0]
       word = line.split(",")[1].chomp!.gsub(/\s+/, "")
       # puts "#{line.chomp!} = #{level} + #{word}"
-      @word = Word.find_by(simplified: word)
-      if not @word.nil?
-        @word.HSK = level
-        @word.save!
-        puts "#{level}\t#{word}"
+      @words = Word.where(simplified: word)
+      if not @words.nil?
+        @words.each do |word|
+          word.HSK = level
+          word.save!
+          puts "#{level}\t#{word.simplified}"
+        end
       else
         if word.length > 1
           puts "#{level}\t#{word}\tNOT FOUND"
