@@ -49,6 +49,24 @@
       <% end %>
     <% counter += 1 %>
     <% end %>
+    <% if !subtitle.sentence.empty? && subtitle.english.empty? %>
+      <% if signed_in? && current_user.admin? %>
+        <%= form_for(@subtitle) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+
+          <%= f.label :chinglish %>
+          <%= f.text_area :chinglish %>
+
+          <%= f.label :english %>
+          <%= f.text_area :english %>
+
+          </br>
+
+          <%= f.submit "Save translations", class: "btn btn-large btn-primary" %>
+        <% end %>
+      <% end %>
+    <% end %>
+
   <% else %>
     <% subtitle.sentence.each_char do |char| %>
       <span class="big-char hanzi"><a href="/hurl/<%= char %>"><%= char %></a></span>
@@ -57,6 +75,8 @@
   <% if morelink %>
     &nbsp;<a href="/subtitles/<%= subtitle.id %>" class="morelink">&rarr;</a><br/>
   <% end %>
+  <div class="chinglish"><%= subtitle.chinglish %></div>
+  <div class="english"><%= subtitle.english %></div>
 </div>
 
 <% if !@subtitle.nil? && !@vocabulary.nil? %>
@@ -65,22 +85,14 @@
       <% @vocabulary.each do |v| %>
         <tr>
           <td class="voc-left">
-	    <% if v[0] == "---" %>
-	      ----------
-	    <% else %>
-	      <% v[0].each_char do |char| %>
-	        <a href="/hurl/<%= char %>"><%= char %></a>
-	      <% end %>
+	    <% v[0].each_char do |char| %>
+	      <a href="/hurl/<%= char %>"><%= char %></a>
 	    <% end %>
 	  </td>
           <td class="voc-right">
-	    <% if v[0] == "---" %>
-	      Definitions for words above consisting of more than one character:
-	    <% else %>
-	      <% v[1].each do |w| %>
-	        <%= w %><br/>
-	      <% end %>
-            <% end %>
+	    <% v[1].each do |w| %>
+	      <%= w %><br/>
+	    <% end %>
           </td>
         </tr>
       <% end %>

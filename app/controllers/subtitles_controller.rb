@@ -34,15 +34,23 @@ class SubtitlesController < ApplicationController
   def update
     if current_user.admin?
       @subtitle = Subtitle.find(params[:id])
-      @subtitle.sentence = params[:subtitle][:sentence]
-      @pinyin_string = params[:subtitle][:pinyin]
-      @pinyin_array = @pinyin_string.split("|")
-      @pinyin = Array.new
-      @pinyin_array.each do |p|
-        @pinyin.push(p.split("/"))
+      if !params[:subtitle][:sentence].nil?
+        @subtitle.sentence = params[:subtitle][:sentence]
       end
-      @subtitle.pinyin = @pinyin
-      @subtitle.words = params[:subtitle][:words].split("|")
+      @subtitle.chinglish = params[:subtitle][:chinglish]
+      @subtitle.english = params[:subtitle][:english]
+      if !params[:subtitle][:pinyin].nil?
+        @pinyin_string = params[:subtitle][:pinyin]
+        @pinyin_array = @pinyin_string.split("|")
+        @pinyin = Array.new
+        @pinyin_array.each do |p|
+          @pinyin.push(p.split("/"))
+        end
+        @subtitle.pinyin = @pinyin
+      end
+      if !params[:subtitle][:words].nil?
+        @subtitle.words = params[:subtitle][:words].split("|")
+      end
       @subtitle.save!
     end
     redirect_back_or root_url
