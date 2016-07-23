@@ -38,7 +38,7 @@ namespace :db do
           end
           @vocabulary += "</table>"
 
-          puts "#{movie.title}\t#{subtitle.HSK}\t#{subtitle.id}\t#{@sentence_pinyin}\t#{subtitle.filename}\t#{@vocabulary}"
+          puts "#{movie.title}\t#{subtitle.HSK}\t#{subtitle.id}\t#{@sentence_pinyin}\t#{subtitle.filename}\t#{@vocabulary}\t#{subtitle.chinglish}\t#{subtitle.english}"
         end
       end
     end
