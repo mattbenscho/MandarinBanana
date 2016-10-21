@@ -25,4 +25,22 @@ describe "Hanzi pages" do
     it { should have_content("I didn't find anything") }
   end
 
+  describe "visiting a strokeorder link" do
+    describe "as not logged in user" do
+      before do
+        visit hanzi_path(hanzi)
+      end
+      subject { page }
+      it { should_not have_content("add strokeorder") }
+    end
+
+    describe "as logged in user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+      before { visit hanzi_path(hanzi) }
+      subject { page }
+      it { should have_content("add stroke order") }
+    end      
+  end
+
 end

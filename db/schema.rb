@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717075134) do
+ActiveRecord::Schema.define(version: 20161019182807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,14 @@ ActiveRecord::Schema.define(version: 20160717075134) do
   add_index "simplifieds", ["simp_id"], name: "index_simplifieds_on_simp_id", using: :btree
   add_index "simplifieds", ["trad_id", "simp_id"], name: "index_simplifieds_on_trad_id_and_simp_id", unique: true, using: :btree
   add_index "simplifieds", ["trad_id"], name: "index_simplifieds_on_trad_id", using: :btree
+
+  create_table "strokeorders", force: :cascade do |t|
+    t.integer  "hanzi_id"
+    t.integer  "user_id"
+    t.text     "strokes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "subtitles", force: :cascade do |t|
     t.text     "sentence"

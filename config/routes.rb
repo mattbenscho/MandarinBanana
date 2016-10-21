@@ -15,6 +15,7 @@ Mbv2::Application.routes.draw do
   resources :pinyindefinitions
   resources :wallposts, only: [:index, :create, :destroy]
   resources :featured_images
+  resources :strokeorders, only: [:new, :create, :show, :destroy]
   root  'static_pages#home'
   match '/signup',                   to: 'users#new',           via: 'get'
   match '/signin',                   to: 'sessions#new',        via: 'get'

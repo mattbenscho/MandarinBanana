@@ -19,6 +19,11 @@
       <%= image_tag @stroke_order, class: "stroke_order_image" %>
     </a>
   <% end %>
+  <% if signed_in? %>
+    <div class="center">
+      <%= link_to "add stroke order", { controller: "strokeorders", action: "new", hanzi_id: @hanzi.id } %>
+    </div>
+  <% end %>    
 </div>
 
 <div class="center">

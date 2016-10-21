@@ -1,0 +1,104 @@
+<% provide(:title, 'Add new stroke order') %>
+<h1>Add new stroke order for <%= @hanzi.character %></h1>
+
+<div id="images"></div>
+<div>
+  <canvas id="stroke_order_canvas" height="400" width="400" class="center"></canvas>
+</div>
+
+<br><br>
+<div class="span2 center">    
+  <input type="button" value="hanzi done" onclick="push_strokeorder();"/>
+</div>
+<br><br>
+
+<div class="center">
+<%= form_for @strokeorder do |f| %>
+  <%= f.hidden_field(:hanzi_id, value: @hanzi.id) %>
+  <%= f.hidden_field(:user_id, value: @user.id) %>  
+  <%= f.hidden_field(:strokes, value: "") %>  
+  <%= f.submit "submit", class: "btn btn-large btn-primary"  %>
+<% end %>
+</div>
+
+<script>
+var listening = false;
+var canvas = document.getElementById("stroke_order_canvas");
+var context = canvas.getContext("2d");
+var last_x = null;
+var last_y = null;
+var stroke_data = [];
+var this_strokeorder = [];
+var this_stroke = [];
+var text_x = canvas.width / 2;
+var text_y = canvas.height / 2;
+
+function add_character() {
+    context.font = '300pt FangSong';
+    context.fillStyle = 'gray';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(<%= ("'" + @hanzi.character + "'").html_safe %>, text_x, text_y);
+}
+
+add_character();
+
+function push_strokeorder() {
+    if ((stroke_data.length == 0) || (this_strokeorder.length == stroke_data[0].length)) {
+	stroke_data.push(this_strokeorder);
+	document.getElementById("strokeorder_strokes").value = JSON.stringify(stroke_data);
+    } else {
+	alert("Stroke order data not saved! Please try again. Did you use the same number of strokes?");
+    }
+    this_strokeorder = [];
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    add_character();
+}
+
+function draw(e) {
+    if (listening) {
+        var pos = getMousePos(canvas, e);
+        posx = Math.round(pos.x);
+        posy = Math.round(pos.y);
+        this_stroke.push([posx, posy])
+        // context.fillStyle = "#000000";
+        // context.fillRect(posx-1, posy-1, 2, 2);
+	if (last_x && last_y) {
+	    context.beginPath();
+	    context.moveTo(posx, posy);
+	    context.lineTo(last_x, last_y);
+	    context.stroke()
+	}
+	last_x = posx;
+	last_y = posy;
+    }
+}
+
+function toggle_listening() {
+    if (listening) {
+        last_x = null;
+	last_y = null;
+	listening = false;
+	this_strokeorder.push(this_stroke);
+	this_stroke = [];
+    } else {
+	listening = true;
+    }
+}
+
+function  getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect(), // abs. size of element
+      scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
+      scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
+
+  return {
+    x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+    y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
+  }
+}
+
+window.addEventListener('mousedown', toggle_listening, false);
+window.addEventListener('mouseup', toggle_listening, false);
+window.addEventListener('mousemove', draw, false);
+</script>
+
