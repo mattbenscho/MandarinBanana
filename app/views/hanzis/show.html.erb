@@ -77,6 +77,8 @@
   <a target="_blank" href="https://en.wiktionary.org/wiki/<%= @hanzi.character %>">The English Wiktionary</a><br/>
   <a target="_blank" href="http://stroke-order.learningweb.moe.edu.tw/characterQueryResult.do?word=<%= @hanzi.character %>">stroke-order.learningweb.moe.edu.tw</a><br/>
   <a target="_blank" href="http://tatoeba.org/eng/sentences/search?query=<%= @hanzi.character %>&from=cmn&to=und">Tatoeba</a><br/>
+  <a target="_blank" href="http://www.google.com/search?query=<%= @hanzi.character %>+stroke+order">Google search "<%= @hanzi.character %> stroke order"</a><br/>
+  <a target="_blank" href="http://www.google.com/search?tbm=isch&query=<%= @hanzi.character %>+stroke+order">Google image search "<%= @hanzi.character %> stroke order"</a><br/>
 </div>
 
 <% if @hanzi.comments.any? %>
