@@ -9,15 +9,7 @@
 var canvas = document.getElementById("stroke_order_canvas");
 var context = canvas.getContext("2d");
 var strokes = <%= @strokeorder.strokes %>;
-var max_distance = 20;
-var clear_distance = max_distance / 1.5;
-var stroke_number = 0;
-
-for (var i = 0; i < strokes[0].length; i++) {
-    if (strokes[0][i].length > 1) {
-	stroke_number++;
-    }
-}
+var unit_distance = 3;
 
 function point(x, y, canvas){
     context.beginPath();
@@ -26,133 +18,247 @@ function point(x, y, canvas){
 }
 
 // plot each individual dot
-for (var i = 0; i < strokes.length; i++) {
-    for (var j = 0; j < strokes[i].length; j++) {
-	for (var k = 0; k < strokes[i][j].length; k++) {
-	    point(strokes[i][j][k][0], strokes[i][j][k][1], canvas);
+if (false) {
+    for (var i = 0; i < strokes.length; i++) {
+	for (var j = 0; j < strokes[i].length; j++) {
+	    for (var k = 0; k < strokes[i][j].length; k++) {
+		point(strokes[i][j][k][0], strokes[i][j][k][1], canvas);
+	    }
 	}
     }
 }
 
-var final_strokes = [];
-
-// getting the final points
-for (var stroke_count = 0; stroke_count < stroke_number; stroke_count++) {
-    // we want to consider each point only once, so we'll keep record
-    var final_stroke = []
-    var used_points = [];
-    // get the starting point by averaging the first point of each try
-    var average_x = 0;
-    var average_y = 0;
-    var total_points = 0;
-    for (var try_count = 0; try_count < strokes.length; try_count++) {
-	var point_x = strokes[try_count][stroke_count][0][0];
-	var point_y = strokes[try_count][stroke_count][0][1]
-	average_x += point_x;
-	average_y += point_y;
-	total_points += strokes[try_count][stroke_count].length;
-	used_points.push([point_x, point_y].join());
+var stroke_number = 0;
+for (var i = 0; i < strokes[0].length; i++) {
+    if (strokes[0][i].length > 1) {
+	stroke_number++;
     }
-    average_x /= strokes.length;
-    average_y /= strokes.length;
+}
 
-    // plot the starting point
-    context.beginPath();
-    context.arc(average_x, average_y, 10, 0, 2 * Math.PI, true);
-    context.fillStyle = 'blue';
-    context.fill();
-    context.strokeStyle = 'blue';
-    context.stroke();
-    context.closePath();
+processed_points = [];
+// for each stroke, linearly interpolate the tries and average them
+for (var stroke_count = 0; stroke_count < stroke_number; stroke_count++) {
+    stroke_length_list = [];
+    distances_list = [];
+    deltas_list = [];
+    avg_stroke_length = 0;
+    // calculate distances and incremental translations
+    for (var try_count = 0; try_count < strokes.length; try_count++) {
+	stroke_length = 0;
+	this_stroke = strokes[try_count][stroke_count];
+	last_x = this_stroke[0][0];
+	last_y = this_stroke[0][1];
+	distances = [];
+	deltas = [];
+	for (var point_index = 1; point_index < this_stroke.length; point_index++) {
+	    this_x = this_stroke[point_index][0];
+	    this_y = this_stroke[point_index][1];
+	    delta_x = this_x - last_x;
+	    delta_y = this_y - last_y;
+	    distance = Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2));
+	    stroke_length += distance;
+	    distances.push(distance);
+	    deltas.push([delta_x, delta_y]);
+	    last_x = this_x;
+	    last_y = this_y;
+	}
+	stroke_length_list.push(stroke_length);
+	avg_stroke_length += stroke_length;
+	distances_list.push(distances);
+	deltas_list.push(deltas);
+    }
 
-    var last_x = average_x;
-    var last_y = average_y;
-    final_stroke.push([last_x, last_y]);
+    avg_stroke_length /= stroke_length_list.length;
+    samples = Math.round(avg_stroke_length / unit_distance);
+    console.log(samples);
 
-    // repeat this until all points have been used
-    var points_left = true;
-    while ((used_points.length < total_points) && (points_left)) {
-
-	// get the distance from the starting point for each stroke point
-	// but just check the points within max_distance!
-	var these_points = [];
-	for (var try_count = 0; try_count < strokes.length; try_count++) {
-	    for (var i = 0; i < strokes[try_count][stroke_count].length; i++) {
-		var x_coordinate = strokes[try_count][stroke_count][i][0];
-		var y_coordinate = strokes[try_count][stroke_count][i][1];
-		if (used_points.indexOf([x_coordinate, y_coordinate].join()) < 0) {
-		    var rel_x = average_x - x_coordinate;
-		    var rel_y = average_y - y_coordinate;
-		    if ((Math.abs(rel_x) < max_distance) && (Math.abs(rel_y) < max_distance)) {
-			these_points.push([x_coordinate, y_coordinate]);
-			if ((Math.abs(rel_x) < clear_distance) && (Math.abs(rel_y) < clear_distance)) {			
-			    used_points.push([x_coordinate, y_coordinate].join());
-			}
+    if (samples < 1) {
+	continue
+    }
+    
+    // interpolate linearly for each try
+    new_points_list = [];
+    for (var try_count = 0; try_count < strokes.length; try_count++) {
+	stroke_length = stroke_length_list[try_count];
+	this_unit_distance = stroke_length / samples;
+	// console.log(stroke_length, this_unit_distance, samples);
+	new_points = [];
+	distances = distances_list[try_count];
+	deltas = deltas_list[try_count];
+	this_stroke = strokes[try_count][stroke_count];	
+	moved = 0;
+	current_position_index = 0;
+	current_position = this_stroke[current_position_index];		    
+	for (var sample = 0; sample < samples; sample++) {
+	    target = (sample+1) * this_unit_distance;
+	    // console.log("new target:", target);
+	    while (moved < target) {
+		distance = distances[current_position_index];
+		if (moved + distance > target) {
+		    // console.log(moved, distance, "moved enough.");
+		    current_position = this_stroke[current_position_index];
+		    // how much percent of the distance do we need to move?
+		    percent = (target - moved) / this_unit_distance;
+		    // moving to the interpolated point
+		    delta_x = deltas[current_position_index][0];
+		    delta_y = deltas[current_position_index][1];
+		    new_x = current_position[0] + percent * delta_x;
+		    new_y = current_position[1] + percent * delta_y;
+		    new_points.push([new_x, new_y]);
+		    if (false) {
+			context.beginPath();
+			context.arc(new_x, new_y, 1, 0, 2 * Math.PI, true);
+			context.fillStyle = 'red';
+			context.fill();
+			context.strokeStyle = 'red';
+			context.stroke();
+			context.closePath();
 		    }
+		    // now move to the data point. We know that there is one!
+		    current_position_index++;
+		} else {
+		    // we didn't move enough yet, travel to the next spot
+		    // console.log(moved, distance, "need to travel!");
+		    current_position_index++;
 		}
+		moved += distance;
 	    }
 	}
-
-	if (these_points.length == 0) {
-	    points_left = false;
-	    break
+	// if we do not have enough samples yet, we'll include the last point
+	while (new_points.length < samples) {
+	    new_points.push([this_stroke[this_stroke.length-1][0], this_stroke[this_stroke.length-1][1]]);
 	}
-
-	// average all these points
-	var x = 0;
-	var y = 0;
-	for (var i = 0; i < these_points.length; i++) {
-	    var this_x = these_points[i][0];
-	    var this_y = these_points[i][1];
-	    x += this_x;
-	    y += this_y;
-	}
-
-	x /= these_points.length;
-	y /= these_points.length;
-
-	context.beginPath();
-	context.moveTo(x, y);		
-	context.lineTo(last_x, last_y);
-	context.stroke()
-	context.strokeStyle = 'red';
-	context.stroke();
-	context.closePath();
-
-	last_x = x;	
-	last_y = y;
-	average_x = x;
-	average_y = y;
-	final_stroke.push([x, y]);
+	new_points_list.push(new_points);
     }
-    final_strokes.push(final_stroke);
+    if (false) {
+	// check the interpolated points by plotting them
+	for (var try_count = 0; try_count < strokes.length; try_count++) {
+    	    for (var sample = 0; sample < new_points_list[try_count].length; sample++) {
+    		new_x = new_points_list[try_count][sample][0];
+    		new_y = new_points_list[try_count][sample][1];
+    		context.beginPath();
+    		context.arc(new_x, new_y, 1, 0, 2 * Math.PI, true);
+    		context.fillStyle = 'red';
+    		context.fill();
+    		context.strokeStyle = 'red';
+    		context.stroke();
+    		context.closePath();	    
+    	    }
+	}
+    }
+    // for each sample index, average the points from all tries
+    averaged_points_list = [];
+    console.log(new_points_list);
+    for (var sample = 0; sample < samples; sample++) {
+    	new_x = 0.0;
+    	new_y = 0.0;
+    	for (var try_count = 0; try_count < new_points_list.length; try_count++) {
+	    // console.log(stroke_count, try_count, sample);
+    	    this_x = new_points_list[try_count][sample][0];
+    	    this_y = new_points_list[try_count][sample][1];
+    	    new_x += this_x;
+    	    new_y += this_y;
+    	}
+    	new_x /= new_points_list.length;
+    	new_y /= new_points_list.length;	
+	averaged_points_list.push([new_x, new_y]);
+	if (false) {
+    	    context.beginPath();
+    	    context.arc(new_x, new_y, 1, 0, 2 * Math.PI, true);
+    	    context.fillStyle = 'blue';
+    	    context.fill();
+    	    context.strokeStyle = 'blue';
+    	    context.stroke();
+    	    context.closePath();
+	}
+    }
+    processed_points.push(averaged_points_list);
 }
 
 // animating the final points
-function animate_strokes() {
-    var context = document.getElementById('stroke_order_canvas').getContext('2d');
-    var seconds_per_stroke = 1;
-    var total_time = seconds_per_stroke * final_strokes.length;
 
-    context.globalCompositeOperation = 'destination-over';
-    context.clearRect(0, 0, canvas.width, canvas.height);
+pixel_per_second = 100;
+time = new Date();
+zero_time = time.getSeconds();
 
-    if(time.get_seconds() - zero_time > total_time) {
-	zero_time = time.get_seconds();
+distances_list = [];
+total_distance = 0;
+for (var i = 0; i < processed_points.length; i++) {
+    distances = [];
+    last_x = processed_points[i][0][0];
+    last_y = processed_points[i][0][1];
+    for (var j = 1; j < processed_points[i].length; j++) {
+	delta_x = processed_points[i][j][0] - last_x;
+	delta_y = processed_points[i][j][1] - last_y;
+	distance = Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2));
+	total_distance += distance;
+	distances.push(distance);
+	last_x = processed_points[i][j][0];
+	last_y = processed_points[i][j][1];
     }
-
-    // for each seconds_per_stroke that has passed since zero_time, draw one stroke
-    for (var i = 0; i < Math.floor(time.get_seconds() / seconds_per_stroke); i++) {
-	for (strokenumber = 0; strokenumber < final_strokes.length; strokenumber++) {
-	    var stroke = final_strokes[strokenumber];
-	}
-	
-    }
-
-    // for a fraction of a seconds_per_stroke, draw a fraction of the next stroke
+    distances_list.push(distances);
 }
 
-var zero_time = time.get_seconds();
-window.requestAnimationFrame(animate_strokes);
+index = 0;
+i = 0;
+j = 0;
+flattened_points = [].concat.apply([], processed_points);
+
+function add_original_character() {
+    text_x = canvas.width / 2;
+    text_y = canvas.height / 2;
+    context.font = '300pt FangSong';
+    context.fillStyle = 'gray';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(<%= ("'" + @hanzi.character + "'").html_safe %>, text_x, text_y);
+}
+
+function add_written_character() {
+    for (var index = 0; index < flattened_points.length; index++) {
+	context.beginPath();
+	context.arc(flattened_points[index][0], flattened_points[index][1], 3, 0, 2 * Math.PI, true);
+	context.fillStyle = 'gray';
+	context.fill();
+	context.strokeStyle = 'gray';
+	context.stroke();
+	context.closePath();
+    }
+    for (var i = 0; i < processed_points.length; i++) {
+	context.beginPath();
+	context.arc(processed_points[i][0][0], processed_points[i][0][1], 5, 0, 2 * Math.PI, true);
+	context.fillStyle = 'blue';
+	context.fill();
+	context.strokeStyle = 'blue';
+	context.stroke();
+	context.closePath();
+    }	
+}
+
+add_written_character();
+
+function animate_strokes() {
+    context = document.getElementById('stroke_order_canvas').getContext('2d');
+
+    context.beginPath();
+    context.arc(flattened_points[index][0], flattened_points[index][1], 10, 0, 2 * Math.PI, true);
+    context.fillStyle = 'black';
+    context.fill();
+    context.strokeStyle = 'black';
+    context.stroke();
+    context.closePath();
+
+    index++;
+
+    if (index >= flattened_points.length) {
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	add_written_character();
+	index = 0;
+    }
+    
+    requestAnimationFrame(animate_strokes);
+}
+
+animate_strokes();
 
 </script>
