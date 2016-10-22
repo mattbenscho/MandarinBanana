@@ -63,6 +63,7 @@ class HanzisController < ApplicationController
     else
       @words = Word.where('simplified LIKE ?', "%#{@hanzi.character}%").paginate(page: params[:page], per_page: 40)
     end
+    @strokeorders = @hanzi.strokeorders
     store_location
   end
 

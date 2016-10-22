@@ -1,7 +1,6 @@
 <% provide(:title, 'Add new stroke order') %>
 <h1>Add new stroke order for <%= @hanzi.character %></h1>
 
-<div id="images"></div>
 <div>
   <canvas id="stroke_order_canvas" height="400" width="400" class="center"></canvas>
 </div>
@@ -9,6 +8,11 @@
 <br><br>
 <div class="span2 center">    
   <input type="button" value="hanzi done" onclick="push_strokeorder();"/>
+</div>
+<br><br>
+    
+<div class="center">
+  You completed <span id="completed_hanzis">0</span> hanzis so far.
 </div>
 <br><br>
 
@@ -47,6 +51,7 @@ function push_strokeorder() {
     if ((stroke_data.length == 0) || (this_strokeorder.length == stroke_data[0].length)) {
 	stroke_data.push(this_strokeorder);
 	document.getElementById("strokeorder_strokes").value = JSON.stringify(stroke_data);
+	$("#completed_hanzis").text(stroke_data.length);
     } else {
 	alert("Stroke order data not saved! Please try again. Did you use the same number of strokes?");
     }

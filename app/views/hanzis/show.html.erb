@@ -13,16 +13,30 @@
 </div>
 
 <div class="center">
+  <h2>Stroke order</h2>
   <% if !@stroke_order.nil? %>
-    <h2>Wikimedia Commons:Stroke Order Project</h2>
     <a href="http://commons.wikimedia.org/wiki/Commons:Stroke_Order_Project" target="_blank">
       <%= image_tag @stroke_order, class: "stroke_order_image" %>
     </a>
+  <% else %>
+    No Wikimedia Commons Stroke Order Project data available yet.
+  <% end %>
+  <% @strokeorders.each do |so| %>
+    <% canvas_id = "stroke_order_canvas_#{so.id}" %>
+    <% width = 200 %>
+    <div><canvas id=<%= canvas_id %> height="<%= width %>" width="<%= width %>" class="center"></canvas></div>
+    <%= render partial: "strokeorders/canvas", locals: { strokeorder_data: so.strokes, canvas_id: canvas_id, width: width } %>
+    Stroke order information submitted by <%= User.find(so.user_id).name %> <%= time_ago_in_words(so.created_at) %> ago.
+  <% end %>
+  <% if @strokeorders.empty? %>
+    No user submitted stroke order information available yet.  
   <% end %>
   <% if signed_in? %>
     <div class="center">
-      <%= link_to "add stroke order", { controller: "strokeorders", action: "new", hanzi_id: @hanzi.id } %>
+      <%= link_to "Submit stroke order", { controller: "strokeorders", action: "new", hanzi_id: @hanzi.id } %>
     </div>
+  <% else %>
+    <br/><br/>Sign in to submit stroke order information.
   <% end %>    
 </div>
 

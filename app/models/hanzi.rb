@@ -11,6 +11,7 @@ class Hanzi < ActiveRecord::Base
   has_many :traditionals, foreign_key: "simp_id", class_name: "Simplified", dependent: :destroy
   has_many :traditional_variants, through: :traditionals, source: :trad
   has_many :featured_images
+  has_many :strokeorders
 
   default_scope { order(:HSK, frequency: :desc) }
 
