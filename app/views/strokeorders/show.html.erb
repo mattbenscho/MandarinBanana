@@ -6,3 +6,7 @@
 </div>
 
 <%= render partial: 'strokeorders/canvas', locals: {strokeorder_data: @strokeorder.strokes, canvas_id: "stroke_order_canvas", width: 400 } %>
+
+<div>
+  <%= @strokeorder.strokes %>
+</div>
