@@ -11,17 +11,20 @@ class StrokeordersController < ApplicationController
     @strokeorder = Strokeorder.new(strokeorder_params)
     tries = JSON.parse(@strokeorder.strokes)
 
-    unit_distance = 2
+    unit_distance = 10
 
-    strokecounter = 0
-    for strokes in tries
-      trycounter = 0
+    # handle each try separately to get information
+    # calculate distances and incremental translations
+    # just information gathering, nothing happening yet
+    tries_stroke_lengths = []
+    tries_distances = []
+    tries_deltas = []
+    number_of_tries = tries.length
+    for this_try in tries
       stroke_length_list = []
       distances_list = []
       deltas_list = []
-      avg_stroke_length = 0
-      # calculate distances and incremental translations
-      for stroke in strokes
+      for stroke in this_try
         if stroke.empty?
           next
         end
@@ -43,34 +46,37 @@ class StrokeordersController < ApplicationController
           last_y = this_y
         end
         stroke_length_list.push(stroke_length)
-        trycounter += 1
-        avg_stroke_length += stroke_length
         distances_list.push(distances);
         deltas_list.push(deltas)
       end
-      avg_stroke_length /= stroke_length_list.length
-      samples = (avg_stroke_length / unit_distance).round
+      tries_stroke_lengths.push(stroke_length_list)
+      tries_distances.push(distances_list)
+      tries_deltas.push(deltas_list)
+    end
 
-      if samples < 1
-        next
+    all_new_points = []
+    # now go through all tries for each stroke to interpolate them
+    for stroke_index in 0..tries[0].length - 1
+      # calculate the average length of this stroke
+      avg_length = 0
+      for try_index in 0..tries.length - 1
+        avg_length += tries_stroke_lengths[try_index][stroke_index]
       end
+      avg_length /= tries_stroke_lengths[try_index].length
+      samples = (avg_length / unit_distance).round
 
-      # interpolate linearly
-      new_points_list = []
-
-      trycounter = 0
-      for stroke in tries[strokecounter]
-        if stroke.empty?
-          next
-        end
-        stroke_length = stroke_length_list[trycounter]
+      # interpolate this stroke linearly for each try
+      this_stroke_new_points = []
+      for try_index in 0..tries.length - 1
+        stroke = tries[try_index][stroke_index]
+        stroke_length = tries_stroke_lengths[try_index][stroke_index]
         this_unit_distance = stroke_length / samples
         new_points = []
-        distances = distances_list[trycounter]
-        deltas = deltas_list[trycounter]
+        distances = tries_distances[try_index][stroke_index]
+        deltas = tries_deltas[try_index][stroke_index]
         moved = 0
         current_position_index = 0
-        for sample in 0..samples
+        for sample in 0..samples - 1
           target = (sample+1) * this_unit_distance
           while moved < target
             distance = distances[current_position_index] || distances[-1]
@@ -92,15 +98,31 @@ class StrokeordersController < ApplicationController
         while new_points.length < samples
           new_points.push([stroke[-1][0], stroke[-1][1]])
         end
-        new_points_list.push(new_points)
-
-        trycounter += 1
+        puts new_points.length
+        this_stroke_new_points.push(new_points)
       end
-
-      strokecounter += 1
+      all_new_points.push(this_stroke_new_points)
     end
 
-    @strokeorder.strokes = new_points_list.to_s
+    # average the new strokes
+    averaged_points = []
+    for stroke_index in 0..all_new_points.length - 1
+      new_points = []
+      for point_index in 0..all_new_points[stroke_index][0].length - 1
+        x = 0
+        y = 0
+        for try_index in 0..number_of_tries - 1
+          x += all_new_points[stroke_index][try_index][point_index][0]
+          y += all_new_points[stroke_index][try_index][point_index][1]
+        end
+        x /= number_of_tries
+        y /= number_of_tries
+        new_points.push([x.round, y.round])
+      end
+      averaged_points.push(new_points)
+    end
+    
+    @strokeorder.strokes = averaged_points.to_s
 
     if @strokeorder.save
       flash[:success] = "Stroke order information saved!"

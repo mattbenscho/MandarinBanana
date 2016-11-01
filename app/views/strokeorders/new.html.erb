@@ -79,16 +79,18 @@ function draw(e) {
     }
 }
 
-function toggle_listening() {
-    if (listening) {
-        last_x = null;
-	last_y = null;
-	listening = false;
+function start_listening() {
+    listening = true;
+}
+
+function stop_listening() {
+    last_x = null;
+    last_y = null;
+    listening = false;
+    if (this_stroke.length > 0) {
 	this_strokeorder.push(this_stroke);
-	this_stroke = [];
-    } else {
-	listening = true;
     }
+    this_stroke = [];   
 }
 
 function  getMousePos(canvas, evt) {
@@ -102,8 +104,8 @@ function  getMousePos(canvas, evt) {
   }
 }
 
-window.addEventListener('mousedown', toggle_listening, false);
-window.addEventListener('mouseup', toggle_listening, false);
+window.addEventListener('mousedown', start_listening, false);
+window.addEventListener('mouseup', stop_listening, false);
 window.addEventListener('mousemove', draw, false);
 </script>
 
