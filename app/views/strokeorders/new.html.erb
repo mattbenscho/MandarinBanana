@@ -63,8 +63,8 @@ function push_strokeorder() {
 function draw(e) {
     if (listening) {
         var pos = getMousePos(canvas, e);
-        posx = Math.round(pos.x);
-        posy = Math.round(pos.y);
+	var posx = pos.x;
+	var posy = pos.y;
         this_stroke.push([posx, posy])
         // context.fillStyle = "#000000";
         // context.fillRect(posx-1, posy-1, 2, 2);

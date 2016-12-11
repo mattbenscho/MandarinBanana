@@ -5,27 +5,23 @@
     var context = canvas.getContext("2d");
     var strokes = <%= strokeorder_data %>;
     var stroke_number = strokes.length;
-    var unit_distance = 2;
     var width = <%= width %>;
     var scaling = width / 400;
     var height = <%= width %>;
     var thin_line_thickness = 2;
-    var thick_line_thickness = 7 * scaling;
+    var thick_line_thickness = 14 * scaling;
     var blue_dot_diameter = 5 > thick_line_thickness ? thick_line_thickness : 5;
-    var pixel_per_second = 160;
     var time = new Date();
     var zero_time = time.getSeconds();
-
-    function point(x, y, canvas){
-	context.beginPath();
-	context.arc(x, y, 1, 0, 2 * Math.PI, true);
-	context.stroke();
-    }
-
-    console.log(strokes);
+    var speed = 10;
 
     // plot each individual dot
     if (false) {
+	function point(x, y, canvas){
+	    context.beginPath();
+	    context.arc(x, y, 1, 0, 2 * Math.PI, true);
+	    context.stroke();
+	}
 	for (var i = 0; i < strokes.length; i++) {
 	    for (var j = 0; j < strokes[i].length; j++) {
 		point(strokes[i][j][0], strokes[i][j][1], canvas);
@@ -45,27 +41,6 @@
 
     // animating
 
-    var distances_list = [];
-    var total_distance = 0;
-    for (var i = 0; i < strokes.length; i++) {
-	var distances = [];
-	var last_x = strokes[i][0][0];
-	var last_y = strokes[i][0][1];
-	for (var j = 1; j < strokes[i].length; j++) {
-	    var delta_x = strokes[i][j][0] - last_x;
-	    var delta_y = strokes[i][j][1] - last_y;
-	    var distance = Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2));
-	    total_distance += distance;
-	    distances.push(distance);
-	    var last_x = strokes[i][j][0];
-	    var last_y = strokes[i][j][1];
-	}
-	distances_list.push(distances);
-    }
-
-    var index = 0;
-    var i = 0;
-    var j = 0;
     var flattened_points = [].concat.apply([], strokes);
 
     function add_original_character() {
@@ -86,11 +61,13 @@
 	    context.fill();
 	    context.strokeStyle = 'gray';
 	    context.stroke();
+	    context.lineWidth = thin_line_thickness;
 	    context.closePath();
 	}
 	for (var i = 0; i < strokes.length; i++) {
 	    context.beginPath();
 	    context.arc(strokes[i][0][0], strokes[i][0][1], blue_dot_diameter, 0, 2 * Math.PI, true);
+	    context.lineWidth = blue_dot_diameter;
 	    context.fillStyle = 'blue';
 	    context.fill();
 	    context.strokeStyle = 'blue';
@@ -101,29 +78,59 @@
 
     add_written_character();
 
+    var stroke_index = 0;
+    var point_index = 1;
+
     var animate_strokes = function() {
 	requestAnimationFrame(animate_strokes);
-	var context = document.getElementById(canvas_id).getContext('2d');
+
+	var stroke = strokes[stroke_index];
 
 	context.beginPath();
-	context.arc(flattened_points[index][0], flattened_points[index][1], thick_line_thickness, 0, 2 * Math.PI, true);
-	context.fillStyle = 'black';
-	context.fill();
+	var minus = point_index > speed ? speed : point_index
+	context.moveTo(stroke[point_index-minus][0], stroke[point_index-minus][1])
+	context.lineTo(stroke[point_index][0], stroke[point_index][1])
+
+	// check the distance to the first and last point to adjust stroke thickness
+	if (point_index > 0 && point_index < stroke.length - 1) {
+	    var delta_x_1 = stroke[point_index][0] - stroke[0][0];
+	    var delta_y_1 = stroke[point_index][1] - stroke[0][1];
+	    var distance_1 = Math.sqrt(Math.pow(delta_x_1, 2) + Math.pow(delta_y_1, 2));
+	    var last_index = stroke.length - 1;
+	    var delta_x_2 = stroke[point_index][0] - stroke[last_index][0];
+	    var delta_y_2 = stroke[point_index][1] - stroke[last_index][1];
+	    var distance_2 = Math.sqrt(Math.pow(delta_x_2, 2) + Math.pow(delta_y_2, 2));
+	    var lower = Math.min(distance_1, distance_2);
+	    if (lower < thick_line_thickness) {
+		context.lineWidth = lower;
+	    } else {
+		context.lineWidth = thick_line_thickness;
+	    }	    
+	} else {
+	    context.lineWidth = 1;	    
+	}
+	
+	context.lineCap = 'round';
 	context.strokeStyle = 'black';
 	context.stroke();
 	context.closePath();
 
-	index++;
+	point_index += speed;
 
-	if (index >= flattened_points.length) {
+	if (point_index >= stroke.length) {
+	    stroke_index++;
+	    point_index = 1;
+	}
+
+	if (stroke_index == strokes.length) {
 	    context.clearRect(0, 0, canvas.width, canvas.height);
-	    add_written_character();
-	    index = 0;
+	    // add_written_character();
+	    stroke_index = 0;
+	    point_index = 1;
 	}	
     };
 
     animate_strokes();
-
 
 })();
 </script>

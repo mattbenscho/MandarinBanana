@@ -5,8 +5,6 @@
   <canvas id="stroke_order_canvas" height="400" width="400" class="center"></canvas>
 </div>
 
-<%= render partial: 'strokeorders/canvas', locals: {strokeorder_data: @strokeorder.strokes, canvas_id: "stroke_order_canvas", width: 400 } %>
+<%= render partial: 'strokeorders/canvas', locals: {strokeorder_data: @strokes, canvas_id: "stroke_order_canvas", width: 400 } %>
 
-<div>
-  <%= @strokeorder.strokes %>
-</div>
+<!-- <%= @strokes.to_s %> -->

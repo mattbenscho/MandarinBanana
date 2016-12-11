@@ -21,12 +21,15 @@
   <% else %>
     No Wikimedia Commons Stroke Order Project data available yet.
   <% end %>
+  </br>
   <% @strokeorders.each do |so| %>
+    <div class="strokeorder">
     <% canvas_id = "stroke_order_canvas_#{so.id}" %>
     <% width = 200 %>
     <div><canvas id=<%= canvas_id %> height="<%= width %>" width="<%= width %>" class="center"></canvas></div>
     <%= render partial: "strokeorders/canvas", locals: { strokeorder_data: so.strokes, canvas_id: canvas_id, width: width } %>
-    Stroke order information submitted by <%= User.find(so.user_id).name %> <%= time_ago_in_words(so.created_at) %> ago.
+    By <%= User.find(so.user_id).name %>, <%= time_ago_in_words(so.created_at) %> ago.
+    </div>
   <% end %>
   <% if @strokeorders.empty? %>
     No user submitted stroke order information available yet.  

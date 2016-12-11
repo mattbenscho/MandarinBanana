@@ -372,3 +372,13 @@ aside {
 .words-table td {
   padding-bottom: 20px;
 }
+
+/* strokeorders */
+
+.strokeorder {
+  display: inline-block;
+  margin: 10px;
+  canvas {
+    border: 1px solid black;
+  }
+}
