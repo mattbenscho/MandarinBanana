@@ -8,16 +8,17 @@ namespace :db do
         pds += "<td class=\"color#{pd.pinyin.gsub(/[^0-9]/, '')}\"><div><span class=\"hanzi\">#{hanzi.character}<br/></span><span class=\"pinyin\">#{pd.pinyin}</span></div></td>"
         pds += "<td>"
         pds += "<div class=\"pydefinition\">#{pd.definition}</div>"
-        pds += "<div class=\"mnemonics\">"
-        for mnemonic in pd.mnemonics
-          pds += "<div class=\"mnemonic\">#{mnemonic.aide.gsub(/[^[:print:]]+/,'<br/><br/>')}</div>"
-          for image in mnemonic.images
-            pds += "<img class=\"mimage\" src=\"#{image.id}.png\">"
+        if pd.mnemonics.any?
+          pds += "<div class=\"mnemonics\">"
+          for mnemonic in pd.mnemonics
+            pds += "<div class=\"mnemonic\">#{mnemonic.aide.gsub(/[^[:print:]]+/,'<br/><br/>')}</div>"
+            for image in mnemonic.images
+              pds += "<img class=\"mimage\" src=\"#{image.id}.png\">"
+            end
           end
-        end
-        pds += "</div>"
-        pds += "</td>"
-        pds += "</tr>"
+          pds += "</div>"
+        end 
+        pds += "</td></tr>"
       end
       pds += "</table>"
       return pds
