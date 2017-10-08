@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20161019182807) do
   add_index "featured_images", ["hanzi_id"], name: "index_featured_images_on_hanzi_id", using: :btree
 
   create_table "gorodishes", force: :cascade do |t|
-    t.string   "element",    limit: 255
+    t.string   "element"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,11 +61,11 @@ ActiveRecord::Schema.define(version: 20161019182807) do
   add_index "gorodishes", ["element"], name: "index_gorodishes_on_element", unique: true, using: :btree
 
   create_table "hanzis", force: :cascade do |t|
-    t.string   "character",  limit: 255
-    t.string   "components", limit: 255
+    t.string   "character"
+    t.string   "components"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "frequency",              default: 0
+    t.integer  "frequency",  default: 0
     t.integer  "HSK"
   end
 
@@ -96,18 +96,18 @@ ActiveRecord::Schema.define(version: 20161019182807) do
   add_index "mnemonics", ["pinyindefinition_id"], name: "index_mnemonics_on_pinyindefinition_id", using: :btree
 
   create_table "movies", force: :cascade do |t|
-    t.string   "title",       limit: 255
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
   end
 
   create_table "pinyindefinitions", force: :cascade do |t|
-    t.string   "pinyin",     limit: 255
+    t.string   "pinyin"
     t.text     "definition"
     t.integer  "hanzi_id"
-    t.string   "gbeginning", limit: 255
-    t.string   "gending",    limit: 255
+    t.string   "gbeginning"
+    t.string   "gending"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -140,22 +140,22 @@ ActiveRecord::Schema.define(version: 20161019182807) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "movie_id"
-    t.string   "filename",   limit: 255
+    t.string   "filename"
     t.text     "words"
     t.text     "pinyin"
     t.integer  "HSK"
-    t.text     "english",                default: ""
-    t.text     "chinglish",              default: ""
+    t.text     "english",    default: ""
+    t.text     "chinglish",  default: ""
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "email",           limit: 255
+    t.string   "name"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest", limit: 255
-    t.string   "remember_token",  limit: 255
-    t.boolean  "admin",                       default: false
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.boolean  "admin",           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
