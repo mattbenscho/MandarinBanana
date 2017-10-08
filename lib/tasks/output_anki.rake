@@ -52,7 +52,37 @@ namespace :db do
       end
       pds = get_table(hanzi)
       tags = "HSK#{hanzi.HSK}"
-      puts "#{h_char}\t#{h_components}\t#{pds}\t#{tags}"
+
+      image_ids = []
+      hanzi.images.each do |image|
+        image_ids.push(image.id)
+      end
+
+      hanzi.pinyindefinitions.each do |pd|
+        pd.gorodishes.each do |gorodish|
+          gorodish.mnemonics.each do |mnemonic|
+            mnemonic.images.each do |image|
+              image_ids.push(image.id)
+            end
+          end
+        end   
+      end
+
+      for hanzi_component in hanzi.components.split("")
+        this_hanzi = Hanzi.find_by(character: hanzi_component)
+        unless this_hanzi.nil?
+          this_hanzi.images.each do |image|
+            image_ids.push(image.id)
+          end          
+        end
+      end
+
+      images = ""
+      for id in image_ids.uniq
+        images += "<img class=\"mimage\" src=\"#{id}.png\">"
+      end
+      
+      puts "#{h_char}\t#{h_components}\t#{pds}\t#{images}\t#{tags}"
       @processed += h_char
     end
   end

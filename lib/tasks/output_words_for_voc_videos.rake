@@ -10,7 +10,7 @@
 
 namespace :db do
   desc "Output words grouped by hsk level"
-  task output_words: :environment do
+  task output_words_for_voc_videos: :environment do
     (1..6).each do |hsk|
       Word.where("\"HSK\" = ?", hsk).reorder(:simplified).each do |word|
         if word.simplified != word.traditional
