@@ -79,10 +79,55 @@ namespace :db do
 
       images = ""
       for id in image_ids.uniq
-        images += "<img class=\"mimage\" src=\"#{id}.png\">"
+        images += "<img class=\"mimage\" src=\"#{id}.png\"> "
       end
-      
-      puts "#{h_char}\t#{h_components}\t#{pds}\t#{images}\t#{tags}"
+
+      appearances = ""
+      children = Hanzi.where('components LIKE ?', "%#{hanzi.character}%")
+      for child in children
+        appearances += "<span><a href=\"http://www.mandarinbanana.com/hurl/#{child.character}\">#{child.character}</a></span> "
+      end
+
+      words_html = "<table class=\"words-table\">"
+      if hanzi.simplifieds.any?
+        words = Word.where('traditional LIKE ?', "%#{hanzi.character}%").limit(30)
+      else
+        words = Word.where('simplified LIKE ?', "%#{hanzi.character}%").limit(30)
+      end
+      words.each do |w|
+        words_html += "<tr><td class=\"word-characters\">"
+        w.simplified.each_char.with_index do |c, i|
+          pinyin = w.pinyin.split(" ")[i]
+	  colorclass = ""
+	  unless pinyin.nil?
+	    colornumber = pinyin[-1]
+ 	    if colornumber =~ /[1-5]/
+	      colorclass = "color" + colornumber
+	    end
+          end
+          words_html += "<div style=\"display:inline-block;\" class=\"center #{colorclass}\">"
+          words_html += "<a href=\"http://www.mandarinbanana.com/hurl/#{c}\" class=\"colorclass hanzi\">#{c}</a>"
+	  words_html += "<br/>"
+	  words_html += "#{pinyin}"
+          words_html += "</div> "
+        end
+        words_html += "</td><td class=\"word-translation\">#{w.translation}"
+        if w.HSK < 7
+	  words_html += " (HSK level #{w.HSK})"
+        end
+        words_html += "</td>"
+        words_html += "</tr>"          
+      end
+      words_html += "</table>"
+
+      examples = hanzi.subtitles.limit(20)
+      subtitles_html = "<ul class=\"subtitles-list\">"
+      for subtitle in examples do
+        subtitles_html += "<li><a class=\"hanzi\" href=\"http://www.mandarinbanana.com/subtitles/#{subtitle.id}\">#{subtitle.sentence}</a></li> "
+      end
+      subtitles_html += "</ul>"
+
+      puts "#{h_char}\t#{h_components}\t#{pds}\t#{images}\t#{appearances}\t#{subtitles_html}\t#{words_html}\t#{tags}"
       @processed += h_char
     end
   end
