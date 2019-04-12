@@ -285,5 +285,8 @@ DEPENDENCIES
   unicorn (= 4.8.3)
   will_paginate (= 3.0.4)
 
+RUBY VERSION
+   ruby 2.3.1p112
+
 BUNDLED WITH
-   1.13.7
+   1.16.6

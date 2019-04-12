@@ -11,7 +11,7 @@ namespace :db do
         if pd.mnemonics.any?
           pds += "<div class=\"mnemonics\">"
           for mnemonic in pd.mnemonics
-            pds += "<div class=\"mnemonic\">#{mnemonic.aide.gsub(/[^[:print:]]+/,'<br/><br/>')}</div>"
+            pds += "<div class=\"mnemonic\">#{mnemonic.aide.gsub(/[^[:print:]]+/,'<br/><br/>')} <span class=\"authorattribution\">(#{mnemonic.user.name})</span></div>"
             for image in mnemonic.images
               pds += "<img class=\"mimage\" src=\"#{image.id}.png\">"
             end

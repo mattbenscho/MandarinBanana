@@ -1,37 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# def truncate s, length = 100, ellipsis = '...'
-#   if s.length > length
-#     s.to_s[0..length].gsub(/[^\w]\w+\s*$/, ellipsis)
-#   else
-#     s
-#   end
-# end
-
 namespace :db do
-  def get_table(hanzi)
-      pds = "<table>"
-      for pd in hanzi.pinyindefinitions
-        pds += "<tr>"
-        pds += "<td class=\"color#{pd.pinyin.gsub(/[^0-9]/, '')}\"><div><span class=\"hanzi\">#{hanzi.character}<br/></span><span class=\"pinyin\">#{pd.pinyin}</span></div></td>"
-        pds += "<td>"
-        pds += "<div class=\"pydefinition\">#{pd.definition}</div>"
-        if pd.mnemonics.any?
-          pds += "<div class=\"mnemonics\">"
-          for mnemonic in pd.mnemonics
-            pds += "<div class=\"mnemonic\">#{mnemonic.aide.gsub(/[^[:print:]]+/,'<br/><br/>')}</div>"
-            for image in mnemonic.images
-              pds += "<img class=\"mimage\" src=\"#{image.id}.png\">"
-            end
-          end
-          pds += "</div>"
-        end 
-        pds += "</td></tr>"
-      end
-      pds += "</table>"
-      return pds
-  end
-  
   desc "Output words grouped by hsk level"
   task output_words: :environment do
     done = Array.new

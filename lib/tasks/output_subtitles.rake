@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# def truncate s, length = 100, ellipsis = '...'
-#   if s.length > length
-#     s.to_s[0..length].gsub(/[^\w]\w+\s*$/, ellipsis)
-#   else
-#     s
-#   end
-# end
-
 namespace :db do
   desc "Output subtitles grouped by movie and hsk level"
   task output_subtitles: :environment do
