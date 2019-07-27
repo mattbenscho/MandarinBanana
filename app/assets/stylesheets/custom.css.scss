@@ -2,7 +2,7 @@
 
 /* mixins, variables, etc. */
 
-$grayMediumLight: #eaeaea;
+/* $gray-medium-light: #eaeaea; */
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -22,10 +22,6 @@ $grayMediumLight: #eaeaea;
 
 html {
   overflow-y: scroll;
-}
-
-body {
-  padding-top: 60px;
 }
 
 section {
@@ -109,11 +105,11 @@ p {
 footer {
   margin-top: 45px;
   text-align: center;
-  color: $grayLight;
+  color: lightgray;
   a {
-    color: $gray;
+    color: gray;
     &:hover {
-      color: $grayDarker;
+      color: darkgray;
     }
   }
   ul {
@@ -127,7 +123,8 @@ footer {
 }
 
 .search {
-  border-top: 1px solid $grayMediumLight;
+  /* $gray-medium-light: #eaeaea; */
+  border-top: 1px solid #eaeaea;
   margin-top: 45px;
   margin-bottom: 20px;
   color: black;
@@ -145,6 +142,7 @@ footer {
 }
 
 .hero-unit {
+   margin-top: 60px;
    background: url(image-path('bg_tile.png'));
 }
 
@@ -167,7 +165,7 @@ footer {
 aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid lightgray;
     &:first-child {
       border: 0;
       padding-top: 0;
@@ -216,8 +214,8 @@ input {
 }
 
 .field_with_errors {
-  @extend .control-group;
-  @extend .error;
+  @extend .control-group !optional;
+  @extend .error !optional;
 }
 
 /* Users index */
@@ -228,9 +226,9 @@ input {
   li {
     overflow: auto;
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid lightgray;
     &:last-child {
-      border-bottom: 1px solid $grayLighter;
+      border-bottom: 1px solid lightgray;
     }
   }
 }
@@ -252,7 +250,7 @@ input {
 }
 
 .timestamp {
-  color: $grayLight;
+  color: lightgray;
 }
 
 .gravatar {

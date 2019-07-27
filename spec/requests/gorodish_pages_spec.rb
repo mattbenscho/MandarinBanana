@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe "GorodishPages" do
 
-  let(:gorodish) { FactoryGirl.create(:gorodish, element: "ai1") }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:gorodish) { FactoryBot.create(:gorodish, element: "ai1") }
+  let(:user) { FactoryBot.create(:user) }
   before { @mnemonic = user.mnemonics.build(aide: "Lorem ipsum", pinyindefinition: nil, gorodish: gorodish) }
   before { @mnemonic.save }
 

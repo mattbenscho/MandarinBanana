@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe FeaturedImage do
 
-  let(:fimage) { FactoryGirl.create(:featured_image) }
+  let(:fimage) { FactoryBot.create(:featured_image) }
 
   subject { fimage }
 

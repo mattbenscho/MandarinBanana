@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe "homonyms" do
-  let(:pd) { FactoryGirl.create(:pinyindefinition) }
+  let(:pd) { FactoryBot.create(:pinyindefinition) }
   before { visit pinyindefinition_path(pd) }
   subject { page }
   it { should have_content(pd.hanzi.character) }  

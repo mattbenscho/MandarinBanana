@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe Movie do
 
-  let(:subtitle) { FactoryGirl.create(:subtitle) }
-  let(:movie) { FactoryGirl.create(:movie) }
+  let(:subtitle) { FactoryBot.create(:subtitle) }
+  let(:movie) { FactoryBot.create(:movie) }
 
   subject { movie }
 

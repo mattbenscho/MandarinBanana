@@ -4,7 +4,7 @@ class FeaturedImage < ActiveRecord::Base
   validates :hanzi_id, presence: true
   validates :pinyindefinition_id, presence: true
   validates :commentary, presence: true
-  default_scope -> { order('created_at ASC') }
+  default_scope -> { order(Arel.sql('created_at ASC')) }
   belongs_to :hanzi
   belongs_to :pinyindefinition
 

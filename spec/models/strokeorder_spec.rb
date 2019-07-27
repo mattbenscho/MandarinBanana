@@ -4,8 +4,8 @@ require 'spec_helper'
 describe Strokeorder do
   
   before do
-    @user = FactoryGirl.create(:user)
-    @hanzi = FactoryGirl.create(:hanzi)
+    @user = FactoryBot.create(:user)
+    @hanzi = FactoryBot.create(:hanzi)
     @strokeorder = Strokeorder.new(user_id: @user.id,
                                    hanzi_id: @hanzi.id,
                                    strokes: "[[0, 10], [1, 11], [5, -7]]")

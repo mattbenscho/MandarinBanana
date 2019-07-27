@@ -24,7 +24,7 @@ class ImagesController < ApplicationController
     end
     if @image.save and @image.data != ""
       flash[:success] = "Image saved!"
-      s3 = AWS::S3.new(:access_key_id => ENV["S3_KEY_ID"], :secret_access_key => ENV["S3_SECRET"])
+      s3 = Aws::S3.new(:access_key_id => ENV["S3_KEY_ID"], :secret_access_key => ENV["S3_SECRET"])
       bucket = s3.buckets[S3_CONFIG["image_bucket"]]
       @name = @image.id.to_s + ".png"
       @png = Base64.decode64(@image.data['data:image/png;base64,'.length .. -1])
@@ -47,7 +47,7 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find(params[:id])
     if @image.update_attributes(image_params)
-      s3 = AWS::S3.new(:access_key_id => S3_CONFIG["access_key_id"], :secret_access_key => S3_CONFIG["secret_access_key"])
+      s3 = Aws::S3.new(:access_key_id => S3_CONFIG["access_key_id"], :secret_access_key => S3_CONFIG["secret_access_key"])
       bucket = s3.buckets[S3_CONFIG["image_bucket"]]
       # create and upload the png
       @name = @image.id.to_s + ".png"

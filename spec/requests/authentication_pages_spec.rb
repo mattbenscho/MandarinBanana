@@ -3,8 +3,8 @@ require 'spec_helper'
 
 describe "Authentication" do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   subject { page }
 
@@ -87,8 +87,8 @@ describe "Authentication" do
     end
 
     describe "as wrong user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      let(:user) { FactoryBot.create(:user) }
+      let(:wrong_user) { FactoryBot.create(:user, email: "wrong@example.com") }
       before { sign_in user, no_capybara: true }
 
       describe "submitting a GET request to the Users#edit action" do
@@ -104,8 +104,8 @@ describe "Authentication" do
     end
 
     describe "as non-admin user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:non_admin) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
+      let(:non_admin) { FactoryBot.create(:user) }
 
       before { sign_in non_admin, no_capybara: true }
 
@@ -121,7 +121,7 @@ describe "Authentication" do
         @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
       end
       
-      let(:movie) { FactoryGirl.create(:movie) }
+      let(:movie) { FactoryBot.create(:movie) }
       before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
       
       before { @user.save }
@@ -133,7 +133,7 @@ describe "Authentication" do
       end
       
       describe "submitting to the destroy action" do
-        let(:comment) { FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle, hanzi: nil) }
+        let(:comment) { FactoryBot.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle, hanzi: nil) }
         before { delete comment_path(comment) }
         specify { response.should redirect_to(signin_path) }
       end

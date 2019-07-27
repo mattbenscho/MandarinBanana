@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Mnemonic do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   before { @mnemonic = user.mnemonics.build(aide: "Lorem ipsum", pinyindefinition_id: 23, gorodish_id: nil) }
 
   subject { @mnemonic }

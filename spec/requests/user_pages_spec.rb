@@ -3,14 +3,14 @@ require 'spec_helper'
 
 describe "User pages" do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   subject { page }
 
   describe "index" do
 
-    before(:all) { 30.times { FactoryGirl.create(:user) } }
+    before(:all) { 30.times { FactoryBot.create(:user) } }
     after(:all)  { User.delete_all }
 
     describe "as a logged in user" do
@@ -61,15 +61,15 @@ describe "User pages" do
   describe "profile page" do
 
     describe "as not logged in user" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       before { visit user_path(user) }
       it { should_not have_content(user.name) }
       it { should_not have_title(user.name) }
     end
 
     describe "as logged in user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:other_user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
+      let(:other_user) { FactoryBot.create(:user) }
       before { sign_in other_user }
       before { visit user_path(other_user) }
       it { should have_content(other_user.name) }
@@ -136,7 +136,7 @@ describe "User pages" do
   end
 
   describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     before do
       sign_in user
       visit edit_user_path(user)

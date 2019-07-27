@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Hanzi pages" do
 
-  let(:hanzi) { FactoryGirl.create(:hanzi, character: "大") }
+  let(:hanzi) { FactoryBot.create(:hanzi, character: "大") }
 
   describe "searching for existing character" do
     before do
@@ -35,7 +35,7 @@ describe "Hanzi pages" do
     end
 
     describe "as logged in user" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       before { sign_in user }
       before { visit hanzi_path(hanzi) }
       subject { page }

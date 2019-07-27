@@ -3,10 +3,10 @@ require 'spec_helper'
 
 describe Pinyindefinition do
 
-  let!(:gorodish_d) { FactoryGirl.create(:gorodish, element: "d") }
-  let!(:gorodish_a4) { FactoryGirl.create(:gorodish, element: "a4") }
-  let(:pinyindefinition) { FactoryGirl.create(:pinyindefinition, gbeginning: "d", gending: "a4") }
-  let(:pinyindefinition_xx5) { FactoryGirl.create(:pinyindefinition, gbeginning: "", gending: "") }
+  let!(:gorodish_d) { FactoryBot.create(:gorodish, element: "d") }
+  let!(:gorodish_a4) { FactoryBot.create(:gorodish, element: "a4") }
+  let(:pinyindefinition) { FactoryBot.create(:pinyindefinition, gbeginning: "d", gending: "a4") }
+  let(:pinyindefinition_xx5) { FactoryBot.create(:pinyindefinition, gbeginning: "", gending: "") }
 
   describe "with valid Gorodishes" do
     subject { pinyindefinition }

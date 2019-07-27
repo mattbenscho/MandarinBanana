@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Comment do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   before { @comment = user.comments.build(content: "Lorem ipsum", subtitle_id: 23, hanzi_id: nil) }
 
   subject { @comment }

@@ -1,6 +1,6 @@
 S3_CONFIG = YAML.load_file("#{::Rails.root}/config/aws.yml")[Rails.env]
 
-# Load local AWS keys if available.
+# Load local Aws keys if available.
 keys = "#{::Rails.root}/config/aws_keys.csv"
 if File.exists?(keys)
   File.open(keys).each do |line|

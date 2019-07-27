@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Subtitle do
 
-  let(:movie) { FactoryGirl.create(:movie) }
+  let(:movie) { FactoryBot.create(:movie) }
   before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
 
   subject { @subtitle }
@@ -29,11 +29,11 @@ describe Subtitle do
     before { @subtitle.save }
 
     let!(:older_comment) do
-      FactoryGirl.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle, hanzi: nil)
+      FactoryBot.create(:comment, user: @user, created_at: 1.day.ago, subtitle: @subtitle, hanzi: nil)
     end
 
     let!(:newer_comment) do
-      FactoryGirl.create(:comment, user: @user, created_at: 1.hour.ago, subtitle: @subtitle, hanzi: nil)
+      FactoryBot.create(:comment, user: @user, created_at: 1.hour.ago, subtitle: @subtitle, hanzi: nil)
     end
 
     it "should have the right comments in the right order" do
@@ -51,7 +51,7 @@ describe Subtitle do
   end
 
   describe "movie associations" do
-    let(:movie) { FactoryGirl.create(:movie) }
+    let(:movie) { FactoryBot.create(:movie) }
     before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
 
     subject { @subtitle }

@@ -7,7 +7,7 @@ describe "SubtitlePages" do
     @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
   end
 
-  let(:movie) { FactoryGirl.create(:movie) }
+  let(:movie) { FactoryBot.create(:movie) }
   before { @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200") }
   
   before { @user.save }
@@ -19,8 +19,8 @@ describe "SubtitlePages" do
 
   describe "subtitle page" do
     
-    let!(:c1) { FactoryGirl.create(:comment, user: @user, subtitle: @subtitle, content: "Foo", hanzi: nil) }
-    let!(:c2) { FactoryGirl.create(:comment, user: @user, subtitle: @subtitle, content: "Bar", hanzi: nil) }
+    let!(:c1) { FactoryBot.create(:comment, user: @user, subtitle: @subtitle, content: "Foo", hanzi: nil) }
+    let!(:c2) { FactoryBot.create(:comment, user: @user, subtitle: @subtitle, content: "Bar", hanzi: nil) }
     
     before { visit subtitle_path(@subtitle) }
     
@@ -40,7 +40,7 @@ describe "SubtitlePages" do
       it { should_not have_content("edit subtitle") }
     end
     describe "as admin" do
-      let(:admin) { FactoryGirl.create(:admin) }
+      let(:admin) { FactoryBot.create(:admin) }
 
       before do
         sign_in admin

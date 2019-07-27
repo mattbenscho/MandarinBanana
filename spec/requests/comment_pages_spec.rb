@@ -3,10 +3,10 @@ require 'spec_helper'
 
 describe "Comment pages" do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:hanzi) { FactoryGirl.create(:hanzi) }
-  let(:image) { FactoryGirl.create(:image) }
-  let(:movie) { FactoryGirl.create(:movie) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:hanzi) { FactoryBot.create(:hanzi) }
+  let(:image) { FactoryBot.create(:image) }
+  let(:movie) { FactoryBot.create(:movie) }
 
   before do
     @subtitle = movie.subtitles.build(sentence: "大王", filename: "dntg-100-200")
@@ -21,7 +21,7 @@ describe "Comment pages" do
 
   describe "comment creation" do
 
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     before do
       sign_in user
@@ -74,7 +74,7 @@ describe "Comment pages" do
     end
 
     describe "as another user" do
-      let(:other_user) { FactoryGirl.create(:user) }
+      let(:other_user) { FactoryBot.create(:user) }
       before do
         sign_in other_user
         visit subtitle_path(@subtitle)
@@ -111,7 +111,7 @@ describe "Comment pages" do
     end
 
     describe "as another user" do
-      let(:other_user) { FactoryGirl.create(:user) }
+      let(:other_user) { FactoryBot.create(:user) }
       before do
         sign_in other_user
         visit hanzi_path(hanzi)

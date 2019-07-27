@@ -3,15 +3,15 @@ require 'spec_helper'
 
 describe "FeaturedImage pages" do
     
-  let!(:gorodish_d) { FactoryGirl.create(:gorodish, element: "d") }
-  let!(:gorodish_a4) { FactoryGirl.create(:gorodish, element: "a4") }
-  let!(:fimage) { FactoryGirl.create(:featured_image) }
-  let!(:other_fimage) { FactoryGirl.create(:featured_image) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
-  let(:image) { FactoryGirl.create(:image) }
-  let(:hanzi) { FactoryGirl.create(:hanzi) }
-  let(:other_hanzi) { FactoryGirl.create(:hanzi) }
+  let!(:gorodish_d) { FactoryBot.create(:gorodish, element: "d") }
+  let!(:gorodish_a4) { FactoryBot.create(:gorodish, element: "a4") }
+  let!(:fimage) { FactoryBot.create(:featured_image) }
+  let!(:other_fimage) { FactoryBot.create(:featured_image) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin) { FactoryBot.create(:admin) }
+  let(:image) { FactoryBot.create(:image) }
+  let(:hanzi) { FactoryBot.create(:hanzi) }
+  let(:other_hanzi) { FactoryBot.create(:hanzi) }
 
   describe "anonymous user visiting hanzi without featured image" do
     before do
@@ -77,7 +77,7 @@ describe "FeaturedImage pages" do
 
   describe "visiting a featured image" do
 
-    let!(:last_fimage) { FactoryGirl.create(:featured_image) }
+    let!(:last_fimage) { FactoryBot.create(:featured_image) }
 
     before { visit featured_image_path(fimage) }
     subject { page }
@@ -100,7 +100,7 @@ describe "FeaturedImage pages" do
     end
 
     describe "index page" do
-      let!(:other_fimage) { FactoryGirl.create(:featured_image) }
+      let!(:other_fimage) { FactoryBot.create(:featured_image) }
       before do
         visit featured_images_path
       end
